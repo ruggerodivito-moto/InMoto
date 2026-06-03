@@ -3,6 +3,8 @@ import MapKit
 
 struct RouteDetailView: View {
     let route: MotoRoute
+    @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) private var dismiss
     @State private var waypoints: [String]
     @State private var newWaypoint = ""
     @State private var showAddField = false
@@ -29,6 +31,16 @@ struct RouteDetailView: View {
         }
         .navigationTitle(route.nome)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    dismiss()
+                    appState.selectedTab = 0
+                } label: {
+                    Image(systemName: "house.fill")
+                }
+            }
+        }
     }
 
     // ── Header ───────────────────────────────────────────────────────────────
