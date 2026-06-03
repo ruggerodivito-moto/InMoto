@@ -105,6 +105,18 @@ class RouteStore: ObservableObject {
         isLoading = false
     }
 
+    // ── Luoghi unici (per autocomplete) ────────────────────────────────────
+    var allLocations: [String] {
+        var seen = Set<String>()
+        for r in routes {
+            let p = r.partenza.trimmingCharacters(in: .whitespaces)
+            let a = r.arrivo.trimmingCharacters(in: .whitespaces)
+            if !p.isEmpty { seen.insert(p) }
+            if !a.isEmpty { seen.insert(a) }
+        }
+        return seen.sorted()
+    }
+
     // ── Filtro locale ───────────────────────────────────────────────────────
     func filtered(regione: String?, partenza: String?, arrivo: String?,
                   kmMax: Int?, durataMax: Int?) -> [MotoRoute] {
