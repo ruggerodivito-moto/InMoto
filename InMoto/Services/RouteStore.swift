@@ -106,20 +106,33 @@ class RouteStore: ObservableObject {
     }
 
     // ── Composizione tragitto locale ────────────────────────────────────────
+    // Route che non usano autostrade o strade a pedaggio
+    private var scenicRoutes: [MotoRoute] {
+        let blocked = ["autostrada", "pedaggio", "casello", "tangenziale", "raccordo"]
+        return routes.filter { r in
+            let text = [r.nome, r.descrizione, r.partenza, r.arrivo]
+                .joined(separator: " ").lowercased()
+            return !blocked.contains(where: { text.contains($0) })
+        }
+    }
+
     func composeLocalRoute(da startText: String, a endText: String) -> MotoRoute {
         func fuzzy(_ a: String, _ b: String) -> Bool {
             let a = a.lowercased(), b = b.lowercased()
             return a.contains(b) || b.contains(a)
         }
 
+        // Usa solo route scenic (no autostrade/pedaggio)
+        let pool = scenicRoutes
+
         // Candidati per partenza e arrivo
-        let startCandidates = routes.filter { fuzzy($0.partenza, startText) }
-                                    .sorted { $0.stelle > $1.stelle }
-        let endCandidates   = routes.filter { fuzzy($0.arrivo, endText) }
-                                    .sorted { $0.stelle > $1.stelle }
+        let startCandidates = pool.filter { fuzzy($0.partenza, startText) }
+                                  .sorted { $0.stelle > $1.stelle }
+        let endCandidates   = pool.filter { fuzzy($0.arrivo, endText) }
+                                  .sorted { $0.stelle > $1.stelle }
 
         // Fase 1 — unico route che copre entrambi
-        if let direct = routes.first(where: { fuzzy($0.partenza, startText) && fuzzy($0.arrivo, endText) }) {
+        if let direct = pool.first(where: { fuzzy($0.partenza, startText) && fuzzy($0.arrivo, endText) }) {
             return direct
         }
 
@@ -137,7 +150,7 @@ class RouteStore: ObservableObject {
         for s in startCandidates.prefix(5) {
             for e in endCandidates.prefix(5) {
                 guard s.id != e.id else { continue }
-                for bridge in routes {
+                for bridge in pool {
                     guard bridge.id != s.id && bridge.id != e.id else { continue }
                     if fuzzy(bridge.partenza, s.arrivo) && fuzzy(bridge.arrivo, e.partenza) {
                         return buildComposed([s, bridge, e], start: startText, end: endText)
@@ -151,9 +164,9 @@ class RouteStore: ObservableObject {
         if let s = startCandidates.first { legs.append(s) }
         if let e = endCandidates.first, e.id != legs.first?.id { legs.append(e) }
 
-        // Fase 5 — nulla trovato: top route per stelle
+        // Fase 5 — nulla trovato: top route scenic per stelle
         if legs.isEmpty {
-            legs = Array(routes.sorted { $0.stelle > $1.stelle }.prefix(2))
+            legs = Array(pool.sorted { $0.stelle > $1.stelle }.prefix(2))
         }
 
         return buildComposed(legs, start: startText, end: endText)

@@ -258,7 +258,7 @@ struct RouteDetailView: View {
                 .buttonStyle(.bordered)
                 .tint(.indigo)
             }
-            Text("Include tutte le tappe elencate sopra, comprese quelle aggiunte.")
+            Text("Google Maps evita automaticamente autostrade e pedaggi. Per Apple Maps attiva l'opzione nelle preferenze di Maps.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
         }
@@ -268,11 +268,26 @@ struct RouteDetailView: View {
 
     // ── Actions ──────────────────────────────────────────────────────────────
     private func openGoogleMaps() {
-        let parts = waypoints.map { $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? $0 }
-        let urlStr = "https://www.google.com/maps/dir/" + parts.joined(separator: "/") + "/"
-        if let url = URL(string: urlStr) {
-            UIApplication.shared.open(url)
+        guard !waypoints.isEmpty else { return }
+        let encode: (String) -> String = {
+            $0.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? $0
         }
+
+        // App Google Maps: supporta avoid=tolls,highways
+        if let gmScheme = URL(string: "comgooglemaps://"),
+           UIApplication.shared.canOpenURL(gmScheme) {
+            let origin = encode(waypoints.first!)
+            let dests  = waypoints.dropFirst().map { encode($0) }.joined(separator: "+to:")
+            let str = "comgooglemaps://?saddr=\(origin)&daddr=\(dests)&directionsmode=driving&avoid=tolls,highways"
+            if let url = URL(string: str) { UIApplication.shared.open(url); return }
+        }
+
+        // Fallback web: no avoid su multi-stop, ma funziona senza app
+        let parts = waypoints.map {
+            $0.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? $0
+        }
+        let urlStr = "https://www.google.com/maps/dir/" + parts.joined(separator: "/") + "/"
+        if let url = URL(string: urlStr) { UIApplication.shared.open(url) }
     }
 
     private func openAppleMaps() {
