@@ -8,20 +8,50 @@ class RouteStore: ObservableObject {
     @Published var isLoading = false
     @Published var syncMessage: String?
     @Published var lastSyncDate: Date?
+    @Published var personalRoutes: [MotoRoute] = []
 
     private let cacheURL: URL = {
         let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
         return dir.appendingPathComponent("routes_cache.json")
     }()
 
+    private let personalURL: URL = {
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return dir.appendingPathComponent("personal_routes.json")
+    }()
+
     private let syncDateKey = "lastSyncDate"
 
     // ── Caricamento iniziale ────────────────────────────────────────────────
     func loadInitial() {
-        // Prima prova dalla cache (più aggiornata)
         if loadFromCache() { return }
-        // Poi dal bundle JSON
         loadFromBundle()
+        loadPersonalRoutes()
+    }
+
+    // ── Tragitti personali ──────────────────────────────────────────────────
+    func loadPersonalRoutes() {
+        guard FileManager.default.fileExists(atPath: personalURL.path) else { return }
+        if let data = try? Data(contentsOf: personalURL),
+           let loaded = try? JSONDecoder().decode([MotoRoute].self, from: data) {
+            personalRoutes = loaded
+        }
+    }
+
+    func savePersonalRoute(_ route: MotoRoute) {
+        personalRoutes.append(route)
+        persistPersonalRoutes()
+    }
+
+    func deletePersonalRoute(_ route: MotoRoute) {
+        personalRoutes.removeAll { $0.id == route.id }
+        persistPersonalRoutes()
+    }
+
+    private func persistPersonalRoutes() {
+        if let data = try? JSONEncoder().encode(personalRoutes) {
+            try? data.write(to: personalURL, options: .atomic)
+        }
     }
 
     private func loadFromBundle() {
@@ -44,6 +74,7 @@ class RouteStore: ObservableObject {
             routes = loaded
             updateRegions()
             lastSyncDate = UserDefaults.standard.object(forKey: syncDateKey) as? Date
+            loadPersonalRoutes()
             return true
         } catch {
             return false

@@ -1,5 +1,4 @@
 import SwiftUI
-import MapKit
 
 struct RouteDetailView: View {
     let route: MotoRoute
@@ -238,27 +237,17 @@ struct RouteDetailView: View {
     // ── Maps CTA ─────────────────────────────────────────────────────────────
     private var mapsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label("Apri su Maps", systemImage: "map.fill")
+            Label("Navigazione", systemImage: "map.fill")
                 .font(.headline)
 
-            HStack(spacing: 12) {
-                // Apple Maps
-                Button(action: openAppleMaps) {
-                    Label("Apple Maps", systemImage: "apple.logo")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.indigo)
-
-                // Google Maps
-                Button(action: openGoogleMaps) {
-                    Label("Google Maps", systemImage: "globe")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-                .tint(.indigo)
+            Button(action: openGoogleMaps) {
+                Label("Apri in Google Maps", systemImage: "globe")
+                    .frame(maxWidth: .infinity)
             }
-            Text("Google Maps evita automaticamente autostrade e pedaggi. Per Apple Maps attiva l'opzione nelle preferenze di Maps.")
+            .buttonStyle(.borderedProminent)
+            .tint(.indigo)
+
+            Text("Evita automaticamente autostrade e pedaggi. Include tutte le tappe elencate sopra.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
         }
@@ -290,29 +279,6 @@ struct RouteDetailView: View {
         if let url = URL(string: urlStr) { UIApplication.shared.open(url) }
     }
 
-    private func openAppleMaps() {
-        guard !waypoints.isEmpty else { return }
-        let geocoder = CLGeocoder()
-        var mapItems: [MKMapItem] = []
-        let group = DispatchGroup()
-
-        for wp in waypoints {
-            group.enter()
-            geocoder.geocodeAddressString(wp) { placemarks, _ in
-                if let pm = placemarks?.first {
-                    mapItems.append(MKMapItem(placemark: MKPlacemark(placemark: pm)))
-                }
-                group.leave()
-            }
-        }
-        group.notify(queue: .main) {
-            guard mapItems.count >= 2 else { return }
-            let options: [String: Any] = [
-                MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-            ]
-            MKMapItem.openMaps(with: mapItems, launchOptions: options)
-        }
-    }
 }
 
 // ── FlowLayout ───────────────────────────────────────────────────────────────

@@ -14,9 +14,12 @@ struct ContentView: View {
             CreateRouteView()
                 .tabItem { Label("Crea", systemImage: "arrow.triangle.swap") }
                 .tag(2)
+            ImportedRoutesView()
+                .tabItem { Label("Importati", systemImage: "bookmark.fill") }
+                .tag(3)
             SettingsView()
                 .tabItem { Label("Impostazioni", systemImage: "gearshape.fill") }
-                .tag(3)
+                .tag(4)
         }
         .tint(.indigo)
     }
