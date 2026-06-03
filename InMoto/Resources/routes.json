@@ -1,6 +1,6 @@
 [
   {
-    "id": "",
+    "id": "valle-daosta-65df5898",
     "nome": "Gran San Bernardo e Colle del Gran San Bernardo",
     "partenza": "Aosta",
     "arrivo": "Martigny (CH) andata/ritorno",
@@ -32,7 +32,7 @@
     "stagione": "giugno-settembre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-f31dbd4c",
     "nome": "Colle del Nivolet - Il tetto della Valle d'Aosta",
     "partenza": "Ceresole Reale",
     "arrivo": "Colle del Nivolet 2612m",
@@ -64,7 +64,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-d4b9aaf5",
     "nome": "Piccolo San Bernardo - La porta delle Alpi occidentali",
     "partenza": "Aosta",
     "arrivo": "La Thuile - Colle Piccolo San Bernardo 2188m",
@@ -97,7 +97,7 @@
     "stagione": "giugno-settembre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-eab01ef0",
     "nome": "Colle del Mont Cenis - Anello delle Alpi Graie",
     "partenza": "Aosta",
     "arrivo": "Susa (TO) via Mont Cenis",
@@ -133,7 +133,7 @@
     "stagione": "giugno-settembre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-b659a444",
     "nome": "Valpelline e Colle Serena",
     "partenza": "Aosta",
     "arrivo": "Bionaz - Lago Place Moulin",
@@ -166,7 +166,7 @@
     "stagione": "giugno-settembre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-82721a09",
     "nome": "Cervinia e Colle Superiore delle Cime Bianche",
     "partenza": "Châtillon",
     "arrivo": "Breuil-Cervinia",
@@ -198,7 +198,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-f09b7f61",
     "nome": "Valle del Gran Paradiso - Cogne e Valnontey",
     "partenza": "Aosta",
     "arrivo": "Valnontey - Cogne",
@@ -231,7 +231,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-4f117452",
     "nome": "Anello della Valle d'Aosta Centrale",
     "partenza": "Aosta",
     "arrivo": "Aosta (anello)",
@@ -269,7 +269,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-ffb5067c",
     "nome": "Colle di Joux e Saint-Vincent",
     "partenza": "Saint-Vincent",
     "arrivo": "Colle di Joux 1640m - Brusson",
@@ -301,7 +301,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "valle-daosta-b7a00b1a",
     "nome": "Valle d'Ayas e Monte Rosa",
     "partenza": "Verrès",
     "arrivo": "Champoluc",
@@ -334,7 +334,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "piemonte-594fd804",
     "nome": "Colle dell'Agnello - Il tetto delle Alpi Cozie",
     "partenza": "Cuneo",
     "arrivo": "Pontechianale - Colle dell'Agnello 2744m",
@@ -369,7 +369,7 @@
     "stagione": "luglio-agosto"
   },
   {
-    "id": "",
+    "id": "piemonte-e2a0941f",
     "nome": "Colle della Lombarda e Vallée de l'Ubaye",
     "partenza": "Cuneo",
     "arrivo": "Isola 2000 (F) via Colle Lombarda 2351m",
@@ -403,7 +403,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "piemonte-981feb47",
     "nome": "Colle di Tenda - Le Alpi Marittime tra Italia e Francia",
     "partenza": "Cuneo",
     "arrivo": "Tenda (F) via Colle di Tenda 1871m",
@@ -438,7 +438,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "piemonte-13aa32c6",
     "nome": "Lago d'Orta e Mottarone",
     "partenza": "Novara",
     "arrivo": "Orta San Giulio - Mottarone 1491m",
@@ -472,7 +472,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "piemonte-4e5eab9f",
     "nome": "Langhe e Monferrato - Le colline del vino",
     "partenza": "Asti",
     "arrivo": "Alba - La Morra - Barolo",
@@ -508,7 +508,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "piemonte-11ce5954",
     "nome": "Valle Maira e Colle Esischie",
     "partenza": "Cuneo",
     "arrivo": "Marmora - Colle Esischie 2370m",
@@ -541,7 +541,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "piemonte-73349a56",
     "nome": "Valsesia e Monte Rosa - La via dei walser",
     "partenza": "Vercelli",
     "arrivo": "Alagna Valsesia",
@@ -575,7 +575,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "piemonte-4053be36",
     "nome": "Colle del Moncenisio - Il valico napoleonico",
     "partenza": "Susa",
     "arrivo": "Lanslebourg (F) via Colle Moncenisio 2083m",
@@ -609,7 +609,7 @@
     "stagione": "giugno-settembre"
   },
   {
-    "id": "",
+    "id": "piemonte-17a0c3ba",
     "nome": "Valle Ossola e Passo del Sempione",
     "partenza": "Verbania",
     "arrivo": "Brig (CH) via Passo Sempione 2005m",
@@ -642,7 +642,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "piemonte-a50c12c9",
     "nome": "Alta Val di Susa - Sestriere e Colle del Monginevro",
     "partenza": "Susa",
     "arrivo": "Briançon (F) via Monginevro 1854m",
@@ -676,7 +676,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "liguria-92aad691",
     "nome": "Passo del Turchino - Il passo 'mari e monti' di Ponente",
     "partenza": "Ovada",
     "arrivo": "Voltri (GE) via Passo Turchino 532m",
@@ -710,7 +710,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-a36dd5af",
     "nome": "Passo del Faiallo - Il balcone sul golfo di Genova",
     "partenza": "Genova Voltri",
     "arrivo": "Sassello via Passo del Faiallo 1044m",
@@ -744,7 +744,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "liguria-9485df33",
     "nome": "Colle del Melogno - Le faggete del Savonese",
     "partenza": "Finale Ligure",
     "arrivo": "Millesimo via Colle del Melogno 708m",
@@ -778,7 +778,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-e66c1527",
     "nome": "Passo del Bocco - Il valico tra Genova e La Spezia",
     "partenza": "Genova Recco",
     "arrivo": "Borzonasca - Passo del Bocco 956m",
@@ -813,7 +813,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-a87f0923",
     "nome": "Passo di Caprauna - Le Alpi Liguri selvagge",
     "partenza": "Albenga",
     "arrivo": "Garessio (CN) via Passo di Caprauna 1379m",
@@ -848,7 +848,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "liguria-88fa4eff",
     "nome": "Colle di Nava - Il nodo tra Liguria e Piemonte",
     "partenza": "Imperia",
     "arrivo": "Garessio (CN) via Colle di Nava 934m",
@@ -883,7 +883,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-00a8e497",
     "nome": "Passo della Teglia - L'Alpe alta dell'imperiese",
     "partenza": "Imperia",
     "arrivo": "Triora - Passo della Teglia 1385m",
@@ -919,7 +919,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "liguria-110a4db4",
     "nome": "Passo del Bracco - Tra Genova e la Riviera di Levante",
     "partenza": "Sestri Levante",
     "arrivo": "Brugnato (SP) via Passo del Bracco 615m",
@@ -952,7 +952,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-b80d7ce3",
     "nome": "Passo di Cento Croci - Tra Liguria ed Emilia",
     "partenza": "La Spezia",
     "arrivo": "Borgotaro (PR) via Passo Cento Croci 1059m",
@@ -986,7 +986,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-e53cedd0",
     "nome": "Valle Argentina e Valle Nervia - L'entroterra di Sanremo",
     "partenza": "Sanremo",
     "arrivo": "Triora - Pigna - Dolceacqua",
@@ -1024,7 +1024,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "liguria-64f7c2a1",
     "nome": "Val Trebbia e Val d'Aveto - L'Appennino ligure genovese",
     "partenza": "Genova",
     "arrivo": "Santo Stefano d'Aveto - Rezzoaglio",
@@ -1061,7 +1061,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "liguria-25599672",
     "nome": "Riviera di Ponente e Riviera di Levante - La SS1 Aurelia panoramica",
     "partenza": "Ventimiglia",
     "arrivo": "La Spezia via Aurelia costiera",
@@ -1102,7 +1102,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lombardia-04ddb9a3",
     "nome": "Lago di Como - Il triangolo lariano",
     "partenza": "Como",
     "arrivo": "Como (anello Triangolo Lariano)",
@@ -1140,7 +1140,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "lombardia-c2b82af3",
     "nome": "Passo dello Stelvio - Il colosso delle Alpi",
     "partenza": "Bormio",
     "arrivo": "Prato allo Stelvio via Passo Stelvio 2758m",
@@ -1173,7 +1173,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "lombardia-738b986b",
     "nome": "Lago di Garda occidentale - La SS45bis dei Gardesani",
     "partenza": "Brescia",
     "arrivo": "Riva del Garda (TN) via sponda ovest",
@@ -1210,7 +1210,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lombardia-5f450b90",
     "nome": "Valchiavenna e Maloja - Lo svizzero dalla Valtellina",
     "partenza": "Sondrio",
     "arrivo": "Maloja (CH) via Chiavenna",
@@ -1246,7 +1246,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "lombardia-40daa828",
     "nome": "Valtellina e Livigno - Il Piccolo Tibet",
     "partenza": "Sondrio",
     "arrivo": "Livigno via Passo dell'Eira 2210m",
@@ -1282,7 +1282,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "lombardia-841bef37",
     "nome": "Franciacorta e Lago d'Iseo",
     "partenza": "Brescia",
     "arrivo": "Bergamo via Lago d'Iseo",
@@ -1320,7 +1320,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lombardia-97ebeb1a",
     "nome": "Valcamonica - La valle dei segni rupestri",
     "partenza": "Brescia",
     "arrivo": "Ponte di Legno via Passo del Tonale 1884m",
@@ -1358,7 +1358,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "lombardia-5bd2c239",
     "nome": "Lago Maggiore - Anello della sponda lombarda",
     "partenza": "Varese",
     "arrivo": "Verbania (VB) via Angera e Arona",
@@ -1396,7 +1396,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lombardia-e3d5f626",
     "nome": "Val Brembana e Passo San Marco",
     "partenza": "Bergamo",
     "arrivo": "Morbegno (SO) via Passo San Marco 1985m",
@@ -1433,7 +1433,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "lombardia-df1fb370",
     "nome": "Triangolo Lariano - Asso, Bellagio e Valassina",
     "partenza": "Lecco",
     "arrivo": "Como via Bellagio e Valassina",
@@ -1469,7 +1469,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-5e11f897",
     "nome": "Sellaronda - Il Giro dei Quattro Passi",
     "partenza": "Canazei",
     "arrivo": "Canazei (anello)",
@@ -1509,7 +1509,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-1af1c2be",
     "nome": "Passo dello Stelvio versante trentino - Da Prato allo Stelvio",
     "partenza": "Merano",
     "arrivo": "Passo dello Stelvio 2758m",
@@ -1544,7 +1544,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-464fb3c0",
     "nome": "Anello dei Passi Trentini - Manghen, San Pellegrino, Rolle",
     "partenza": "Borgo Valsugana",
     "arrivo": "Borgo Valsugana (anello)",
@@ -1583,7 +1583,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-72558210",
     "nome": "Passo Falzarego e Passo Valparola",
     "partenza": "Cortina d'Ampezzo",
     "arrivo": "Corvara via Passo Falzarego 2105m",
@@ -1617,7 +1617,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-046bc116",
     "nome": "Alta Pusteria e Tre Cime di Lavaredo",
     "partenza": "Brunico",
     "arrivo": "Misurina via Tre Cime",
@@ -1652,7 +1652,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-e3321756",
     "nome": "Strada del Vino dell'Alto Adige",
     "partenza": "Bolzano",
     "arrivo": "Merano via Strada del Vino",
@@ -1690,7 +1690,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-5ddf6b70",
     "nome": "Passo del Brennero e Val d'Isarco",
     "partenza": "Bolzano",
     "arrivo": "Innsbruck (A) via Passo Brennero 1374m",
@@ -1725,7 +1725,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-ac26c93c",
     "nome": "Passo di Resia e Val Venosta",
     "partenza": "Merano",
     "arrivo": "Resia via Passo di Resia 1504m",
@@ -1760,7 +1760,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-1a18f99e",
     "nome": "Altopiano di Siusi e Alpe di Siusi",
     "partenza": "Bolzano",
     "arrivo": "Alpe di Siusi via Castelrotto",
@@ -1794,7 +1794,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "trentino-alto-adige-48d74891",
     "nome": "Lago di Carezza e Nova Levante",
     "partenza": "Bolzano",
     "arrivo": "Passo di Costalunga via Lago di Carezza",
@@ -1827,7 +1827,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "veneto-549e07a2",
     "nome": "Passo Pordoi e Arabba - Il tetto del Veneto dolomitico",
     "partenza": "Belluno",
     "arrivo": "Arabba via Passo Pordoi 2239m",
@@ -1862,7 +1862,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "veneto-cfd5a03d",
     "nome": "Cortina d'Ampezzo - Il giro delle Dolomiti ampezzane",
     "partenza": "Belluno",
     "arrivo": "Cortina d'Ampezzo",
@@ -1896,7 +1896,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "veneto-2d85f9e7",
     "nome": "Passo Giau e Colle Santa Lucia",
     "partenza": "Cortina d'Ampezzo",
     "arrivo": "Caprile via Passo Giau 2236m",
@@ -1929,7 +1929,7 @@
     "stagione": "luglio-settembre"
   },
   {
-    "id": "",
+    "id": "veneto-da465f19",
     "nome": "Lago di Garda orientale - Da Verona a Riva",
     "partenza": "Verona",
     "arrivo": "Riva del Garda via sponda est",
@@ -1968,7 +1968,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-81b87426",
     "nome": "Colli Euganei e Riviera del Brenta",
     "partenza": "Padova",
     "arrivo": "Venezia via Riviera del Brenta",
@@ -2008,7 +2008,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-a3e784b8",
     "nome": "Altopiano di Asiago e Sette Comuni",
     "partenza": "Vicenza",
     "arrivo": "Asiago - Gallio",
@@ -2045,7 +2045,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-5f208463",
     "nome": "Valpolicella e Monte Lessini",
     "partenza": "Verona",
     "arrivo": "Bosco Chiesanuova via Monte Lessini",
@@ -2080,7 +2080,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-ec9be744",
     "nome": "Prealpi Trevigiane e Vittorio Veneto",
     "partenza": "Treviso",
     "arrivo": "Vittorio Veneto - Fadalto",
@@ -2115,7 +2115,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-c93d318b",
     "nome": "Soave e i Colli Berici",
     "partenza": "Verona",
     "arrivo": "Vicenza via Soave e Colli Berici",
@@ -2151,7 +2151,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "veneto-5a9393f9",
     "nome": "Passo Tre Croci e Auronzo - Le Dolomiti di Cadore",
     "partenza": "Belluno",
     "arrivo": "Auronzo via Passo Tre Croci 1809m",
@@ -2188,7 +2188,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-59e66032",
     "nome": "Passo dello Zoncolan - Il muro del Friuli",
     "partenza": "Tolmezzo",
     "arrivo": "Ravascletto via Passo Zoncolan 1750m",
@@ -2222,7 +2222,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-eb927a73",
     "nome": "Tarvisiano e Passo del Predil",
     "partenza": "Udine",
     "arrivo": "Tarvisio via Passo del Predil 1156m",
@@ -2260,7 +2260,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-cda48672",
     "nome": "Dolomiti Friulane - Da Maniago a Erto",
     "partenza": "Maniago",
     "arrivo": "Erto e Casso - Vajont",
@@ -2295,7 +2295,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-830ea064",
     "nome": "Carso e Costiera triestina",
     "partenza": "Trieste",
     "arrivo": "Duino via Carso e costa",
@@ -2330,7 +2330,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-89c7b1ec",
     "nome": "Laguna di Grado e Aquileia",
     "partenza": "Trieste",
     "arrivo": "Grado via Aquileia",
@@ -2364,7 +2364,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-e89a7514",
     "nome": "Via dei Laghi - Cornino, Cavazzo, Barcis",
     "partenza": "Udine",
     "arrivo": "Barcis via Laghi friulani",
@@ -2400,7 +2400,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-f3532515",
     "nome": "Forni di Sopra e Passo della Mauria",
     "partenza": "Tolmezzo",
     "arrivo": "Lorenzago di Cadore (BL) via Passo Mauria 1298m",
@@ -2434,7 +2434,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-8ad8e63d",
     "nome": "Collio e Cormons - Le colline del vino",
     "partenza": "Gorizia",
     "arrivo": "Cividale del Friuli via Collio",
@@ -2468,7 +2468,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-5125df33",
     "nome": "Passo della Futa e Passo della Raticosa - La via degli Dei in moto",
     "partenza": "Bologna",
     "arrivo": "Firenze via Passo della Futa 903m",
@@ -2505,7 +2505,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-2e1b2a8d",
     "nome": "Passo del Cerreto e Passo dei Carpinelli",
     "partenza": "Reggio Emilia",
     "arrivo": "Aulla (MS) via Passo del Cerreto 1261m",
@@ -2541,7 +2541,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-fdd06133",
     "nome": "Passo del Lagastrello e Val di Secchia",
     "partenza": "Reggio Emilia",
     "arrivo": "Pontremoli (MS) via Passo Lagastrello 1193m",
@@ -2575,7 +2575,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-968ad72a",
     "nome": "Motor Valley - Maranello, Modena, Bologna",
     "partenza": "Modena",
     "arrivo": "Bologna via Maranello e Vignola",
@@ -2611,7 +2611,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-43f21c0f",
     "nome": "Romagna - Da Riccione a San Marino e oltre",
     "partenza": "Riccione",
     "arrivo": "San Marino - Pennabilli",
@@ -2648,7 +2648,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-528bb6da",
     "nome": "Passo del Giogo di Scarperia - L'Appennino bolognese",
     "partenza": "Bologna",
     "arrivo": "Scarperia via Passo del Giogo 882m",
@@ -2683,7 +2683,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-675103e3",
     "nome": "Val Trebbia - La Valle Selvaggia",
     "partenza": "Piacenza",
     "arrivo": "Bobbio - Genova via Val Trebbia",
@@ -2720,7 +2720,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-f650b45e",
     "nome": "Appennino parmense - Passo della Cisa e Parma",
     "partenza": "Parma",
     "arrivo": "La Spezia via Passo della Cisa 1039m",
@@ -2756,7 +2756,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-f5718606",
     "nome": "Appennino Forlivese - Premilcuore e Corniolo",
     "partenza": "Forlì",
     "arrivo": "Santa Sofia - Passo dei Mandrioli 1173m",
@@ -2792,7 +2792,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "emilia-romagna-6b23e7ab",
     "nome": "Delta del Po e Ferrara",
     "partenza": "Ferrara",
     "arrivo": "Porto Garibaldi - Delta del Po",
@@ -2828,7 +2828,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-fdb891e9",
     "nome": "Chianti Classico - Le strade del vino tra Siena e Firenze",
     "partenza": "Firenze",
     "arrivo": "Siena via Via Chiantigiana SS222",
@@ -2865,7 +2865,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-20d8a4c2",
     "nome": "Val d'Orcia - La Toscana da cartolina",
     "partenza": "Siena",
     "arrivo": "Pitigliano via Val d'Orcia",
@@ -2904,7 +2904,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-c9dfe3b7",
     "nome": "Garfagnana e Alpi Apuane",
     "partenza": "Lucca",
     "arrivo": "Castelnuovo di Garfagnana - Passo delle Radici 1529m",
@@ -2940,7 +2940,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "toscana-f01ebd52",
     "nome": "Monte Amiata - Il vulcano spento della Toscana",
     "partenza": "Grosseto",
     "arrivo": "Monte Amiata 1738m - Abbadia San Salvatore",
@@ -2977,7 +2977,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-5fdd64b4",
     "nome": "Maremma Toscana - Dai Butteri all'Argentario",
     "partenza": "Grosseto",
     "arrivo": "Porto Ercole via Argentario",
@@ -3014,7 +3014,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-e02df211",
     "nome": "Mugello - Il cuore verde della Toscana",
     "partenza": "Firenze",
     "arrivo": "Borgo San Lorenzo - Scarperia",
@@ -3051,7 +3051,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-fe14fce6",
     "nome": "Casentino - La foresta di Dante",
     "partenza": "Arezzo",
     "arrivo": "La Verna - Camaldoli - Poppi",
@@ -3087,7 +3087,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-9f67f063",
     "nome": "Volterra e la Val di Cecina",
     "partenza": "Pisa",
     "arrivo": "Volterra - Massa Marittima",
@@ -3123,7 +3123,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-d32caffc",
     "nome": "Versilia e Cinque Terre da terra",
     "partenza": "Viareggio",
     "arrivo": "La Spezia via Passo di Bracco",
@@ -3160,7 +3160,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "toscana-fedca09d",
     "nome": "Valdarno Superiore e Pratomagno",
     "partenza": "Arezzo",
     "arrivo": "Firenze via Pratomagno e Valdarno",
@@ -3198,7 +3198,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "umbria-9a3fc356",
     "nome": "Monti Sibillini - Il tetto dell'Umbria",
     "partenza": "Perugia",
     "arrivo": "Castelluccio di Norcia via Piano Grande",
@@ -3235,7 +3235,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "umbria-3fcfb90f",
     "nome": "Assisi, Spello e Valle Umbra",
     "partenza": "Perugia",
     "arrivo": "Spoleto via Valle Umbra",
@@ -3272,7 +3272,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-e360e371",
     "nome": "Lago Trasimeno - L'anello del lago",
     "partenza": "Perugia",
     "arrivo": "Perugia (anello Trasimeno)",
@@ -3308,7 +3308,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-b95fb478",
     "nome": "Valnerina - La Cascata delle Marmore",
     "partenza": "Terni",
     "arrivo": "Norcia via Valnerina",
@@ -3345,7 +3345,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-7d4081b3",
     "nome": "Orvieto e la Todi medievale",
     "partenza": "Roma",
     "arrivo": "Todi via Orvieto",
@@ -3379,7 +3379,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-566b4cb3",
     "nome": "Gubbio e l'Appennino umbro-marchigiano",
     "partenza": "Perugia",
     "arrivo": "Gubbio - Scheggia - Passo del Furlo",
@@ -3414,7 +3414,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-3b2b4317",
     "nome": "Montefalco e Torgiano - La via del vino umbro",
     "partenza": "Perugia",
     "arrivo": "Montefalco via Torgiano",
@@ -3449,7 +3449,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "umbria-31756884",
     "nome": "Amerino e i Borghi della Valnerina meridionale",
     "partenza": "Terni",
     "arrivo": "Amelia - Narni",
@@ -3483,7 +3483,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-7ad9dd8d",
     "nome": "Monti Sibillini versante marchigiano",
     "partenza": "Ascoli Piceno",
     "arrivo": "Sarnano via Monte Sibilla",
@@ -3520,7 +3520,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "marche-3e1c28f1",
     "nome": "Urbino - Il Rinascimento in moto",
     "partenza": "Pesaro",
     "arrivo": "Urbino - San Leo - Pennabilli",
@@ -3555,7 +3555,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-3ac9bc26",
     "nome": "Gola della Rossa e di Frasassi",
     "partenza": "Ancona",
     "arrivo": "Grotte di Frasassi - Serra San Quirico",
@@ -3592,7 +3592,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-abf7089a",
     "nome": "Costa del Conero e Riviera del Piceno",
     "partenza": "Ancona",
     "arrivo": "San Benedetto del Tronto via Conero",
@@ -3630,7 +3630,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-6611fded",
     "nome": "Macerata e i Monti dell'Appennino maceratese",
     "partenza": "Macerata",
     "arrivo": "Camerino - Sarnano",
@@ -3665,7 +3665,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-bb5dd5f5",
     "nome": "Ascoli Piceno e i Monti della Laga",
     "partenza": "Ascoli Piceno",
     "arrivo": "Lago di Campotosto (AQ) via Monti della Laga",
@@ -3700,7 +3700,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "marche-e464f565",
     "nome": "Pesaro e l'entroterra pesarese",
     "partenza": "Pesaro",
     "arrivo": "Cantiano via Passo della Scheggia",
@@ -3736,7 +3736,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-c56c718b",
     "nome": "Macerata - Recanati e l'infinito di Leopardi",
     "partenza": "Ancona",
     "arrivo": "Recanati - Loreto - Porto Recanati",
@@ -3771,7 +3771,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-6feb4735",
     "nome": "Monti della Tolfa - La Maremma laziale",
     "partenza": "Roma",
     "arrivo": "Civitavecchia via Monti della Tolfa",
@@ -3806,7 +3806,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-adf18765",
     "nome": "Castelli Romani - L'anello dei Colli Albani",
     "partenza": "Roma",
     "arrivo": "Castel Gandolfo - Rocca di Papa - Frascati",
@@ -3844,7 +3844,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-02987d51",
     "nome": "Parco Nazionale del Circeo e Pontine",
     "partenza": "Roma",
     "arrivo": "Terracina via Agro Pontino",
@@ -3881,7 +3881,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-32a6372b",
     "nome": "Monti Ernici e la Ciociaria",
     "partenza": "Frosinone",
     "arrivo": "Alatri - Ferentino - Anagni",
@@ -3917,7 +3917,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-3da757c5",
     "nome": "Lago di Bolsena e Viterbo",
     "partenza": "Roma",
     "arrivo": "Bolsena - Bagnoregio - Civita",
@@ -3954,7 +3954,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-ccc20047",
     "nome": "Monti Simbruini e Valle dell'Aniene",
     "partenza": "Roma",
     "arrivo": "Subiaco - Filettino",
@@ -3990,7 +3990,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-50321354",
     "nome": "Rieti e il Terminillo",
     "partenza": "Roma",
     "arrivo": "Terminillo 1675m - Rieti",
@@ -4024,7 +4024,7 @@
     "stagione": "maggio-novembre"
   },
   {
-    "id": "",
+    "id": "lazio-f9a93ffe",
     "nome": "Costa Tirrenica - Da Anzio a Gaeta",
     "partenza": "Anzio",
     "arrivo": "Gaeta via costa laziale",
@@ -4062,7 +4062,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-801b3ce1",
     "nome": "Gran Sasso - Campo Imperatore e il Tetto d'Abruzzo",
     "partenza": "L'Aquila",
     "arrivo": "Campo Imperatore 2130m - Assergi",
@@ -4098,7 +4098,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "abruzzo-1be92504",
     "nome": "Maiella - Il Monte Padre",
     "partenza": "Chieti",
     "arrivo": "Caramanico Terme - Passo San Leonardo",
@@ -4134,7 +4134,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "abruzzo-109b0b51",
     "nome": "Parco Nazionale d'Abruzzo - Orsi e Lupi",
     "partenza": "Avezzano",
     "arrivo": "Pescasseroli - Villetta Barrea",
@@ -4170,7 +4170,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "abruzzo-895eaa3a",
     "nome": "Costa dei Trabocchi - Lanciano e la Costa dei Trabocchi",
     "partenza": "Pescara",
     "arrivo": "Vasto via SS16 Adriatica e costa",
@@ -4207,7 +4207,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-2f6e485a",
     "nome": "Marsica e Fucino - La piana prosciugata",
     "partenza": "L'Aquila",
     "arrivo": "Avezzano - Tagliacozzo",
@@ -4242,7 +4242,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-cdd9cac7",
     "nome": "Monti della Laga - Teramo e l'Abruzzo settentrionale",
     "partenza": "Teramo",
     "arrivo": "Campotosto - Prati di Tivo",
@@ -4277,7 +4277,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "abruzzo-126de901",
     "nome": "Lanciano e i borghi della Frentania",
     "partenza": "Chieti",
     "arrivo": "Guardiagrele - Lanciano",
@@ -4311,7 +4311,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-d9b5b222",
     "nome": "Passo Lanciano e Majelletta",
     "partenza": "Chieti",
     "arrivo": "Guardiagrele - Passo Lanciano 1306m - Majelletta",
@@ -4345,7 +4345,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "molise-ac6496fc",
     "nome": "Monti del Molise - Il Parco Nazionale del Matese",
     "partenza": "Campobasso",
     "arrivo": "Boiano - Monte Miletto 2050m",
@@ -4379,7 +4379,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "molise-7994a98c",
     "nome": "Bojano e la Piana di Boiano",
     "partenza": "Isernia",
     "arrivo": "Bojano - Campobasso",
@@ -4413,7 +4413,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "molise-6538e5f5",
     "nome": "Costa Molisana - Termoli e le Isole Tremiti",
     "partenza": "Termoli",
     "arrivo": "Petacciato - Montenero di Bisaccia",
@@ -4446,7 +4446,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "molise-951ef00c",
     "nome": "Isernia e l'Alto Molise",
     "partenza": "Isernia",
     "arrivo": "Agnone - Capracotta",
@@ -4481,7 +4481,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "molise-ece9b50c",
     "nome": "Venafro e il Parco del Matese meridionale",
     "partenza": "Isernia",
     "arrivo": "Venafro - San Pietro Infine",
@@ -4514,7 +4514,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "molise-e142ec02",
     "nome": "Il Tratturo Magno - La Via dei pastori",
     "partenza": "L'Aquila (AQ)",
     "arrivo": "Foggia (FG) via Tratturo Magno",
@@ -4551,7 +4551,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "campania-c3b1788a",
     "nome": "Costiera Amalfitana - La strada più bella del mondo",
     "partenza": "Salerno",
     "arrivo": "Positano - Sorrento via SS163",
@@ -4590,7 +4590,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-fce24466",
     "nome": "Vesuvio e Campi Flegrei",
     "partenza": "Napoli",
     "arrivo": "Cima Vesuvio 1281m - Ercolano",
@@ -4625,7 +4625,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-f64827c0",
     "nome": "Penisola Sorrentina e Punta della Campanella",
     "partenza": "Napoli",
     "arrivo": "Sorrento - Massa Lubrense - Punta Campanella",
@@ -4662,7 +4662,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-9e8284b3",
     "nome": "Cilento - Il mare incontaminato del sud",
     "partenza": "Salerno",
     "arrivo": "Palinuro - Camerota",
@@ -4699,7 +4699,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "campania-db351a1e",
     "nome": "Appennino Campano - Parco del Partenio e Irpinia",
     "partenza": "Avellino",
     "arrivo": "Montevergine - Laceno",
@@ -4734,7 +4734,7 @@
     "stagione": "aprile-novembre"
   },
   {
-    "id": "",
+    "id": "campania-a038b7f3",
     "nome": "Caserta Reale e la Terra di Lavoro",
     "partenza": "Napoli",
     "arrivo": "Caserta - Caserta Vecchia - San Leucio",
@@ -4768,7 +4768,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-710e2488",
     "nome": "Costiera Cilentana interna - Vallo e Teggiano",
     "partenza": "Salerno",
     "arrivo": "Teggiano - Padula",
@@ -4803,7 +4803,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-0330341b",
     "nome": "Isola di Ischia - Il giro dell'isola vulcanica",
     "partenza": "Napoli (traghetto)",
     "arrivo": "Ischia - giro completo dell'isola",
@@ -4838,7 +4838,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "campania-e4adffc2",
     "nome": "Benevento e il Sannio - L'arco di Traiano",
     "partenza": "Napoli",
     "arrivo": "Benevento - Pietrelcina",
@@ -4873,7 +4873,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "campania-17f3d9e0",
     "nome": "Pompei e il Vesuvio - Il viaggio nel tempo",
     "partenza": "Napoli",
     "arrivo": "Pompei - Torre Annunziata",
@@ -4908,7 +4908,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-55d4062d",
     "nome": "Gargano - Il Promontorio degli Dei",
     "partenza": "Foggia",
     "arrivo": "Vieste - Peschici via Gargano",
@@ -4945,7 +4945,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "puglia-1dd1c74d",
     "nome": "Valle d'Itria - I Trulli e la via dei Borghi",
     "partenza": "Bari",
     "arrivo": "Alberobello - Locorotondo - Martina Franca",
@@ -4983,7 +4983,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-aed1ea44",
     "nome": "Salento - Finibus Terrae",
     "partenza": "Lecce",
     "arrivo": "Santa Maria di Leuca via Otranto",
@@ -5021,7 +5021,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-f88806ef",
     "nome": "Alta Murgia - Castel del Monte e i Sassi",
     "partenza": "Bari",
     "arrivo": "Castel del Monte - Spinazzola",
@@ -5057,7 +5057,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-de6b2341",
     "nome": "Capitanata - Da Foggia ai Laghi di Lesina e Varano",
     "partenza": "Foggia",
     "arrivo": "Lesina - Varano - Rodi Garganico",
@@ -5093,7 +5093,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-a2e0a754",
     "nome": "Brindisi e la Via Appia Traiana",
     "partenza": "Taranto",
     "arrivo": "Brindisi via Egnazia",
@@ -5129,7 +5129,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-2858c478",
     "nome": "Taranto e la Magna Grecia",
     "partenza": "Taranto",
     "arrivo": "Metaponto (MT) via costa ionica",
@@ -5163,7 +5163,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-728f7cee",
     "nome": "Daunia - Foggia e i Monti della Daunia",
     "partenza": "Foggia",
     "arrivo": "Bovino - Troia via Monti Daunia",
@@ -5198,7 +5198,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-cd2be36f",
     "nome": "Polignano a Mare e la Costa dei Trulli",
     "partenza": "Bari",
     "arrivo": "Monopoli - Polignano - Fasano",
@@ -5233,7 +5233,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "puglia-cef1738b",
     "nome": "Lecce Barocca - La Firenze del Sud",
     "partenza": "Brindisi",
     "arrivo": "Lecce - Nardò - Gallipoli",
@@ -5268,7 +5268,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-6dcb6683",
     "nome": "Matera - I Sassi della preistoria",
     "partenza": "Matera",
     "arrivo": "Montescaglioso - Pisticci via Matera",
@@ -5303,7 +5303,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-3088229c",
     "nome": "Parco del Pollino - Tra Basilicata e Calabria",
     "partenza": "Potenza",
     "arrivo": "Castelluccio Inferiore - Serra delle Ciavole",
@@ -5339,7 +5339,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "basilicata-031147d0",
     "nome": "Melfi e il Vulture - Il vulcano dormiente",
     "partenza": "Foggia",
     "arrivo": "Melfi - Lago di Monticchio - Lagopesole",
@@ -5375,7 +5375,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-776ff75d",
     "nome": "Costa Ionica Lucana - Metaponto e Policoro",
     "partenza": "Matera",
     "arrivo": "Policoro - Marina di Nova Siri",
@@ -5410,7 +5410,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-491317b6",
     "nome": "Appennino Lucano - Da Potenza a Pietragalla",
     "partenza": "Potenza",
     "arrivo": "Pietragalla - Acerenza",
@@ -5444,7 +5444,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-94ba26be",
     "nome": "Maratea - La Perla del Tirreno",
     "partenza": "Salerno",
     "arrivo": "Maratea - Praia a Mare",
@@ -5479,7 +5479,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "basilicata-3969fb53",
     "nome": "Agri e Sinni - Le valli del petrolio lucano",
     "partenza": "Potenza",
     "arrivo": "Sant'Arcangelo - Senise",
@@ -5515,7 +5515,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "basilicata-6ee12925",
     "nome": "Aliano - La terra di Carlo Levi",
     "partenza": "Matera",
     "arrivo": "Aliano - Craco (borgo fantasma)",
@@ -5550,7 +5550,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "calabria-5b3bb99a",
     "nome": "Aspromonte - La montagna dei briganti",
     "partenza": "Reggio Calabria",
     "arrivo": "Gambarie d'Aspromonte 1310m",
@@ -5582,7 +5582,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "calabria-de792b7e",
     "nome": "Sila - L'Altopiano di Calabria",
     "partenza": "Cosenza",
     "arrivo": "Camigliatello Silano - Lago Arvo",
@@ -5618,7 +5618,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "calabria-e10b9dd6",
     "nome": "Costa degli Dei - Tropea e il Tirreno calabrese",
     "partenza": "Lamezia Terme",
     "arrivo": "Reggio Calabria via Costa degli Dei",
@@ -5657,7 +5657,7 @@
     "stagione": "maggio-settembre"
   },
   {
-    "id": "",
+    "id": "calabria-ec5c770f",
     "nome": "Pollino Calabrese - Il lato meridionale del parco",
     "partenza": "Cosenza",
     "arrivo": "Castrovillari - Civita",
@@ -5692,7 +5692,7 @@
     "stagione": "maggio-ottobre"
   },
   {
-    "id": "",
+    "id": "calabria-5d1d0967",
     "nome": "Costa Ionica Calabrese - Da Sibari a Reggio",
     "partenza": "Sibari",
     "arrivo": "Reggio Calabria via SS106 ionica",
@@ -5730,7 +5730,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "calabria-e9960161",
     "nome": "Serre Calabresi - La Calabria sconosciuta",
     "partenza": "Vibo Valentia",
     "arrivo": "Serra San Bruno - Spadola",
@@ -5764,7 +5764,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "calabria-a9bcfa43",
     "nome": "Catanzaro e la Stretta di Catanzaro",
     "partenza": "Catanzaro",
     "arrivo": "Soverato - Tiriolo",
@@ -5798,7 +5798,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "calabria-3bb1966d",
     "nome": "Stretto di Messina - Scilla e Cariddi",
     "partenza": "Villa San Giovanni",
     "arrivo": "Reggio Calabria - Scilla",
@@ -5834,7 +5834,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "calabria-ce46929a",
     "nome": "Crotone e Le Castella - La Calabria greca",
     "partenza": "Crotone",
     "arrivo": "Isola di Capo Rizzuto - Le Castella",
@@ -5868,7 +5868,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "calabria-36b9e3a2",
     "nome": "Nicastro e l'Appennino Calabro-Lucano",
     "partenza": "Lamezia Terme",
     "arrivo": "Tiriolo - Nicastro - San Mango d'Aquino",
@@ -5902,7 +5902,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-04bc812c",
     "nome": "Etna - Il Vulcano Attivo",
     "partenza": "Catania",
     "arrivo": "Etna Nord - Rifugio Sapienza 1910m",
@@ -5938,7 +5938,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-054e15d5",
     "nome": "Madonie - La Targa Florio",
     "partenza": "Palermo",
     "arrivo": "Cefalù via Madonie SS120",
@@ -5977,7 +5977,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-289910f1",
     "nome": "Trapani e le Egadi - Il sale e il vento",
     "partenza": "Palermo",
     "arrivo": "Trapani - Marsala - Saline",
@@ -6015,7 +6015,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-77dd5658",
     "nome": "Valle dei Templi - Agrigento e la Magna Grecia",
     "partenza": "Palermo",
     "arrivo": "Agrigento via SS121",
@@ -6050,7 +6050,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-f11772bf",
     "nome": "Ragusa Ibla e il Val di Noto Barocco",
     "partenza": "Catania",
     "arrivo": "Ragusa - Noto - Modica",
@@ -6087,7 +6087,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-53a2e587",
     "nome": "Nebrodi - La Sicilia verde",
     "partenza": "Messina",
     "arrivo": "Santo Stefano di Camastra via Nebrodi",
@@ -6123,7 +6123,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "sicilia-aa4653f3",
     "nome": "Palermo-Monreale-Bagheria - Il barocco arabo-normanno",
     "partenza": "Palermo",
     "arrivo": "Bagheria - Monreale - Palazzo Adriano",
@@ -6158,7 +6158,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-95c91391",
     "nome": "Siracusa e la Sicilia orientale antica",
     "partenza": "Catania",
     "arrivo": "Siracusa - Ortigia - Noto",
@@ -6194,7 +6194,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-480f2e3c",
     "nome": "Costa Peloritana - Lo stretto e le Eolie in vista",
     "partenza": "Messina",
     "arrivo": "Taormina via costa peloritana",
@@ -6228,7 +6228,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sicilia-a06db3da",
     "nome": "Le Erei Siciliane - Enna e il centro dell'isola",
     "partenza": "Catania",
     "arrivo": "Enna - Piazza Armerina - Villa Romana",
@@ -6263,7 +6263,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-63cb06ae",
     "nome": "Gennargentu - Il cuore selvaggio della Sardegna",
     "partenza": "Nuoro",
     "arrivo": "Fonni - Desulo - Bruncu Spina 1829m",
@@ -6299,7 +6299,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "sardegna-6e5b3d3e",
     "nome": "Costa Smeralda e Gallura",
     "partenza": "Olbia",
     "arrivo": "Palau - Santa Teresa Gallura via Costa Smeralda",
@@ -6336,7 +6336,7 @@
     "stagione": "maggio-settembre"
   },
   {
-    "id": "",
+    "id": "sardegna-8d3065c1",
     "nome": "Barbagia di Ollolai - I villaggi del vino",
     "partenza": "Nuoro",
     "arrivo": "Mamoiada - Gavoi - Lago Gusana",
@@ -6372,7 +6372,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "sardegna-18d72cb0",
     "nome": "Sulcis Iglesiente - Le miniere e il mare",
     "partenza": "Cagliari",
     "arrivo": "Iglesias - Nebida - Porto Flavia",
@@ -6408,7 +6408,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-669e7548",
     "nome": "Ogliastra - La Sardegna verticale",
     "partenza": "Tortolì",
     "arrivo": "Urzulei - Gorroppu - Orgosolo",
@@ -6444,7 +6444,7 @@
     "stagione": "giugno-ottobre"
   },
   {
-    "id": "",
+    "id": "sardegna-1888c074",
     "nome": "Gallura Interna - Tempio Pausania e Valle della Luna",
     "partenza": "Olbia",
     "arrivo": "Tempio Pausania - Aggius - Valle della Luna",
@@ -6479,7 +6479,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-7272e06f",
     "nome": "Penisola del Sinis e Tharros",
     "partenza": "Oristano",
     "arrivo": "San Giovanni di Sinis - Tharros",
@@ -6514,7 +6514,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-96432ec1",
     "nome": "Sassari e il Logudoro - I nuraghi del nord",
     "partenza": "Sassari",
     "arrivo": "Nuraghe Santu Antine - Torralba",
@@ -6550,7 +6550,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-bd299bb1",
     "nome": "Cagliari e il Sarrabus - La Sardegna meridionale",
     "partenza": "Cagliari",
     "arrivo": "Villasimius - Costa Rei",
@@ -6586,7 +6586,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "sardegna-d48317f3",
     "nome": "Alghero e Capo Caccia - La Sardegna catalana",
     "partenza": "Sassari",
     "arrivo": "Alghero - Capo Caccia - Grotte di Nettuno",
@@ -6621,7 +6621,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "molise-411cae75",
     "nome": "Pietrabbondante - Il santuario sannitico",
     "partenza": "Isernia",
     "arrivo": "Pietrabbondante - Vastogirardi",
@@ -6655,7 +6655,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "molise-6198daac",
     "nome": "Campobasso e i Borghi dell'entroterra molisano",
     "partenza": "Campobasso",
     "arrivo": "Oratino - Ferrazzano - Campobasso",
@@ -6688,7 +6688,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-69cf687a",
     "nome": "Valli del Natisone - La Slovenia a un passo",
     "partenza": "Cividale del Friuli",
     "arrivo": "San Pietro al Natisone - Pulfero",
@@ -6722,7 +6722,7 @@
     "stagione": "aprile-ottobre"
   },
   {
-    "id": "",
+    "id": "friuli-venezia-giulia-17304e92",
     "nome": "Pordenone e le Dolomiti Friulane Pedemontane",
     "partenza": "Pordenone",
     "arrivo": "Maniago - Spilimbergo - Pinzano",
@@ -6757,7 +6757,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-e05342ca",
     "nome": "Fermo e il Piceno costiero",
     "partenza": "Ancona",
     "arrivo": "Fermo - Porto San Giorgio - San Benedetto",
@@ -6793,7 +6793,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "marche-9f2213a9",
     "nome": "Montefeltro - I castelli del Rinascimento",
     "partenza": "Pesaro",
     "arrivo": "Sant'Agata Feltria - Pennabilli - Maiolo",
@@ -6829,7 +6829,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-2fdfc989",
     "nome": "Sabina - Olio e borghi rupestri",
     "partenza": "Roma",
     "arrivo": "Farfa - Poggio Mirteto - Magliano Sabina",
@@ -6865,7 +6865,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "lazio-68441ae2",
     "nome": "Tuscia Viterbese - Etruschi e termalismo",
     "partenza": "Viterbo",
     "arrivo": "Tarquinia - Cerveteri via Etruschi",
@@ -6900,7 +6900,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-3ce2fe6f",
     "nome": "Vasto e la Bassa Valle del Sangro",
     "partenza": "Lanciano",
     "arrivo": "Vasto - Punta Aderci",
@@ -6934,7 +6934,7 @@
     "stagione": "tutto l'anno"
   },
   {
-    "id": "",
+    "id": "abruzzo-168bc5a6",
     "nome": "Sulmona e la Valle Peligna",
     "partenza": "L'Aquila",
     "arrivo": "Sulmona - Scanno - Lago di Scanno",
