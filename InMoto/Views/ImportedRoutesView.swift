@@ -343,7 +343,14 @@ struct ImportRouteView: View {
 
                 for line in lines {
                     if line.lowercased().hasPrefix("http") {
-                        let (parsed, warn) = GoogleMapsParser.parse(line)
+                        // Risolve automaticamente i link abbreviati (goo.gl, maps.app.goo.gl…)
+                        let urlToParse: String
+                        if GoogleMapsParser.isShortURL(line) {
+                            urlToParse = await GoogleMapsParser.resolveShortURL(line) ?? line
+                        } else {
+                            urlToParse = line
+                        }
+                        let (parsed, warn) = GoogleMapsParser.parse(urlToParse)
                         if parsed.isEmpty {
                             warns.append(warn ?? "Link non riconosciuto: \(line.prefix(60))…")
                         } else {
@@ -454,6 +461,27 @@ struct ParsedWaypoint {
 
 // ── Parser URL Google Maps ───────────────────────────────────────────────────
 enum GoogleMapsParser {
+
+    // Riconosce URL abbreviati che richiedono risoluzione HTTP
+    static func isShortURL(_ urlString: String) -> Bool {
+        let s = urlString.lowercased()
+        return s.contains("goo.gl") || s.contains("maps.app") || s.contains("g.co/maps")
+    }
+
+    // Segue il redirect e restituisce l'URL finale (es. google.com/maps/place/…)
+    static func resolveShortURL(_ urlString: String) async -> String? {
+        guard let url = URL(string: urlString) else { return nil }
+        do {
+            // URLSession segue i redirect automaticamente; response.url è l'URL finale
+            var request = URLRequest(url: url, timeoutInterval: 10)
+            request.httpMethod = "GET"
+            let (_, response) = try await URLSession.shared.data(for: request)
+            return response.url?.absoluteString
+        } catch {
+            return nil
+        }
+    }
+
     /// Restituisce (waypoints estratti, eventuale messaggio di warning)
     static func parse(_ urlString: String) -> ([ParsedWaypoint], String?) {
         guard let url = URL(string: urlString) else {
@@ -493,11 +521,6 @@ enum GoogleMapsParser {
             return ([ParsedWaypoint(displayName: coord,
                                     gmapsWaypoint: coord,
                                     source: "Coordinate")], nil)
-        }
-
-        // ── URL abbreviato (goo.gl, maps.app.goo.gl) ─────────────────────────
-        if urlString.contains("goo.gl") || urlString.contains("maps.app") {
-            return ([], "Link abbreviato non supportato: apri il link, poi usa Condividi → Copia link per ottenere il link completo")
         }
 
         return ([], nil)
