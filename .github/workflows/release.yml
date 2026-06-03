@@ -1,0 +1,117 @@
+name: Build & Release IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build IPA + Pubblica Release
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Leggi versione
+        id: version
+        run: |
+          # Versione basata su data + numero build
+          VERSION="1.0.$(date +'%Y%m%d')"
+          BUILD="${{ github.run_number }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "build=$BUILD"     >> $GITHUB_OUTPUT
+          echo "tag=v$VERSION-$BUILD" >> $GITHUB_OUTPUT
+
+      - name: Installa XcodeGen
+        run: brew install xcodegen
+
+      - name: Aggiorna versione nel project.yml
+        run: |
+          sed -i '' "s/CFBundleShortVersionString: .*/CFBundleShortVersionString: \"${{ steps.version.outputs.version }}\"/" project.yml
+          sed -i '' "s/CFBundleVersion: .*/CFBundleVersion: \"${{ steps.version.outputs.build }}\"/" project.yml
+
+      - name: Genera progetto Xcode
+        run: xcodegen generate
+
+      - name: Build (senza firma — firma avviene lato client)
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -scheme InMoto \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$RUNNER_TEMP/InMoto.xcarchive" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            DEVELOPMENT_TEAM="" \
+            archive 2>&1 | tail -30
+
+      - name: Crea IPA
+        run: |
+          APP=$(find "$RUNNER_TEMP/InMoto.xcarchive" -name "*.app" | head -1)
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -r "$APP" "$RUNNER_TEMP/Payload/"
+          cd "$RUNNER_TEMP"
+          zip -qr InMoto.ipa Payload/
+          SIZE=$(du -sh InMoto.ipa | cut -f1)
+          echo "IPA: $SIZE"
+          echo "ipa_path=$RUNNER_TEMP/InMoto.ipa" >> $GITHUB_ENV
+          echo "ipa_size=$(wc -c < InMoto.ipa)" >> $GITHUB_ENV
+
+      - name: Aggiorna apps.json
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          VERSION="${{ steps.version.outputs.version }}"
+          DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          REPO="${{ github.repository }}"
+          DOWNLOAD_URL="https://github.com/$REPO/releases/download/$TAG/InMoto.ipa"
+          SIZE="${{ env.ipa_size }}"
+
+          python3 << PYEOF
+          import json
+
+          with open("apps.json") as f:
+              source = json.load(f)
+
+          app = source["apps"][0]
+          app["version"]      = "$VERSION"
+          app["versionDate"]  = "$DATE"
+          app["downloadURL"]  = "$DOWNLOAD_URL"
+          app["size"]         = int("$SIZE") if "$SIZE".isdigit() else 5000000
+
+          with open("apps.json", "w") as f:
+              json.dump(source, f, indent=2, ensure_ascii=False)
+
+          print(f"apps.json aggiornato → {app['downloadURL']}")
+          PYEOF
+
+      - name: Commit apps.json aggiornato
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps.json project.yml
+          git diff --staged --quiet || git commit -m "chore: release ${{ steps.version.outputs.tag }} [skip ci]"
+          git push || true
+
+      - name: Crea GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "InMoto ${{ steps.version.outputs.version }} (build ${{ steps.version.outputs.build }})"
+          body: |
+            ## InMoto ${{ steps.version.outputs.version }}
+
+            ### Installazione rapida
+            1. **Windows**: scarica `installa_windows.ps1` ed eseguilo con PowerShell
+            2. **Mac**: scarica `installa_mac.command` e aprilo
+            3. **SideStore**: aggiungi la sorgente nei settings (vedi README)
+
+            ### File
+            - `InMoto.ipa` — app non firmata (la firma avviene durante l'installazione)
+          files: |
+            ${{ runner.temp }}/InMoto.ipa

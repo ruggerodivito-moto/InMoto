@@ -1,0 +1,69 @@
+# Codemagic — firma con Apple ID personale (gratuito, 500 min/mese)
+#
+# SETUP (una volta sola):
+# 1. Vai su codemagic.io → Sign in with GitHub
+# 2. Add app → seleziona il repository InMoto
+# 3. In "Environment variables" aggiungi:
+#       APP_APPLE_ID     = la tua email Apple ID (es. mario@icloud.com)
+#       APP_APPLE_PASS   = la tua password Apple ID  [mark as secret]
+# 4. Avvia il build → scarica il .ipa firmato
+
+workflows:
+  ios-personal-free:
+    name: InMoto – Personal Team (gratis)
+    max_build_duration: 45
+    instance_type: mac_mini_m2
+
+    environment:
+      vars:
+        BUNDLE_ID: com.divito.InMoto
+        XCODE_SCHEME: InMoto
+      groups:
+        - apple_credentials   # gruppo con APP_APPLE_ID e APP_APPLE_PASS
+
+    scripts:
+      - name: Installa XcodeGen
+        script: brew install xcodegen
+
+      - name: Genera progetto Xcode
+        run: xcodegen generate
+
+      - name: Registra device e ottieni profilo (personal team)
+        script: |
+          # Codemagic gestisce automaticamente:
+          # - creazione certificato development con il tuo Apple ID
+          # - registrazione UDID del device (se fornito)
+          # - download provisioning profile
+          #
+          # Per registrare il tuo iPhone: aggiungi la variabile
+          # REGISTERED_DEVICES con l'UDID del tuo iPhone 15 Pro
+          # (trovi l'UDID in: iPhone → Impostazioni → Generali → Info → UDID)
+          echo "Apple ID: $APP_APPLE_ID"
+
+      - name: Build e firma
+        script: |
+          keychain initialize
+          app-store-connect fetch-signing-files \
+            "$BUNDLE_ID" \
+            --type IOS_APP_DEVELOPMENT \
+            --create \
+            --platform IOS
+          keychain add-certificates
+          xcode-project use-profiles
+
+          xcodebuild \
+            -scheme "$XCODE_SCHEME" \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$CM_BUILD_DIR/InMoto.xcarchive" \
+            archive
+
+      - name: Export IPA firmato
+        script: |
+          xcode-project build-ipa \
+            --archive-path "$CM_BUILD_DIR/InMoto.xcarchive" \
+            --export-path "$CM_BUILD_DIR/output"
+
+    artifacts:
+      - $CM_BUILD_DIR/output/*.ipa
+      - $CM_BUILD_DIR/output/*.plist

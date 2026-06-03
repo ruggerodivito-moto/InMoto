@@ -1,0 +1,40 @@
+name: InMoto
+options:
+  bundleIdPrefix: com.divito
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    TARGETED_DEVICE_FAMILY: "1"       # iPhone only
+    DEVELOPMENT_TEAM: ""              # Imposta il tuo Team ID Apple Developer
+
+targets:
+  InMoto:
+    type: application
+    platform: iOS
+    sources:
+      - path: InMoto
+        excludes:
+          - "**/*.md"
+    resources:
+      - path: InMoto/Resources/routes.json
+    info:
+      path: InMoto/Info.plist
+      properties:
+        CFBundleDisplayName: In Moto
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        UILaunchScreen:
+          UIColorName: ""
+        NSLocationWhenInUseUsageDescription: >
+          Necessario per aprire il percorso su Apple Maps.
+        LSApplicationQueriesSchemes:
+          - comgooglemaps
+          - googlemaps
+        UIRequiresFullScreen: false
+    scheme:
+      testTargets: []
