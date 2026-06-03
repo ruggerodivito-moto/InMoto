@@ -109,7 +109,8 @@ class RouteStore: ObservableObject {
     func filtered(regione: String?, partenza: String?, arrivo: String?,
                   kmMax: Int?, durataMax: Int?) -> [MotoRoute] {
         routes.filter { r in
-            if let reg = regione, !reg.isEmpty, r.regione != reg { return false }
+            if let reg = regione, !reg.isEmpty,
+               r.regione.localizedCaseInsensitiveCompare(reg) != .orderedSame { return false }
             if let p = partenza, !p.isEmpty,
                !r.partenza.localizedCaseInsensitiveContains(p) { return false }
             if let a = arrivo, !a.isEmpty,

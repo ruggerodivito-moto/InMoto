@@ -7,7 +7,7 @@ struct HomeView: View {
 
     var displayedRoutes: [MotoRoute] {
         guard let reg = selectedRegion else { return [] }
-        return store.routes.filter { $0.regione == reg }
+        return store.routes.filter { $0.regione.localizedCaseInsensitiveCompare(reg) == .orderedSame }
             .sorted { $0.stelle > $1.stelle }
     }
 
