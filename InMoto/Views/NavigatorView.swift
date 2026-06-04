@@ -1,139 +1,326 @@
 import SwiftUI
+import CoreLocation
+import AVFoundation
 
-// Fase 1 — schermata riepilogo percorso calcolato.
-// La mappa GPS con avanzamento automatico arriverà nella Fase 2.
+// MARK: - NavigationSession
+
+@MainActor
+class NavigationSession: ObservableObject {
+    @Published var currentLegIndex: Int = 0
+    @Published var currentStepIndex: Int = 0
+    @Published var arrivedAtDestination: Bool = false
+    @Published var distanceToNextWaypoint: Double = 0   // metri
+    @Published var distanceToNextStep: Double = 0       // metri
+
+    let navRoute: NavigationRoute
+    private let arrivalThreshold: Double = 150          // metri
+    private let synthesizer = AVSpeechSynthesizer()
+    private var lastSpokenStepIndex: Int = -1
+    private var hasAnnouncedArrival: Bool = false
+
+    init(navRoute: NavigationRoute) {
+        self.navRoute = navRoute
+    }
+
+    // Chiamato ad ogni aggiornamento GPS
+    func update(userLocation: CLLocation) {
+        guard !arrivedAtDestination, currentLegIndex < navRoute.legs.count else { return }
+
+        let target = navRoute.waypoints[currentLegIndex + 1]
+        let targetLoc = CLLocation(latitude: target.latitude, longitude: target.longitude)
+        distanceToNextWaypoint = userLocation.distance(from: targetLoc)
+
+        // Prossimo step della tratta corrente
+        if currentLegIndex < navRoute.legs.count {
+            let leg = navRoute.legs[currentLegIndex]
+            if currentStepIndex < leg.steps.count {
+                let step = leg.steps[currentStepIndex]
+                let stepLoc = CLLocation(latitude: step.latitude, longitude: step.longitude)
+                distanceToNextStep = userLocation.distance(from: stepLoc)
+
+                // Annuncia istruzione quando sei a meno di 200m dallo step
+                if distanceToNextStep < 200, lastSpokenStepIndex != currentStepIndex {
+                    speak(step.instruction)
+                    lastSpokenStepIndex = currentStepIndex
+                }
+
+                // Passa allo step successivo quando sei a meno di 30m
+                if distanceToNextStep < 30, currentStepIndex + 1 < leg.steps.count {
+                    currentStepIndex += 1
+                }
+            }
+        }
+
+        // Controllo arrivo alla tappa successiva
+        if distanceToNextWaypoint < arrivalThreshold {
+            let nextWpIndex = currentLegIndex + 1
+            if nextWpIndex < navRoute.waypoints.count - 1 {
+                // Tappa intermedia raggiunta → avanza
+                let nextName = shortName(navRoute.waypoints[nextWpIndex + 1].name)
+                speak("Tappa raggiunta. Prossima destinazione: \(nextName)")
+                currentLegIndex += 1
+                currentStepIndex = 0
+                lastSpokenStepIndex = -1
+            } else if nextWpIndex == navRoute.waypoints.count - 1 {
+                // Destinazione finale
+                if !hasAnnouncedArrival {
+                    speak("Sei arrivato a destinazione. Buona moto!")
+                    hasAnnouncedArrival = true
+                    arrivedAtDestination = true
+                }
+            }
+        }
+    }
+
+    var currentInstruction: String {
+        guard currentLegIndex < navRoute.legs.count else { return "Destinazione raggiunta" }
+        let leg = navRoute.legs[currentLegIndex]
+        guard currentStepIndex < leg.steps.count else {
+            return "Prosegui verso \(shortName(leg.toName))"
+        }
+        return leg.steps[currentStepIndex].instruction
+    }
+
+    var nextWaypointName: String {
+        let idx = min(currentLegIndex + 1, navRoute.waypoints.count - 1)
+        return shortName(navRoute.waypoints[idx].name)
+    }
+
+    var progressText: String {
+        let done = currentLegIndex
+        let total = navRoute.legs.count
+        return "Tappa \(done + 1) / \(total + 1)"
+    }
+
+    var etaCurrentLeg: String {
+        guard currentLegIndex < navRoute.legs.count else { return "" }
+        let secs = navRoute.legs[currentLegIndex].durationSeconds
+        let m = Int(secs) / 60
+        return m < 60 ? "\(m) min" : "\(m / 60)h \(m % 60)min"
+    }
+
+    var formattedDistance: String {
+        if distanceToNextWaypoint < 1000 {
+            return String(format: "%.0f m", distanceToNextWaypoint)
+        }
+        return String(format: "%.1f km", distanceToNextWaypoint / 1000)
+    }
+
+    private func speak(_ text: String) {
+        synthesizer.stopSpeaking(at: .immediate)
+        let utt = AVSpeechUtterance(string: text)
+        utt.voice = AVSpeechSynthesisVoice(language: "it-IT")
+        utt.rate = 0.52
+        synthesizer.speak(utt)
+    }
+
+    private func shortName(_ full: String) -> String {
+        full.components(separatedBy: ",").first ?? full
+    }
+}
+
+// MARK: - NavigatorView
+
 struct NavigatorView: View {
     let navRoute: NavigationRoute
     let motoRoute: MotoRoute
 
+    @StateObject private var session: NavigationSession
+    @ObservedObject private var locationMgr = LocationManager.shared
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var showArrivalAlert = false
+    @State private var mapCentered = true
+
+    init(navRoute: NavigationRoute, motoRoute: MotoRoute) {
+        self.navRoute = navRoute
+        self.motoRoute = motoRoute
+        _session = StateObject(wrappedValue: NavigationSession(navRoute: navRoute))
+    }
+
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                successHeader
-                    .padding(.top, 8)
-                summaryCard
-                    .padding(.horizontal)
-                legsSection
-                    .padding(.horizontal)
-                phase2Notice
-                    .padding(.horizontal)
-                    .padding(.bottom, 24)
+        ZStack(alignment: .top) {
+            // Mappa a tutto schermo
+            MapKitView(
+                navRoute: navRoute,
+                currentLegIndex: session.currentLegIndex,
+                userLocation: locationMgr.location
+            )
+            .ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                instructionBanner
+                Spacer()
+                progressFooter
             }
+            .ignoresSafeArea(edges: .bottom)
         }
-        .navigationTitle(navRoute.routeName)
-        .navigationBarTitleDisplayMode(.inline)
-    }
-
-    // MARK: - Sezioni
-
-    private var successHeader: some View {
-        VStack(spacing: 10) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(.green)
-            Text("Percorso pronto")
-                .font(.title2.weight(.semibold))
-            Text("\(navRoute.legs.count) tratt\(navRoute.legs.count == 1 ? "o" : "i") calcolat\(navRoute.legs.count == 1 ? "o" : "i") — salvato offline")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-        }
-    }
-
-    private var summaryCard: some View {
-        HStack(spacing: 0) {
-            statCell(value: navRoute.formattedDistance, label: "Distanza")
-            Divider().frame(height: 44)
-            statCell(value: navRoute.formattedDuration, label: "Durata")
-            Divider().frame(height: 44)
-            statCell(value: "\(navRoute.waypoints.count)", label: "Tappe")
-        }
-        .padding(.vertical, 14)
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-
-    private var legsSection: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Tratte")
-                .font(.headline)
-                .padding(.horizontal)
-                .padding(.vertical, 12)
-
-            ForEach(Array(navRoute.legs.enumerated()), id: \.offset) { i, leg in
-                legRow(index: i, leg: leg)
-                if i < navRoute.legs.count - 1 {
-                    Divider().padding(.leading, 60)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { dismiss() }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .shadow(radius: 3)
                 }
             }
         }
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-    }
-
-    private var phase2Notice: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "wrench.and.screwdriver.fill")
-                .foregroundStyle(.orange)
-            Text("La mappa con navigazione GPS e avanzamento automatico tappe arriva nella Fase 2.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+        .onAppear {
+            locationMgr.requestPermission()
+            locationMgr.start()
+            UIApplication.shared.isIdleTimerDisabled = true  // schermo sempre acceso
         }
-        .padding(12)
-        .background(Color(.systemGray6).opacity(0.7))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
-
-    // MARK: - Componenti
-
-    private func statCell(value: String, label: String) -> some View {
-        VStack(spacing: 4) {
-            Text(value).font(.headline)
-            Text(label).font(.caption2).foregroundStyle(.secondary)
+        .onDisappear {
+            locationMgr.stop()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
-        .frame(maxWidth: .infinity)
+        .onReceive(locationMgr.$location.compactMap { $0 }) { loc in
+            session.update(userLocation: loc)
+        }
+        .onChange(of: session.arrivedAtDestination) { arrived in
+            if arrived { showArrivalAlert = true }
+        }
+        .alert("Sei arrivato!", isPresented: $showArrivalAlert) {
+            Button("Chiudi navigazione") { dismiss() }
+        } message: {
+            Text("Hai completato l'itinerario \(motoRoute.nome). Buona moto!")
+        }
     }
 
-    private func legRow(index: Int, leg: RouteLeg) -> some View {
-        HStack(spacing: 12) {
-            ZStack {
-                Circle()
-                    .fill(Color.orange.opacity(0.15))
-                    .frame(width: 36, height: 36)
-                Text("\(index + 1)")
+    // MARK: - Banner istruzioni (in alto)
+
+    private var instructionBanner: some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .center, spacing: 14) {
+                Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
+                    .font(.system(size: 32))
+                    .foregroundStyle(.white)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(session.currentInstruction)
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .lineLimit(2)
+                    if session.distanceToNextStep > 0 {
+                        Text(formatStep(session.distanceToNextStep))
+                            .font(.subheadline)
+                            .foregroundStyle(.white.opacity(0.85))
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(.black.opacity(0.75))
+
+            // Barra destinazione prossima tappa
+            HStack {
+                Image(systemName: "mappin.circle.fill")
+                    .foregroundStyle(.orange)
+                Text(session.nextWaypointName)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.primary)
+                Spacer()
+                Text(session.formattedDistance)
                     .font(.caption.weight(.bold))
                     .foregroundStyle(.orange)
             }
-            VStack(alignment: .leading, spacing: 3) {
-                Text(shortName(leg.fromName))
-                    .font(.subheadline.weight(.medium))
-                    .lineLimit(1)
-                Text("→ \(shortName(leg.toName))")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(.regularMaterial)
+        }
+    }
+
+    // MARK: - Footer progresso (in basso)
+
+    private var progressFooter: some View {
+        VStack(spacing: 0) {
+            // Barra progresso tappe
+            progressBar
+
+            HStack(spacing: 0) {
+                // Tappa corrente
+                VStack(spacing: 2) {
+                    Text(session.progressText)
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    Text(shortName(navRoute.waypoints[session.currentLegIndex].name))
+                        .font(.subheadline.weight(.medium))
+                        .lineLimit(1)
+                }
+                .frame(maxWidth: .infinity)
+
+                Divider().frame(height: 36)
+
+                // ETA tratta
+                VStack(spacing: 2) {
+                    Text("ETA tappa")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    Text(session.etaCurrentLeg)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.orange)
+                }
+                .frame(maxWidth: .infinity)
+
+                Divider().frame(height: 36)
+
+                // Distanza totale rimanente
+                VStack(spacing: 2) {
+                    Text("Rimanente")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    Text(remainingDistance)
+                        .font(.subheadline.weight(.semibold))
+                }
+                .frame(maxWidth: .infinity)
             }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 3) {
-                Text(String(format: "%.0f km", leg.distanceMeters / 1000))
-                    .font(.caption.weight(.medium))
-                Text(formatDuration(leg.durationSeconds))
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
+            .padding(.vertical, 12)
+            .background(.regularMaterial)
+        }
+    }
+
+    private var progressBar: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .fill(Color(.systemGray5))
+                    .frame(height: 4)
+                Rectangle()
+                    .fill(Color.orange)
+                    .frame(
+                        width: geo.size.width * progress,
+                        height: 4
+                    )
+                    .animation(.easeInOut, value: session.currentLegIndex)
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 12)
+        .frame(height: 4)
+    }
+
+    // MARK: - Computed helpers
+
+    private var progress: Double {
+        guard navRoute.legs.count > 0 else { return 0 }
+        return Double(session.currentLegIndex) / Double(navRoute.legs.count)
+    }
+
+    private var remainingDistance: String {
+        let done = navRoute.legs.prefix(session.currentLegIndex).reduce(0) { $0 + $1.distanceMeters }
+        let remaining = max(0, navRoute.totalDistanceMeters - done)
+        if remaining < 1000 { return String(format: "%.0f m", remaining) }
+        return String(format: "%.0f km", remaining / 1000)
     }
 
     private func shortName(_ full: String) -> String {
         full.components(separatedBy: ",").first ?? full
     }
 
-    private func formatDuration(_ seconds: Double) -> String {
-        let total = Int(seconds)
-        let h = total / 3600
-        let m = (total % 3600) / 60
-        if h == 0 { return "\(m) min" }
-        return "\(h)h \(m)min"
+    private func formatStep(_ meters: Double) -> String {
+        if meters < 50   { return "Ora" }
+        if meters < 200  { return "Tra \(Int((meters / 10).rounded()) * 10) m" }
+        if meters < 1000 { return "Tra \(Int((meters / 100).rounded()) * 100) m" }
+        return String(format: "Tra %.1f km", meters / 1000)
     }
 }
