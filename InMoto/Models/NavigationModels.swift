@@ -1,6 +1,45 @@
 import Foundation
 import CoreLocation
 
+// MARK: - TurnDirection
+
+enum TurnDirection {
+    case straight, slightLeft, left, sharpLeft
+    case slightRight, right, sharpRight
+    case uTurn, roundabout, arrive, depart
+
+    /// SF Symbol corrispondente alla manovra
+    var sfSymbol: String {
+        switch self {
+        case .straight:     return "arrow.up"
+        case .slightLeft:   return "arrow.up.left"
+        case .left:         return "arrow.turn.up.left"
+        case .sharpLeft:    return "arrow.turn.up.left"
+        case .slightRight:  return "arrow.up.right"
+        case .right:        return "arrow.turn.up.right"
+        case .sharpRight:   return "arrow.turn.up.right"
+        case .uTurn:        return "arrow.uturn.left"
+        case .roundabout:   return "arrow.triangle.2.circlepath"
+        case .arrive:       return "mappin.circle.fill"
+        case .depart:       return "figure.walk"
+        }
+    }
+
+    /// Parsa istruzioni in italiano o inglese prodotte da MKDirections
+    static func parse(_ instruction: String) -> TurnDirection {
+        let t = instruction.lowercased()
+        if t.contains("arriv") || t.contains("destinazione") || t.contains("destination") { return .arrive }
+        if t.contains("torna indietro") || t.contains("inversione") || t.contains("u-turn") { return .uTurn }
+        if t.contains("rotonda") || t.contains("roundabout") { return .roundabout }
+        if (t.contains("legger") || t.contains("slight")) && (t.contains("sinistra") || t.contains("left"))  { return .slightLeft }
+        if (t.contains("legger") || t.contains("slight")) && (t.contains("destra")   || t.contains("right")) { return .slightRight }
+        if t.contains("sinistra") || t.contains("left")  { return .left }
+        if t.contains("destra")   || t.contains("right") { return .right }
+        if t.contains("parte") || t.contains("depart")  { return .depart }
+        return .straight
+    }
+}
+
 struct GeocodedWaypoint: Codable, Identifiable {
     let id: String
     let name: String

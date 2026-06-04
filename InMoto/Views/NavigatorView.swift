@@ -144,6 +144,7 @@ struct NavigatorView: View {
             MapKitView(
                 navRoute: navRoute,
                 currentLegIndex: session.currentLegIndex,
+                currentStepIndex: session.currentStepIndex,
                 userLocation: locationMgr.location,
                 userHeading: locationMgr.heading?.trueHeading,
                 isFollowingUser: $isFollowingUser
@@ -221,12 +222,22 @@ struct NavigatorView: View {
 
     // MARK: - Banner istruzioni (in alto)
 
+    private var currentTurnDirection: TurnDirection {
+        TurnDirection.parse(session.currentInstruction)
+    }
+
     private var instructionBanner: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: 14) {
-                Image(systemName: "arrow.triangle.turn.up.right.circle.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(.white)
+                // Freccia direzionale dinamica
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.orange)
+                        .frame(width: 52, height: 52)
+                    Image(systemName: currentTurnDirection.sfSymbol)
+                        .font(.system(size: 26, weight: .bold))
+                        .foregroundStyle(.white)
+                }
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(session.currentInstruction)
@@ -243,7 +254,7 @@ struct NavigatorView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
-            .background(.black.opacity(0.75))
+            .background(.black.opacity(0.80))
 
             // Barra destinazione prossima tappa
             HStack {
