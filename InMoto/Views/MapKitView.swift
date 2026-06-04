@@ -46,12 +46,30 @@ struct MapKitView: UIViewRepresentable {
 
         guard isFollowingUser, let loc = userLocation else { return }
         let bearing = resolvedHeading(location: loc, map: map)
+        // Centro spostato 350m avanti: l'utente appare nel terzo inferiore
+        // e il percorso davanti occupa i 2/3 superiori dello schermo
+        let ahead = coordinate(from: loc.coordinate, heading: bearing, meters: 350)
         let camera = MKMapCamera()
-        camera.centerCoordinate = loc.coordinate
-        camera.altitude = 500
+        camera.centerCoordinate = ahead
+        camera.altitude = 450
         camera.pitch    = 45
         camera.heading  = bearing
         map.setCamera(camera, animated: false)
+    }
+
+    /// Calcola una coordinata spostata di N metri nella direzione indicata
+    private func coordinate(from origin: CLLocationCoordinate2D,
+                            heading: Double, meters: Double) -> CLLocationCoordinate2D {
+        let R = 6_371_000.0
+        let d = meters / R
+        let h = heading * .pi / 180
+        let lat1 = origin.latitude  * .pi / 180
+        let lon1 = origin.longitude * .pi / 180
+        let lat2 = asin(sin(lat1) * cos(d) + cos(lat1) * sin(d) * cos(h))
+        let lon2 = lon1 + atan2(sin(h) * sin(d) * cos(lat1),
+                                cos(d) - sin(lat1) * sin(lat2))
+        return CLLocationCoordinate2D(latitude: lat2 * 180 / .pi,
+                                      longitude: lon2 * 180 / .pi)
     }
 
     /// Zooma la mappa per mostrare l'intero percorso (modalità anteprima)
