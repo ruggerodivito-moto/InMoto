@@ -130,7 +130,7 @@ struct NavigatorView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showArrivalAlert = false
-    @State private var mapCentered = true
+    @State private var isFollowingUser = true
 
     init(navRoute: NavigationRoute, motoRoute: MotoRoute) {
         self.navRoute = navRoute
@@ -140,11 +140,13 @@ struct NavigatorView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            // Mappa a tutto schermo
+            // Mappa a tutto schermo con vista in primo piano
             MapKitView(
                 navRoute: navRoute,
                 currentLegIndex: session.currentLegIndex,
-                userLocation: locationMgr.location
+                userLocation: locationMgr.location,
+                userHeading: locationMgr.heading?.trueHeading,
+                isFollowingUser: $isFollowingUser
             )
             .ignoresSafeArea()
 
@@ -154,6 +156,11 @@ struct NavigatorView: View {
                 progressFooter
             }
             .ignoresSafeArea(edges: .bottom)
+
+            // Pulsante ricentra — compare quando l'utente sposta la mappa manualmente
+            if !isFollowingUser {
+                recenterButton
+            }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
@@ -186,6 +193,30 @@ struct NavigatorView: View {
         } message: {
             Text("Hai completato l'itinerario \(motoRoute.nome). Buona moto!")
         }
+    }
+
+    // MARK: - Pulsante ricentra
+
+    private var recenterButton: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Button(action: { isFollowingUser = true }) {
+                    Image(systemName: "location.fill")
+                        .font(.title2)
+                        .foregroundStyle(.orange)
+                        .padding(14)
+                        .background(.regularMaterial)
+                        .clipShape(Circle())
+                        .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                }
+                .padding(.trailing, 16)
+                .padding(.bottom, 130)   // sopra il footer di navigazione
+            }
+        }
+        .transition(.scale.combined(with: .opacity))
+        .animation(.spring(response: 0.3), value: isFollowingUser)
     }
 
     // MARK: - Banner istruzioni (in alto)

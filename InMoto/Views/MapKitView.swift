@@ -1,66 +1,93 @@
 import SwiftUI
 import MapKit
+import CoreLocation
 
-// Wrapper UIViewRepresentable per MKMapView.
-// Disegna tutte le polyline delle tratte e i pin delle tappe.
-// La tratta corrente è arancione, le altre grigie.
 struct MapKitView: UIViewRepresentable {
     let navRoute: NavigationRoute
     let currentLegIndex: Int
     let userLocation: CLLocation?
-    var onMapReady: (() -> Void)?
+    let userHeading: Double?          // gradi da CLHeading.trueHeading; nil se non disponibile
+    @Binding var isFollowingUser: Bool
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
-        map.delegate = context.coordinator
+        map.delegate        = context.coordinator
         map.showsUserLocation = true
-        map.userTrackingMode = .followWithHeading
-        map.showsCompass = true
-        map.showsScale = true
+        map.showsCompass    = true
+        map.showsScale      = true
+        map.isPitchEnabled  = true
+        map.isRotateEnabled = true
         map.pointOfInterestFilter = .excludingAll
+
+        // Rileva interazione manuale dell'utente (pan, pinch, rotation)
+        for gestureType in [UIPanGestureRecognizer.self,
+                            UIPinchGestureRecognizer.self,
+                            UIRotationGestureRecognizer.self] as [UIGestureRecognizer.Type] {
+            let g = gestureType.init(
+                target: context.coordinator,
+                action: #selector(Coordinator.userDidInteract))
+            g.delegate = context.coordinator
+            map.addGestureRecognizer(g)
+        }
+
         return map
     }
 
     func updateUIView(_ map: MKMapView, context: Context) {
-        map.removeOverlays(map.overlays)
-        map.removeAnnotations(map.annotations.filter { !($0 is MKUserLocation) })
+        // Ricalcola overlays e pin solo al cambio di tratta (non ad ogni GPS tick)
+        if context.coordinator.lastLegIndex != currentLegIndex {
+            context.coordinator.lastLegIndex = currentLegIndex
+            refreshOverlays(map)
+            refreshAnnotations(map)
+        }
 
-        // Disegna polyline per ogni tratta
+        // Vista in primo piano: camera 3D che segue posizione e orientamento
+        guard isFollowingUser, let loc = userLocation else { return }
+        let bearing = resolvedHeading(location: loc, map: map)
+        let camera = MKMapCamera()
+        camera.centerCoordinate = loc.coordinate
+        camera.altitude  = 500      // altezza occhio dal suolo in metri
+        camera.pitch     = 45       // inclinazione 3D (0 = pianta, 90 = orizzonte)
+        camera.heading   = bearing
+        map.setCamera(camera, animated: false)
+    }
+
+    // MARK: - Overlays
+
+    private func refreshOverlays(_ map: MKMapView) {
+        map.removeOverlays(map.overlays)
         for (i, leg) in navRoute.legs.enumerated() {
             let coords = leg.polylineCoordinates
             guard !coords.isEmpty else { continue }
-            let polyline = MKPolyline(coordinates: coords, count: coords.count)
-            polyline.title = i == currentLegIndex ? "current" : "other"
-            map.addOverlay(polyline, level: .aboveRoads)
+            let line = MKPolyline(coordinates: coords, count: coords.count)
+            line.title = i == currentLegIndex ? "current" : "other"
+            map.addOverlay(line, level: .aboveRoads)
         }
+    }
 
-        // Pin tappe (waypoints)
+    // MARK: - Annotations
+
+    private func refreshAnnotations(_ map: MKMapView) {
+        map.removeAnnotations(map.annotations.filter { !($0 is MKUserLocation) })
         for (i, wp) in navRoute.waypoints.enumerated() {
-            let ann = WaypointAnnotation(
+            map.addAnnotation(WaypointAnnotation(
                 coordinate: wp.coordinate,
                 title: shortName(wp.name),
                 index: i,
                 isCompleted: i < currentLegIndex,
                 isCurrent: i == currentLegIndex
-            )
-            map.addAnnotation(ann)
+            ))
         }
+    }
 
-        // Centra sulla tratta corrente al cambio di tratta
-        if currentLegIndex < navRoute.legs.count {
-            let leg = navRoute.legs[currentLegIndex]
-            let pts = leg.polylineCoordinates
-            if !pts.isEmpty {
-                let polyline = MKPolyline(coordinates: pts, count: pts.count)
-                let rect = polyline.boundingMapRect
-                map.setVisibleMapRect(
-                    rect.insetBy(dx: -rect.size.width * 0.3, dy: -rect.size.height * 0.3),
-                    animated: true
-                )
-            }
-        }
+    // MARK: - Helpers
+
+    private func resolvedHeading(location: CLLocation, map: MKMapView) -> Double {
+        if let h = userHeading, h >= 0 { return h }
+        if location.course >= 0        { return location.course }
+        return map.camera.heading       // mantiene l'ultimo heading noto
     }
 
     private func shortName(_ full: String) -> String {
@@ -69,65 +96,65 @@ struct MapKitView: UIViewRepresentable {
 
     // MARK: - Coordinator
 
-    class Coordinator: NSObject, MKMapViewDelegate {
+    class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: MapKitView
+        var lastLegIndex: Int = -1      // forza il primo refresh
 
-        init(_ parent: MapKitView) {
-            self.parent = parent
+        init(_ parent: MapKitView) { self.parent = parent }
+
+        // Quando l'utente muove la mappa manualmente, disattiva il seguimi
+        @objc func userDidInteract(_ gesture: UIGestureRecognizer) {
+            guard gesture.state == .began, parent.isFollowingUser else { return }
+            DispatchQueue.main.async { self.parent.isFollowingUser = false }
         }
 
-        func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-            parent.onMapReady?()
-        }
+        // Riconosci i nostri gesture in contemporanea con quelli nativi della mappa
+        func gestureRecognizer(_ g: UIGestureRecognizer,
+                               shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool { true }
 
-        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            guard let polyline = overlay as? MKPolyline else {
-                return MKOverlayRenderer(overlay: overlay)
-            }
-            let renderer = MKPolylineRenderer(polyline: polyline)
-            if polyline.title == "current" {
-                renderer.strokeColor = UIColor.systemOrange
-                renderer.lineWidth = 6
+        // MARK: MKMapViewDelegate
+
+        func mapView(_ map: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+            guard let line = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
+            let r = MKPolylineRenderer(polyline: line)
+            if line.title == "current" {
+                r.strokeColor = UIColor.systemOrange
+                r.lineWidth   = 6
             } else {
-                renderer.strokeColor = UIColor.systemGray3
-                renderer.lineWidth = 4
-                renderer.lineDashPattern = [8, 4]
+                r.strokeColor = UIColor.systemGray3
+                r.lineWidth   = 4
+                r.lineDashPattern = [8, 4]
             }
-            return renderer
+            return r
         }
 
-        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        func mapView(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard let wp = annotation as? WaypointAnnotation else { return nil }
-            let id = "waypoint"
-            let view = mapView.dequeueReusableAnnotationView(withIdentifier: id)
-                ?? MKAnnotationView(annotation: annotation, reuseIdentifier: id)
+            let view = map.dequeueReusableAnnotationView(withIdentifier: "wp")
+                ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "wp")
             view.annotation = annotation
+            view.image = wpImage(for: wp)
+            view.canShowCallout = true
+            return view
+        }
 
+        private func wpImage(for wp: WaypointAnnotation) -> UIImage {
             let size: CGFloat = 32
-            let renderer = UIGraphicsImageRenderer(size: CGSize(width: size, height: size))
-            let img = renderer.image { ctx in
-                let rect = CGRect(x: 2, y: 2, width: size - 4, height: size - 4)
+            return UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { _ in
                 let color: UIColor = wp.isCompleted ? .systemGreen
                                    : wp.isCurrent  ? .systemOrange
                                    : .systemIndigo
                 color.setFill()
-                UIBezierPath(ovalIn: rect).fill()
-                UIColor.white.setFill()
+                UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: size-4, height: size-4)).fill()
                 let label = "\(wp.index + 1)" as NSString
                 let attrs: [NSAttributedString.Key: Any] = [
                     .font: UIFont.boldSystemFont(ofSize: 13),
                     .foregroundColor: UIColor.white
                 ]
                 let sz = label.size(withAttributes: attrs)
-                label.draw(at: CGPoint(
-                    x: (size - sz.width) / 2,
-                    y: (size - sz.height) / 2
-                ), withAttributes: attrs)
+                label.draw(at: CGPoint(x: (size-sz.width)/2, y: (size-sz.height)/2),
+                           withAttributes: attrs)
             }
-            view.image = img
-            view.centerOffset = .zero
-            view.canShowCallout = true
-            return view
         }
     }
 }
@@ -143,10 +170,10 @@ class WaypointAnnotation: NSObject, MKAnnotation {
 
     init(coordinate: CLLocationCoordinate2D, title: String, index: Int,
          isCompleted: Bool, isCurrent: Bool) {
-        self.coordinate = coordinate
-        self.title = title
-        self.index = index
+        self.coordinate  = coordinate
+        self.title       = title
+        self.index       = index
         self.isCompleted = isCompleted
-        self.isCurrent = isCurrent
+        self.isCurrent   = isCurrent
     }
 }
