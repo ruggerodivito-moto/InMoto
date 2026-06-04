@@ -9,6 +9,7 @@ class RouteStore: ObservableObject {
     @Published var syncMessage: String?
     @Published var lastSyncDate: Date?
     @Published var personalRoutes: [MotoRoute] = []
+    @Published var favoritePlaces: [FavoritePlace] = []
 
     private let cacheURL: URL = {
         let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
@@ -20,6 +21,11 @@ class RouteStore: ObservableObject {
         return dir.appendingPathComponent("personal_routes.json")
     }()
 
+    private let favoritesURL: URL = {
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return dir.appendingPathComponent("favorite_places.json")
+    }()
+
     private let syncDateKey = "lastSyncDate"
 
     // ── Caricamento iniziale ────────────────────────────────────────────────
@@ -27,6 +33,7 @@ class RouteStore: ObservableObject {
         if loadFromCache() { return }
         loadFromBundle()
         loadPersonalRoutes()
+        loadFavoritePlaces()
     }
 
     // ── Tragitti personali ──────────────────────────────────────────────────
@@ -54,6 +61,38 @@ class RouteStore: ObservableObject {
         }
     }
 
+    // ── Luoghi preferiti ────────────────────────────────────────────────────
+    func loadFavoritePlaces() {
+        guard FileManager.default.fileExists(atPath: favoritesURL.path) else { return }
+        if let data = try? Data(contentsOf: favoritesURL),
+           let loaded = try? JSONDecoder().decode([FavoritePlace].self, from: data) {
+            favoritePlaces = loaded
+        }
+    }
+
+    func saveFavoritePlace(_ place: FavoritePlace) {
+        favoritePlaces.append(place)
+        persistFavoritePlaces()
+    }
+
+    func updateFavoritePlace(_ place: FavoritePlace) {
+        if let idx = favoritePlaces.firstIndex(where: { $0.id == place.id }) {
+            favoritePlaces[idx] = place
+            persistFavoritePlaces()
+        }
+    }
+
+    func deleteFavoritePlace(at offsets: IndexSet) {
+        favoritePlaces.remove(atOffsets: offsets)
+        persistFavoritePlaces()
+    }
+
+    private func persistFavoritePlaces() {
+        if let data = try? JSONEncoder().encode(favoritePlaces) {
+            try? data.write(to: favoritesURL, options: .atomic)
+        }
+    }
+
     private func loadFromBundle() {
         guard let url = Bundle.main.url(forResource: "routes", withExtension: "json") else { return }
         do {
@@ -75,6 +114,7 @@ class RouteStore: ObservableObject {
             updateRegions()
             lastSyncDate = UserDefaults.standard.object(forKey: syncDateKey) as? Date
             loadPersonalRoutes()
+            loadFavoritePlaces()
             return true
         } catch {
             return false
@@ -226,7 +266,9 @@ class RouteStore: ObservableObject {
             tags: Array(Set(legs.flatMap { $0.tags })).sorted(),
             fonte: "Composto InMoto",
             stagione: legs.first?.stagione ?? "Tutto l'anno",
-            isCustom: true
+            isCustom: true,
+            legKm: legs.map { $0.km },
+            legMin: legs.map { $0.durataMin }
         )
     }
 

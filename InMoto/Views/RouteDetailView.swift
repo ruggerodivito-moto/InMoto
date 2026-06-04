@@ -151,13 +151,40 @@ struct RouteDetailView: View {
                 }
                 .padding(.vertical, 4)
                 if i < waypoints.count - 1 {
-                    HStack {
-                        Spacer().frame(width: 14)
-                        Rectangle()
-                            .fill(Color(.systemGray5))
-                            .frame(width: 1, height: 14)
-                            .padding(.leading, 14)
-                        Spacer()
+                    if let legKm = route.legKm, let legMin = route.legMin, i < legKm.count {
+                        VStack(spacing: 0) {
+                            HStack {
+                                Spacer().frame(width: 28)
+                                Rectangle().fill(Color(.systemGray5)).frame(width: 1, height: 5)
+                                Spacer()
+                            }
+                            HStack {
+                                Spacer().frame(width: 40)
+                                Label("\(legKm[i]) km · \(legMin[i]) min", systemImage: "road.lanes")
+                                    .font(.caption2)
+                                    .foregroundStyle(.secondary)
+                                    .padding(.horizontal, 8)
+                                    .padding(.vertical, 3)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(Capsule())
+                                Spacer()
+                            }
+                            .padding(.vertical, 3)
+                            HStack {
+                                Spacer().frame(width: 28)
+                                Rectangle().fill(Color(.systemGray5)).frame(width: 1, height: 5)
+                                Spacer()
+                            }
+                        }
+                    } else {
+                        HStack {
+                            Spacer().frame(width: 14)
+                            Rectangle()
+                                .fill(Color(.systemGray5))
+                                .frame(width: 1, height: 14)
+                                .padding(.leading, 14)
+                            Spacer()
+                        }
                     }
                 }
             }

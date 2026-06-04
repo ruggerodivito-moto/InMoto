@@ -106,6 +106,20 @@ struct RouteLeg: Codable, Identifiable {
     }
 }
 
+// MARK: - FavoritePlace
+
+struct FavoritePlace: Codable, Identifiable {
+    let id: String
+    var tag: String       // etichetta (es. "Casa", "Lavoro")
+    var address: String   // indirizzo testuale
+
+    init(tag: String, address: String) {
+        self.id = UUID().uuidString
+        self.tag = tag
+        self.address = address
+    }
+}
+
 struct NavigationRoute: Codable {
     let routeId: String
     let routeName: String

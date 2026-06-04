@@ -17,11 +17,14 @@ struct MotoRoute: Codable, Identifiable, Hashable {
     var fonte: String
     var stagione: String
     var isCustom: Bool?
+    var legKm: [Int]?    // km per ogni tratta (disponibile solo per tragitti importati calcolati)
+    var legMin: [Int]?   // minuti per ogni tratta
 
     enum CodingKeys: String, CodingKey {
         case id, nome, partenza, arrivo, regione, km
         case durataMin, difficolta, stelle, descrizione
         case tappe, waypointsGmaps, tags, fonte, stagione, isCustom
+        case legKm, legMin
     }
 
     var durataFormattata: String {

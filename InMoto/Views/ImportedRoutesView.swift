@@ -94,12 +94,18 @@ struct ImportRouteView: View {
     @State private var startSugg: [String] = []
     @State private var endSugg:   [String] = []
 
+    // GPS / Preferiti
+    @State private var isGeolocatingStart = false
+    @State private var showFavStart = false
+    @State private var showFavEnd   = false
+
     // Risultato
     @State private var parsedWaypoints: [ParsedWaypoint] = []
     @State private var preview: MotoRoute?  = nil
     @State private var warnings: [String]   = []
     @State private var errorMsg: String?    = nil
     @State private var isBuilding = false
+    @State private var isComputingDistances = false
 
     private var canVerify: Bool {
         !routeName.trimmingCharacters(in: .whitespaces).isEmpty &&
@@ -163,6 +169,13 @@ struct ImportRouteView: View {
                         Label(w, systemImage: "info.circle")
                             .foregroundStyle(.secondary).font(.caption)
                     }
+                    if isComputingDistances {
+                        HStack(spacing: 8) {
+                            ProgressView().scaleEffect(0.8)
+                            Text("Calcolo distanze reali…")
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
                 }
 
                 // ── Anteprima ─────────────────────────────────────────────────
@@ -178,6 +191,16 @@ struct ImportRouteView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Annulla") { dismiss() }
+                }
+            }
+            .sheet(isPresented: $showFavStart) {
+                FavoritesPickerSheet { place in
+                    startText = place.address; startSugg = []; resetResult()
+                }
+            }
+            .sheet(isPresented: $showFavEnd) {
+                FavoritesPickerSheet { place in
+                    endText = place.address; endSugg = []; resetResult()
                 }
             }
         }
@@ -216,17 +239,27 @@ struct ImportRouteView: View {
     private var aToBInputSection: some View {
         Group {
             Section {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "mappin.circle").foregroundStyle(.green)
                     TextField("Dove parti?", text: $startText)
                         .autocorrectionDisabled()
-                        .onChange(of: startText) { _ in
-                            startSugg = sugg(for: startText); resetResult()
+                        .onChange(of: startText) { _ in startSugg = sugg(for: startText); resetResult() }
+                    if isGeolocatingStart {
+                        ProgressView().scaleEffect(0.85)
+                    } else {
+                        if !startText.isEmpty {
+                            Button { startText = ""; startSugg = [] } label: {
+                                Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                            }.buttonStyle(.plain)
                         }
-                    if !startText.isEmpty {
-                        Button { startText = ""; startSugg = [] } label: {
-                            Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                        Button(action: usaPosizioneAttualeStart) {
+                            Image(systemName: "location.fill").foregroundStyle(.blue)
                         }.buttonStyle(.plain)
+                        if !store.favoritePlaces.isEmpty {
+                            Button { showFavStart = true } label: {
+                                Image(systemName: "star.fill").foregroundStyle(.orange)
+                            }.buttonStyle(.plain)
+                        }
                     }
                 }
                 ForEach(startSugg, id: \.self) { s in
@@ -241,16 +274,19 @@ struct ImportRouteView: View {
               footer: { Text("Puoi scrivere qualsiasi luogo, anche se non è nel database") }
 
             Section {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "mappin.circle.fill").foregroundStyle(.red)
                     TextField("Dove vuoi arrivare?", text: $endText)
                         .autocorrectionDisabled()
-                        .onChange(of: endText) { _ in
-                            endSugg = sugg(for: endText); resetResult()
-                        }
+                        .onChange(of: endText) { _ in endSugg = sugg(for: endText); resetResult() }
                     if !endText.isEmpty {
                         Button { endText = ""; endSugg = [] } label: {
                             Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
+                        }.buttonStyle(.plain)
+                    }
+                    if !store.favoritePlaces.isEmpty {
+                        Button { showFavEnd = true } label: {
+                            Image(systemName: "star.fill").foregroundStyle(.orange)
                         }.buttonStyle(.plain)
                     }
                 }
@@ -307,13 +343,16 @@ struct ImportRouteView: View {
             Button(action: salva) {
                 HStack {
                     Spacer()
-                    Image(systemName: "bookmark.fill")
-                    Text("Salva nel tuo elenco").fontWeight(.semibold)
+                    if isComputingDistances { ProgressView().padding(.trailing, 6) }
+                    else { Image(systemName: "bookmark.fill") }
+                    Text(isComputingDistances ? "Calcolo distanze…" : "Salva nel tuo elenco")
+                        .fontWeight(.semibold)
                     Spacer()
                 }
             }
             .buttonStyle(.borderedProminent)
             .tint(.green)
+            .disabled(isComputingDistances)
         } header: {
             Label("Tragitto ricostruito", systemImage: "checkmark.circle.fill")
                 .foregroundStyle(.green)
@@ -343,7 +382,6 @@ struct ImportRouteView: View {
 
                 for line in lines {
                     if line.lowercased().hasPrefix("http") {
-                        // Risolve automaticamente i link abbreviati (goo.gl, maps.app.goo.gl…)
                         let urlToParse: String
                         if GoogleMapsParser.isShortURL(line) {
                             urlToParse = await GoogleMapsParser.resolveShortURL(line) ?? line
@@ -360,78 +398,140 @@ struct ImportRouteView: View {
                         wps.append(ParsedWaypoint(displayName: line, gmapsWaypoint: "\(line), Italy", source: nil))
                     }
                 }
+
+                guard wps.count >= 2 else {
+                    await MainActor.run {
+                        errorMsg = wps.isEmpty
+                            ? "Nessun luogo riconosciuto. Controlla i link o scrivi i nomi dei luoghi."
+                            : "Inserisci almeno 2 tappe per creare un percorso."
+                        warnings = warns
+                        isBuilding = false
+                    }
+                    return
+                }
+
+                let name  = routeName.trimmingCharacters(in: .whitespaces)
+                let tappe = wps.map { $0.displayName }
+                let gWps  = wps.map { $0.gmapsWaypoint }
+
+                let baseRoute = MotoRoute(
+                    id: UUID().uuidString,
+                    nome: name,
+                    partenza: tappe.first!, arrivo: tappe.last!,
+                    regione: "",
+                    km: 0, durataMin: 0,
+                    difficolta: "Media", stelle: 0,
+                    descrizione: "Tragitto personale con \(wps.count) tapp\(wps.count == 1 ? "a" : "e").",
+                    tappe: tappe,
+                    waypointsGmaps: gWps,
+                    tags: ["personale"],
+                    fonte: "Importato", stagione: "Tutto l'anno", isCustom: true,
+                    legKm: nil, legMin: nil
+                )
+
+                await MainActor.run {
+                    parsedWaypoints = wps
+                    warnings        = warns
+                    preview         = baseRoute
+                    isBuilding      = false
+                    isComputingDistances = true
+                }
+
+                // Calcola distanze reali via MKDirections
+                if let result = await computeDistances(for: gWps) {
+                    await MainActor.run {
+                        if var curr = preview {
+                            preview = MotoRoute(
+                                id: curr.id, nome: curr.nome,
+                                partenza: curr.partenza, arrivo: curr.arrivo,
+                                regione: curr.regione,
+                                km: result.km, durataMin: result.durataMin,
+                                difficolta: curr.difficolta, stelle: curr.stelle,
+                                descrizione: curr.descrizione, tappe: curr.tappe,
+                                waypointsGmaps: curr.waypointsGmaps,
+                                tags: curr.tags, fonte: curr.fonte,
+                                stagione: curr.stagione, isCustom: curr.isCustom,
+                                legKm: result.legKm, legMin: result.legMin
+                            )
+                        }
+                        isComputingDistances = false
+                    }
+                } else {
+                    await MainActor.run { isComputingDistances = false }
+                }
+
             } else {
-                // Modalità A→B: usa composeLocalRoute
+                // Modalità A→B
                 let s = startText.trimmingCharacters(in: .whitespaces)
                 let e = endText.trimmingCharacters(in: .whitespaces)
                 let composed = store.composeLocalRoute(da: s, a: e)
 
-                await MainActor.run {
-                    // Per A→B usiamo direttamente la route composta dal DB
-                    let gWps = composed.waypointsGmaps.isEmpty
-                        ? ["\(s), Italy", "\(e), Italy"]
-                        : composed.waypointsGmaps
+                let gWps = composed.waypointsGmaps.isEmpty
+                    ? ["\(s), Italy", "\(e), Italy"]
+                    : composed.waypointsGmaps
 
+                let baseRoute = MotoRoute(
+                    id: UUID().uuidString,
+                    nome: routeName.trimmingCharacters(in: .whitespaces),
+                    partenza: s, arrivo: e,
+                    regione: composed.regione,
+                    km: composed.km, durataMin: composed.durataMin,
+                    difficolta: composed.difficolta, stelle: composed.stelle,
+                    descrizione: composed.descrizione, tappe: composed.tappe,
+                    waypointsGmaps: composed.waypointsGmaps,
+                    tags: Array(Set(composed.tags + ["personale"])).sorted(),
+                    fonte: "Importato", stagione: composed.stagione, isCustom: true,
+                    legKm: composed.legKm, legMin: composed.legMin
+                )
+
+                await MainActor.run {
                     parsedWaypoints = gWps.enumerated().map { i, wp in
-                        ParsedWaypoint(displayName: composed.tappe[safe: i] ?? wp,
-                                       gmapsWaypoint: wp, source: "DB")
+                        ParsedWaypoint(displayName: composed.tappe[safe: i] ?? wp, gmapsWaypoint: wp, source: "DB")
                     }
-                    preview = MotoRoute(
-                        id: UUID().uuidString,
-                        nome: routeName.trimmingCharacters(in: .whitespaces),
-                        partenza: s, arrivo: e,
-                        regione: composed.regione,
-                        km: composed.km, durataMin: composed.durataMin,
-                        difficolta: composed.difficolta,
-                        stelle: composed.stelle,
-                        descrizione: composed.descrizione,
-                        tappe: composed.tappe,
-                        waypointsGmaps: composed.waypointsGmaps,
-                        tags: Array(Set(composed.tags + ["personale"])).sorted(),
-                        fonte: "Importato", stagione: composed.stagione, isCustom: true
-                    )
+                    preview = baseRoute
                     isBuilding = false
+                    // Calcola distanze reali se il DB non le ha
+                    if composed.km == 0 { isComputingDistances = true }
                 }
-                return
-            }
 
-            // Modalità link: valida e costruisce route
-            guard wps.count >= 2 else {
-                await MainActor.run {
-                    errorMsg = wps.isEmpty
-                        ? "Nessun luogo riconosciuto. Controlla i link o scrivi i nomi dei luoghi."
-                        : "Inserisci almeno 2 tappe per creare un percorso."
-                    warnings = warns
-                    isBuilding = false
+                if composed.km == 0 {
+                    if let result = await computeDistances(for: gWps) {
+                        await MainActor.run {
+                            if var curr = preview {
+                                preview = MotoRoute(
+                                    id: curr.id, nome: curr.nome,
+                                    partenza: curr.partenza, arrivo: curr.arrivo,
+                                    regione: curr.regione,
+                                    km: result.km, durataMin: result.durataMin,
+                                    difficolta: curr.difficolta, stelle: curr.stelle,
+                                    descrizione: curr.descrizione, tappe: curr.tappe,
+                                    waypointsGmaps: curr.waypointsGmaps,
+                                    tags: curr.tags, fonte: curr.fonte,
+                                    stagione: curr.stagione, isCustom: curr.isCustom,
+                                    legKm: result.legKm, legMin: result.legMin
+                                )
+                            }
+                            isComputingDistances = false
+                        }
+                    } else {
+                        await MainActor.run { isComputingDistances = false }
+                    }
                 }
-                return
-            }
-
-            let name  = routeName.trimmingCharacters(in: .whitespaces)
-            let tappe = wps.map { $0.displayName }
-            let gWps  = wps.map { $0.gmapsWaypoint }
-
-            let route = MotoRoute(
-                id: UUID().uuidString,
-                nome: name,
-                partenza: tappe.first!, arrivo: tappe.last!,
-                regione: "",
-                km: 0, durataMin: 0,
-                difficolta: "Media", stelle: 0,
-                descrizione: "Tragitto personale con \(wps.count) tapp\(wps.count == 1 ? "a" : "e").",
-                tappe: tappe,
-                waypointsGmaps: gWps,
-                tags: ["personale"],
-                fonte: "Importato", stagione: "Tutto l'anno", isCustom: true
-            )
-
-            await MainActor.run {
-                parsedWaypoints = wps
-                warnings        = warns
-                preview         = route
-                isBuilding      = false
             }
         }
+    }
+
+    /// Calcola km e durata reali tra i waypoint usando MKDirections
+    private func computeDistances(for waypoints: [String]) async
+        -> (km: Int, durataMin: Int, legKm: [Int], legMin: [Int])? {
+        guard let geoWps = try? await RouterService.shared.geocodeWaypointsMixed(waypoints),
+              geoWps.count >= 2,
+              let legs = try? await RouterService.shared.computeLegs(for: geoWps) else { return nil }
+        let km     = max(1, Int(legs.reduce(0) { $0 + $1.distanceMeters } / 1000))
+        let mins   = max(1, Int(legs.reduce(0) { $0 + $1.durationSeconds } / 60))
+        let legKms = legs.map { max(1, Int($0.distanceMeters / 1000)) }
+        let legMin = legs.map { max(1, Int($0.durationSeconds / 60)) }
+        return (km, mins, legKms, legMin)
     }
 
     private func salva() {
@@ -444,6 +544,31 @@ struct ImportRouteView: View {
         parsedWaypoints = []
         preview         = nil
         errorMsg        = nil
+        isComputingDistances = false
+    }
+
+    private func usaPosizioneAttualeStart() {
+        isGeolocatingStart = true
+        LocationManager.shared.requestPermission()
+        LocationManager.shared.start()
+        Task {
+            var attempts = 0
+            while attempts < 20 {
+                try? await Task.sleep(nanoseconds: 500_000_000)
+                if let loc = LocationManager.shared.location {
+                    let addr = await RouterService.reverseGeocode(loc)
+                    await MainActor.run {
+                        startText = addr.isEmpty ? "Posizione attuale" : addr
+                        startSugg = []
+                        isGeolocatingStart = false
+                        resetResult()
+                    }
+                    return
+                }
+                attempts += 1
+            }
+            await MainActor.run { isGeolocatingStart = false }
+        }
     }
 
     private func hideKeyboard() {

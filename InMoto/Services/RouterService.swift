@@ -20,6 +20,22 @@ class RouterService {
         }
     }
 
+    // MARK: - Utility pubblica
+
+    /// Reverse geocoding: coordinate → indirizzo testuale (es. "Genova, Liguria")
+    static func reverseGeocode(_ location: CLLocation) async -> String {
+        await withCheckedContinuation { cont in
+            CLGeocoder().reverseGeocodeLocation(location) { placemarks, _ in
+                if let p = placemarks?.first {
+                    let parts = [p.locality, p.administrativeArea].compactMap { $0 }
+                    cont.resume(returning: parts.joined(separator: ", "))
+                } else {
+                    cont.resume(returning: "\(location.coordinate.latitude),\(location.coordinate.longitude)")
+                }
+            }
+        }
+    }
+
     // MARK: - Public
 
     func geocodeWaypoints(_ names: [String]) async throws -> [GeocodedWaypoint] {
@@ -28,8 +44,21 @@ class RouterService {
         for name in names {
             let wp = try await geocodeOne(name)
             result.append(wp)
-            // Piccola pausa per rispettare i rate limit di CLGeocoder
             try? await Task.sleep(nanoseconds: 350_000_000)
+        }
+        return result
+    }
+
+    /// Come geocodeWaypoints ma gestisce anche stringhe coordinate "lat,lon"
+    func geocodeWaypointsMixed(_ inputs: [String]) async throws -> [GeocodedWaypoint] {
+        guard !inputs.isEmpty else { throw RouterError.noWaypoints }
+        var result: [GeocodedWaypoint] = []
+        for input in inputs {
+            let wp = try await geocodeMixed(input)
+            result.append(wp)
+            if result.count < inputs.count {
+                try? await Task.sleep(nanoseconds: 350_000_000)
+            }
         }
         return result
     }
@@ -58,6 +87,19 @@ class RouterService {
     }
 
     // MARK: - Private
+
+    private func geocodeMixed(_ input: String) async throws -> GeocodedWaypoint {
+        let t = input.trimmingCharacters(in: .whitespaces)
+        // Gestisci formato "lat,lon" (da link Google Maps)
+        let parts = t.components(separatedBy: ",")
+        if parts.count == 2,
+           let lat = Double(parts[0].trimmingCharacters(in: .whitespaces)),
+           let lon = Double(parts[1].trimmingCharacters(in: .whitespaces)),
+           abs(lat) <= 90, abs(lon) <= 180 {
+            return GeocodedWaypoint(name: t, latitude: lat, longitude: lon)
+        }
+        return try await geocodeOne(t)
+    }
 
     private func geocodeOne(_ address: String) async throws -> GeocodedWaypoint {
         let geocoder = CLGeocoder()
