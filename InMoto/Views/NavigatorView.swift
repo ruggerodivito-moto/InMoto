@@ -130,7 +130,8 @@ struct NavigatorView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showArrivalAlert = false
-    @State private var isFollowingUser = true
+    @State private var isFollowingUser = false        // overview all'avvio
+    @State private var hasStartedNavigation = false   // true dopo tap "Avvia"
 
     init(navRoute: NavigationRoute, motoRoute: MotoRoute) {
         self.navRoute = navRoute
@@ -158,8 +159,10 @@ struct NavigatorView: View {
             }
             .ignoresSafeArea(edges: .bottom)
 
-            // Pulsante ricentra — compare quando l'utente sposta la mappa manualmente
-            if !isFollowingUser {
+            // Pulsante avvia (prima volta) o ricentra (dopo aver avviato)
+            if !hasStartedNavigation {
+                startButton
+            } else if !isFollowingUser {
                 recenterButton
             }
         }
@@ -175,9 +178,9 @@ struct NavigatorView: View {
             }
         }
         .onAppear {
-            locationMgr.requestPermission()
-            locationMgr.start()
-            UIApplication.shared.isIdleTimerDisabled = true  // schermo sempre acceso
+            locationMgr.requestPermission()   // chiede permesso subito
+            // il GPS parte solo quando l'utente tocca "Avvia navigazione GPS"
+            UIApplication.shared.isIdleTimerDisabled = true
         }
         .onDisappear {
             locationMgr.stop()
@@ -194,6 +197,31 @@ struct NavigatorView: View {
         } message: {
             Text("Hai completato l'itinerario \(motoRoute.nome). Buona moto!")
         }
+    }
+
+    // MARK: - Pulsante avvia navigazione (overview → GPS 3D)
+
+    private var startButton: some View {
+        VStack {
+            Spacer()
+            Button(action: {
+                hasStartedNavigation = true
+                isFollowingUser = true
+                locationMgr.start()
+            }) {
+                Label("Avvia navigazione GPS", systemImage: "location.north.fill")
+                    .frame(maxWidth: .infinity)
+                    .fontWeight(.semibold)
+                    .padding(.vertical, 4)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.orange)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 130)
+            .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 4)
+        }
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .animation(.spring(response: 0.4), value: hasStartedNavigation)
     }
 
     // MARK: - Pulsante ricentra

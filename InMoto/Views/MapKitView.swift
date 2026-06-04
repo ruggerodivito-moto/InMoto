@@ -40,6 +40,8 @@ struct MapKitView: UIViewRepresentable {
             context.coordinator.lastKey = key
             refreshOverlays(map)
             refreshAnnotations(map)
+            // In overview: adatta la vista al percorso completo
+            if !isFollowingUser { fitRoute(map) }
         }
 
         guard isFollowingUser, let loc = userLocation else { return }
@@ -50,6 +52,19 @@ struct MapKitView: UIViewRepresentable {
         camera.pitch    = 45
         camera.heading  = bearing
         map.setCamera(camera, animated: false)
+    }
+
+    /// Zooma la mappa per mostrare l'intero percorso (modalità anteprima)
+    private func fitRoute(_ map: MKMapView) {
+        var rect = MKMapRect.null
+        for overlay in map.overlays { rect = rect.union(overlay.boundingMapRect) }
+        guard !rect.isNull else { return }
+        let padded = rect.insetBy(dx: -rect.size.width * 0.12, dy: -rect.size.height * 0.12)
+        map.setVisibleMapRect(
+            padded,
+            edgePadding: UIEdgeInsets(top: 80, left: 20, bottom: 160, right: 20),
+            animated: true
+        )
     }
 
     // MARK: - Overlays
