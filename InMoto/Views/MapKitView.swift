@@ -14,20 +14,20 @@ struct MapKitView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
-        map.delegate            = context.coordinator
-        map.showsUserLocation   = false   // usiamo la nostra icona moto
-        map.showsCompass        = true
-        map.showsScale          = true
-        map.isPitchEnabled      = true
-        map.isRotateEnabled     = true
+        map.delegate              = context.coordinator
+        map.showsUserLocation     = false
+        map.showsCompass          = false   // disabilitiamo la bussola nativa (la mappa ruota)
+        map.showsScale            = true
+        map.isPitchEnabled        = true
+        map.isRotateEnabled       = true
         map.pointOfInterestFilter = .excludingAll
 
-        for gestureType in [UIPanGestureRecognizer.self,
-                            UIPinchGestureRecognizer.self,
-                            UIRotationGestureRecognizer.self] as [UIGestureRecognizer.Type] {
-            let g = gestureType.init(
-                target: context.coordinator,
-                action: #selector(Coordinator.userDidInteract))
+        // Gesture per rilevare movimento manuale → disabilita seguimi
+        [UIPanGestureRecognizer.self,
+         UIPinchGestureRecognizer.self,
+         UIRotationGestureRecognizer.self].forEach { type in
+            let g = type.init(target: context.coordinator,
+                              action: #selector(Coordinator.userPanned))
             g.delegate = context.coordinator
             map.addGestureRecognizer(g)
         }
@@ -35,162 +35,144 @@ struct MapKitView: UIViewRepresentable {
     }
 
     func updateUIView(_ map: MKMapView, context: Context) {
-        // Overlay e pin tappe: aggiorna solo al cambio tratta/step
-        let key = currentLegIndex * 1000 + currentStepIndex
+        // Ricarica overlay e pin solo quando cambia tratta o step
+        let key = currentLegIndex * 10_000 + currentStepIndex
         if context.coordinator.lastKey != key {
             context.coordinator.lastKey = key
-            refreshOverlays(map)
-            refreshTurnAnnotations(map, context: context)
-            if !isFollowingUser { fitRoute(map) }
+            reloadRoute(map)
+            if !isFollowingUser { showOverview(map) }
         }
 
-        // Aggiorna/crea icona moto sulla mappa
+        // Icona moto: crea al primo fix GPS, poi aggiorna coordinate via KVO
         if let loc = userLocation {
-            updateMotoAnnotation(map, context: context, location: loc)
+            if let ann = context.coordinator.motoPin {
+                ann.coordinate = loc.coordinate
+            } else {
+                let ann = MotoPin(coordinate: loc.coordinate)
+                map.addAnnotation(ann)
+                context.coordinator.motoPin = ann
+            }
         }
 
-        // Camera 3D centrata sull'icona moto
+        // Camera: segui l'utente solo in modalità navigazione attiva
         guard isFollowingUser, let loc = userLocation else { return }
-        let bearing = resolvedHeading(location: loc, map: map)
-        let camera = MKMapCamera()
-        camera.centerCoordinate = loc.coordinate
-        camera.altitude = 500
-        camera.pitch    = 45
-        camera.heading  = bearing
-        map.setCamera(camera, animated: false)
+
+        let hdg = userHeading.flatMap { $0 >= 0 ? $0 : nil }
+                  ?? (loc.course >= 0 ? loc.course : map.camera.heading)
+
+        // pitch=20° → la mappa è quasi in pianta, il percorso è ben visibile
+        // altitude=700m → mostra ~1.5km di strada davanti
+        let cam = MKMapCamera()
+        cam.centerCoordinate = loc.coordinate
+        cam.heading          = hdg
+        cam.pitch            = 20
+        cam.altitude         = 700
+        map.setCamera(cam, animated: false)
     }
 
-    // MARK: - Overlay percorso
+    // MARK: - Percorso
 
-    private func refreshOverlays(_ map: MKMapView) {
+    private func reloadRoute(_ map: MKMapView) {
         map.removeOverlays(map.overlays)
+        map.removeAnnotations(map.annotations.filter { !($0 is MotoPin) })
+
+        // Linee percorso
         for (i, leg) in navRoute.legs.enumerated() {
-            let coords = leg.polylineCoordinates
-            guard !coords.isEmpty else { continue }
-            let line = MKPolyline(coordinates: coords, count: coords.count)
+            let pts = leg.polylineCoordinates
+            guard pts.count >= 2 else { continue }
+
+            // Bordo bianco (disegnato per primo, più largo → crea il contorno)
+            let border = MKPolyline(coordinates: pts, count: pts.count)
+            border.title = "border"
+            map.addOverlay(border, level: .aboveRoads)
+
+            // Linea colorata sopra il bordo
+            let line = MKPolyline(coordinates: pts, count: pts.count)
             line.title = i < currentLegIndex  ? "done"
-                       : i == currentLegIndex ? "current"
-                       : "future"
+                       : i == currentLegIndex ? "active"
+                       : "todo"
             map.addOverlay(line, level: .aboveRoads)
         }
-    }
-
-    // MARK: - Annotazioni svolte
-
-    private func refreshTurnAnnotations(_ map: MKMapView, context: Context) {
-        // Rimuovi solo TurnAnnotation e WaypointAnnotation, NON la moto
-        let toRemove = map.annotations.filter {
-            $0 is TurnAnnotation || $0 is WaypointAnnotation
-        }
-        map.removeAnnotations(toRemove)
 
         // Pin tappe principali
         for (i, wp) in navRoute.waypoints.enumerated() {
-            map.addAnnotation(WaypointAnnotation(
+            map.addAnnotation(WaypointPin(
                 coordinate: wp.coordinate,
-                title: shortName(wp.name),
-                index: i,
-                isCompleted: i < currentLegIndex,
-                isCurrent: i == currentLegIndex
+                label: "\(i + 1)",
+                state: i < currentLegIndex ? .done : i == currentLegIndex ? .active : .todo
             ))
         }
 
-        // Marcatori prossime svolte (max 3 step avanti)
+        // Marcatori prossime 2 svolte
         guard currentLegIndex < navRoute.legs.count else { return }
         let steps = navRoute.legs[currentLegIndex].steps
-        guard !steps.isEmpty else { return }
-        let start = min(currentStepIndex, steps.count - 1)
-        for i in start..<min(start + 3, steps.count) {
-            let step = steps[i]
-            guard !step.instruction.isEmpty else { continue }
-            let dir = TurnDirection.parse(step.instruction)
-            if i == start || dir != .straight {
-                map.addAnnotation(TurnAnnotation(
-                    coordinate: step.coordinate,
-                    direction: dir,
-                    instruction: step.instruction,
-                    isNext: i == start
-                ))
-            }
+        let from  = min(currentStepIndex, steps.count - 1)
+        var shown = 0
+        for i in from..<steps.count where shown < 2 {
+            let s = steps[i]
+            guard !s.instruction.isEmpty else { continue }
+            let dir = TurnDirection.parse(s.instruction)
+            guard dir != .straight || i == from else { continue }
+            map.addAnnotation(TurnPin(
+                coordinate: s.coordinate,
+                direction: dir,
+                title: s.instruction,
+                isPrimary: shown == 0
+            ))
+            shown += 1
         }
     }
 
-    // MARK: - Icona moto (posizione utente)
+    // MARK: - Overview
 
-    private func updateMotoAnnotation(_ map: MKMapView,
-                                      context: Context,
-                                      location: CLLocation) {
-        if let ann = context.coordinator.motoAnnotation {
-            // Aggiorna coordinate → MapKit la sposta automaticamente (KVO)
-            ann.coordinate = location.coordinate
-        } else {
-            let ann = MotoAnnotation(coordinate: location.coordinate)
-            map.addAnnotation(ann)
-            context.coordinator.motoAnnotation = ann
-        }
-    }
-
-    // MARK: - Fit overview
-
-    private func fitRoute(_ map: MKMapView) {
+    private func showOverview(_ map: MKMapView) {
         var rect = MKMapRect.null
-        for overlay in map.overlays { rect = rect.union(overlay.boundingMapRect) }
+        map.overlays.forEach { rect = rect.union($0.boundingMapRect) }
         guard !rect.isNull else { return }
-        let padded = rect.insetBy(dx: -rect.size.width * 0.12, dy: -rect.size.height * 0.12)
-        map.setVisibleMapRect(
-            padded,
-            edgePadding: UIEdgeInsets(top: 80, left: 20, bottom: 160, right: 20),
-            animated: true
-        )
-    }
-
-    // MARK: - Helpers
-
-    private func resolvedHeading(location: CLLocation, map: MKMapView) -> Double {
-        if let h = userHeading, h >= 0 { return h }
-        if location.course >= 0        { return location.course }
-        return map.camera.heading
-    }
-
-    private func shortName(_ full: String) -> String {
-        full.components(separatedBy: ",").first ?? full
+        let inset = rect.insetBy(dx: -rect.size.width  * 0.1,
+                                 dy: -rect.size.height * 0.1)
+        map.setVisibleMapRect(inset,
+                              edgePadding: UIEdgeInsets(top: 80, left: 24, bottom: 160, right: 24),
+                              animated: true)
     }
 
     // MARK: - Coordinator
 
     class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: MapKitView
-        var lastKey: Int = -1
-        var motoAnnotation: MotoAnnotation?
+        var lastKey = -1
+        var motoPin: MotoPin?
 
         init(_ parent: MapKitView) { self.parent = parent }
 
-        @objc func userDidInteract(_ g: UIGestureRecognizer) {
+        @objc func userPanned(_ g: UIGestureRecognizer) {
             guard g.state == .began, parent.isFollowingUser else { return }
             DispatchQueue.main.async { self.parent.isFollowingUser = false }
         }
 
-        func gestureRecognizer(_ g: UIGestureRecognizer,
-                               shouldRecognizeSimultaneouslyWith o: UIGestureRecognizer) -> Bool { true }
+        func gestureRecognizer(_ a: UIGestureRecognizer,
+                               shouldRecognizeSimultaneouslyWith b: UIGestureRecognizer) -> Bool { true }
 
-        // MARK: Renderer overlay
+        // MARK: Overlay renderer
 
         func mapView(_ map: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            guard let line = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
-            let r = MKPolylineRenderer(polyline: line)
-            switch line.title {
-            case "current":
-                r.strokeColor = UIColor.systemBlue    // BLU come Google Maps
+            guard let poly = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
+            let r = MKPolylineRenderer(polyline: poly)
+            r.lineCap  = .round
+            r.lineJoin = .round
+            switch poly.title {
+            case "border":
+                r.strokeColor = UIColor.white.withAlphaComponent(0.9)
+                r.lineWidth   = 14
+            case "active":
+                r.strokeColor = UIColor.systemBlue
+                r.lineWidth   = 10
+            case "todo":
+                r.strokeColor = UIColor.systemBlue.withAlphaComponent(0.45)
                 r.lineWidth   = 8
-                r.lineCap     = .round
-                r.lineJoin    = .round
-            case "done":
+            default: // done
                 r.strokeColor = UIColor.systemGray4
-                r.lineWidth   = 5
-            default:
-                r.strokeColor = UIColor.systemBlue.withAlphaComponent(0.35)
-                r.lineWidth   = 5
-                r.lineDashPattern = [8, 5]
+                r.lineWidth   = 7
             }
             return r
         }
@@ -199,150 +181,121 @@ struct MapKitView: UIViewRepresentable {
 
         func mapView(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             switch annotation {
-            case is MotoAnnotation:
-                return motoView(map, annotation: annotation)
-            case let turn as TurnAnnotation:
-                return turnView(map, turn: turn)
-            case let wp as WaypointAnnotation:
-                return waypointView(map, wp: wp)
-            default:
-                return nil
+            case is MotoPin:
+                let v = map.dequeueReusableAnnotationView(withIdentifier: "moto")
+                        ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "moto")
+                v.annotation     = annotation
+                v.canShowCallout = false
+                v.image          = motoPinImage()
+                v.layer.zPosition = 999
+                return v
+            case let t as TurnPin:
+                let v = map.dequeueReusableAnnotationView(withIdentifier: "turn")
+                        ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "turn")
+                v.annotation    = annotation
+                v.canShowCallout = true
+                v.image          = turnPinImage(t)
+                v.centerOffset   = CGPoint(x: 0, y: -(t.isPrimary ? 22 : 16))
+                return v
+            case let w as WaypointPin:
+                let v = map.dequeueReusableAnnotationView(withIdentifier: "wp")
+                        ?? MKAnnotationView(annotation: annotation, reuseIdentifier: "wp")
+                v.annotation    = annotation
+                v.canShowCallout = true
+                v.image          = waypointPinImage(w)
+                return v
+            default: return nil
             }
         }
 
-        // Icona moto — sempre puntata verso l'alto (la mappa ruota sotto di lei)
-        private func motoView(_ map: MKMapView, annotation: MKAnnotation) -> MKAnnotationView {
-            let id = "moto"
-            let view = map.dequeueReusableAnnotationView(withIdentifier: id)
-                ?? MKAnnotationView(annotation: annotation, reuseIdentifier: id)
-            view.annotation    = annotation
-            view.image         = motoImage()
-            view.canShowCallout = false
-            view.layer.zPosition = 1000   // sempre sopra gli altri pin
-            return view
-        }
-
-        private func motoImage() -> UIImage {
-            let size: CGFloat = 52
-            return UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { ctx in
-                let c = ctx.cgContext
-
-                // Alone bianco
+        // MARK: Icona moto — freccia di navigazione, punta sempre in su
+        // (la mappa ruota con il heading, quindi la freccia segue la direzione di marcia)
+        private func motoPinImage() -> UIImage {
+            let S: CGFloat = 56
+            return UIGraphicsImageRenderer(size: CGSize(width: S, height: S)).image { _ in
+                // Alone bianco (shadow)
                 UIColor.white.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: size, height: size)).fill()
-
+                UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: S, height: S)).fill()
                 // Cerchio arancione
                 UIColor.systemOrange.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: size-6, height: size-6)).fill()
-
-                // Icona moto ruotata di -90° per puntare verso l'alto
-                // (SF Symbol "motorcycle" guarda a destra per default)
-                let config = UIImage.SymbolConfiguration(pointSize: 24, weight: .bold)
-                let name = UIImage(systemName: "motorcycle") != nil ? "motorcycle" : "car.fill"
-                if let icon = UIImage(systemName: name, withConfiguration: config)?
-                    .withTintColor(.white, renderingMode: .alwaysOriginal) {
-                    c.saveGState()
-                    c.translateBy(x: size/2, y: size/2)
-                    c.rotate(by: -.pi / 2)   // ruota per puntare in su
-                    icon.draw(at: CGPoint(x: -icon.size.width/2, y: -icon.size.height/2))
-                    c.restoreGState()
-                }
+                UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: S-6, height: S-6)).fill()
+                // Freccia di navigazione bianca che punta in su
+                // (corpo + coda a V, classico stile navigatore)
+                let arrow = UIBezierPath()
+                let cx = S / 2
+                arrow.move(to:     CGPoint(x: cx,      y: 9))       // punta
+                arrow.addLine(to:  CGPoint(x: cx + 14, y: S - 12))  // basso destra
+                arrow.addLine(to:  CGPoint(x: cx,      y: S - 20))  // rientro centrale
+                arrow.addLine(to:  CGPoint(x: cx - 14, y: S - 12))  // basso sinistra
+                arrow.close()
+                UIColor.white.setFill()
+                arrow.fill()
             }
         }
 
-        // Marcatore svolta
-        private func turnView(_ map: MKMapView, turn: TurnAnnotation) -> MKAnnotationView {
-            let id = "turn"
-            let view = map.dequeueReusableAnnotationView(withIdentifier: id)
-                ?? MKAnnotationView(annotation: turn, reuseIdentifier: id)
-            view.annotation     = turn
-            view.canShowCallout = true
-            view.image          = turnImage(for: turn)
-            view.centerOffset   = CGPoint(x: 0, y: -20)
-            return view
-        }
-
-        private func turnImage(for turn: TurnAnnotation) -> UIImage {
-            let size: CGFloat = turn.isNext ? 44 : 32
-            return UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { _ in
-                let bg: UIColor = turn.isNext ? .systemOrange : .systemOrange.withAlphaComponent(0.6)
-                bg.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: size-4, height: size-4)).fill()
+        // MARK: Pin svolta
+        private func turnPinImage(_ t: TurnPin) -> UIImage {
+            let S: CGFloat = t.isPrimary ? 42 : 30
+            return UIGraphicsImageRenderer(size: CGSize(width: S, height: S)).image { _ in
+                UIColor.systemOrange.withAlphaComponent(t.isPrimary ? 1.0 : 0.65).setFill()
+                UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: S-4, height: S-4)).fill()
                 UIColor.white.setStroke()
-                let b = UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: size-4, height: size-4))
-                b.lineWidth = turn.isNext ? 2.5 : 1.5
-                b.stroke()
-                let config = UIImage.SymbolConfiguration(pointSize: size * 0.42, weight: .bold)
-                if let icon = UIImage(systemName: turn.direction.sfSymbol, withConfiguration: config)?
+                let b = UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: S-4, height: S-4))
+                b.lineWidth = t.isPrimary ? 2 : 1.5; b.stroke()
+                let cfg = UIImage.SymbolConfiguration(pointSize: S * 0.40, weight: .bold)
+                if let img = UIImage(systemName: t.direction.sfSymbol, withConfiguration: cfg)?
                     .withTintColor(.white, renderingMode: .alwaysOriginal) {
-                    icon.draw(at: CGPoint(
-                        x: (size - icon.size.width)  / 2,
-                        y: (size - icon.size.height) / 2))
+                    img.draw(at: CGPoint(x: (S - img.size.width)/2,
+                                        y: (S - img.size.height)/2))
                 }
             }
         }
 
-        // Pin tappa
-        private func waypointView(_ map: MKMapView, wp: WaypointAnnotation) -> MKAnnotationView {
-            let id = "wp"
-            let view = map.dequeueReusableAnnotationView(withIdentifier: id)
-                ?? MKAnnotationView(annotation: wp, reuseIdentifier: id)
-            view.annotation    = wp
-            view.canShowCallout = true
-            view.image         = waypointImage(for: wp)
-            return view
-        }
-
-        private func waypointImage(for wp: WaypointAnnotation) -> UIImage {
-            let size: CGFloat = 32
-            return UIGraphicsImageRenderer(size: CGSize(width: size, height: size)).image { _ in
-                let color: UIColor = wp.isCompleted ? .systemGreen
-                                   : wp.isCurrent  ? .systemOrange
-                                   : .systemBlue
-                color.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: size-4, height: size-4)).fill()
-                let label = "\(wp.index + 1)" as NSString
-                let attrs: [NSAttributedString.Key: Any] = [
-                    .font: UIFont.boldSystemFont(ofSize: 13),
-                    .foregroundColor: UIColor.white
-                ]
-                let sz = label.size(withAttributes: attrs)
-                label.draw(at: CGPoint(x: (size-sz.width)/2, y: (size-sz.height)/2),
-                           withAttributes: attrs)
+        // MARK: Pin tappa
+        private func waypointPinImage(_ w: WaypointPin) -> UIImage {
+            let S: CGFloat = 30
+            return UIGraphicsImageRenderer(size: CGSize(width: S, height: S)).image { _ in
+                let c: UIColor = w.state == .done   ? .systemGray3
+                               : w.state == .active ? .systemOrange
+                               : .systemBlue
+                c.setFill()
+                UIBezierPath(ovalIn: CGRect(x: 2, y: 2, width: S-4, height: S-4)).fill()
+                (w.label as NSString).draw(
+                    at: CGPoint(x: (S - 12)/2, y: (S - 14)/2),
+                    withAttributes: [.font: UIFont.boldSystemFont(ofSize: 11),
+                                     .foregroundColor: UIColor.white])
             }
         }
     }
 }
 
-// MARK: - Annotation classes
+// MARK: - Annotation models
 
-/// Posizione utente — usa KVO per aggiornare automaticamente la mappa
-class MotoAnnotation: NSObject, MKAnnotation {
+class MotoPin: NSObject, MKAnnotation {
     @objc dynamic var coordinate: CLLocationCoordinate2D
     init(coordinate: CLLocationCoordinate2D) { self.coordinate = coordinate }
 }
 
-class WaypointAnnotation: NSObject, MKAnnotation {
+class WaypointPin: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let title: String?
-    let index: Int
-    let isCompleted: Bool
-    let isCurrent: Bool
-    init(coordinate: CLLocationCoordinate2D, title: String, index: Int,
-         isCompleted: Bool, isCurrent: Bool) {
-        self.coordinate = coordinate; self.title = title; self.index = index
-        self.isCompleted = isCompleted; self.isCurrent = isCurrent
+    let label: String
+    enum State { case done, active, todo }
+    let state: State
+    init(coordinate: CLLocationCoordinate2D, label: String, state: State) {
+        self.coordinate = coordinate; self.title = label
+        self.label = label; self.state = state
     }
 }
 
-class TurnAnnotation: NSObject, MKAnnotation {
+class TurnPin: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let direction: TurnDirection
     let title: String?
-    let isNext: Bool
+    let isPrimary: Bool
     init(coordinate: CLLocationCoordinate2D, direction: TurnDirection,
-         instruction: String, isNext: Bool) {
+         title: String, isPrimary: Bool) {
         self.coordinate = coordinate; self.direction = direction
-        self.title = instruction; self.isNext = isNext
+        self.title = title; self.isPrimary = isPrimary
     }
 }
