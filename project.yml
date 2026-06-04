@@ -31,7 +31,11 @@ targets:
         UILaunchScreen:
           UIColorName: ""
         NSLocationWhenInUseUsageDescription: >
-          Necessario per aprire il percorso su Apple Maps.
+          InMoto usa la tua posizione per la navigazione GPS e l'avanzamento automatico tra le tappe.
+        NSLocationAlwaysAndWhenInUseUsageDescription: >
+          InMoto usa la tua posizione in background per continuare la navigazione GPS con schermo spento.
+        UIBackgroundModes:
+          - location
         LSApplicationQueriesSchemes:
           - comgooglemaps
           - googlemaps

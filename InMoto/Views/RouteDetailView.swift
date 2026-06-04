@@ -7,6 +7,7 @@ struct RouteDetailView: View {
     @State private var waypoints: [String]
     @State private var newWaypoint = ""
     @State private var showAddField = false
+    @State private var showNavigator = false
 
     init(route: MotoRoute) {
         self.route = route
@@ -39,6 +40,9 @@ struct RouteDetailView: View {
                     Image(systemName: "house.fill")
                 }
             }
+        }
+        .fullScreenCover(isPresented: $showNavigator) {
+            DownloadPreparationView(route: route)
         }
     }
 
@@ -240,11 +244,26 @@ struct RouteDetailView: View {
             Label("Navigazione", systemImage: "map.fill")
                 .font(.headline)
 
+            Button(action: { showNavigator = true }) {
+                Label("Naviga con InMoto", systemImage: "location.north.fill")
+                    .frame(maxWidth: .infinity)
+                    .fontWeight(.semibold)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.orange)
+            .disabled(waypoints.isEmpty)
+
+            Text("Percorso offline con avanzamento automatico tra le tappe.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+
+            Divider()
+
             Button(action: openGoogleMaps) {
                 Label("Apri in Google Maps", systemImage: "globe")
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
+            .buttonStyle(.bordered)
             .tint(.indigo)
 
             Text("Evita automaticamente autostrade e pedaggi. Include tutte le tappe elencate sopra.")
