@@ -1,31 +1,23 @@
 import SwiftUI
-import CoreLocation
 
 struct CreateRouteView: View {
     @EnvironmentObject var store:    RouteStore
     @EnvironmentObject var appState: AppState
 
-    @State private var partenza      = ""
-    @State private var destinazione  = ""
-    @State private var partenzaSugg: [String]     = []
-    @State private var destinazioneSugg: [String] = []
-    @State private var result:       MotoRoute?   = nil
-    @State private var isLoading     = false
+    @State private var partenza     = ""
+    @State private var destinazione = ""
+    @State private var result:      MotoRoute? = nil
+    @State private var isLoading    = false
     @State private var isGeolocating = false
     @State private var showFavPartenza     = false
     @State private var showFavDestinazione = false
 
+    @StateObject private var partenzaCompleter     = AddressCompleter()
+    @StateObject private var destinazioneCompleter = AddressCompleter()
+
     private var canCreate: Bool {
         !partenza.trimmingCharacters(in: .whitespaces).isEmpty &&
         !destinazione.trimmingCharacters(in: .whitespaces).isEmpty
-    }
-
-    private func sugg(for text: String) -> [String] {
-        let q = text.trimmingCharacters(in: .whitespaces)
-        guard q.count >= 2 else { return [] }
-        return store.allLocations
-            .filter { $0.localizedCaseInsensitiveContains(q) }
-            .prefix(6).map { $0 }
     }
 
     var body: some View {
@@ -37,12 +29,14 @@ struct CreateRouteView: View {
                         Image(systemName: "mappin.circle").foregroundStyle(.green)
                         TextField("Dove parti?", text: $partenza)
                             .autocorrectionDisabled()
-                            .onChange(of: partenza) { _ in partenzaSugg = sugg(for: partenza) }
+                            .onChange(of: partenza) { _ in
+                                partenzaCompleter.update(query: partenza)
+                            }
                         if isGeolocating {
                             ProgressView().scaleEffect(0.85)
                         } else {
                             if !partenza.isEmpty {
-                                Button { partenza = ""; partenzaSugg = [] } label: {
+                                Button { partenza = ""; partenzaCompleter.clear() } label: {
                                     Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
                                 }.buttonStyle(.plain)
                             }
@@ -56,18 +50,16 @@ struct CreateRouteView: View {
                             }
                         }
                     }
-                    ForEach(partenzaSugg, id: \.self) { s in
+                    ForEach(partenzaCompleter.results) { s in
                         Button {
-                            partenza = s; partenzaSugg = []; hideKeyboard()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "mappin").foregroundStyle(.green).font(.caption)
-                                Text(s).foregroundStyle(.primary).frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                        }.buttonStyle(.plain)
+                            partenza = s.fullText
+                            partenzaCompleter.clear()
+                            hideKeyboard()
+                        } label: { suggestionRow(s, color: .green) }
+                        .buttonStyle(.plain)
                     }
                 } header: { Text("Partenza") }
-                  footer: { Text("Inserisci qualsiasi luogo, anche se non è nel database") }
+                  footer: { Text("Inserisci qualsiasi luogo o indirizzo in Italia") }
 
                 // ── Destinazione ─────────────────────────────────────────────
                 Section {
@@ -75,9 +67,11 @@ struct CreateRouteView: View {
                         Image(systemName: "mappin.circle.fill").foregroundStyle(.red)
                         TextField("Dove vuoi arrivare?", text: $destinazione)
                             .autocorrectionDisabled()
-                            .onChange(of: destinazione) { _ in destinazioneSugg = sugg(for: destinazione) }
+                            .onChange(of: destinazione) { _ in
+                                destinazioneCompleter.update(query: destinazione)
+                            }
                         if !destinazione.isEmpty {
-                            Button { destinazione = ""; destinazioneSugg = [] } label: {
+                            Button { destinazione = ""; destinazioneCompleter.clear() } label: {
                                 Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
                             }.buttonStyle(.plain)
                         }
@@ -87,15 +81,13 @@ struct CreateRouteView: View {
                             }.buttonStyle(.plain)
                         }
                     }
-                    ForEach(destinazioneSugg, id: \.self) { s in
+                    ForEach(destinazioneCompleter.results) { s in
                         Button {
-                            destinazione = s; destinazioneSugg = []; hideKeyboard()
-                        } label: {
-                            HStack(spacing: 8) {
-                                Image(systemName: "mappin").foregroundStyle(.red).font(.caption)
-                                Text(s).foregroundStyle(.primary).frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                        }.buttonStyle(.plain)
+                            destinazione = s.fullText
+                            destinazioneCompleter.clear()
+                            hideKeyboard()
+                        } label: { suggestionRow(s, color: .red) }
+                        .buttonStyle(.plain)
                     }
                 } header: { Text("Destinazione") }
 
@@ -131,8 +123,7 @@ struct CreateRouteView: View {
                         .padding(.vertical, 4)
 
                         NavigationLink(destination: RouteDetailView(route: route)) {
-                            RouteCardView(route: route)
-                                .padding(.horizontal, -16)
+                            RouteCardView(route: route).padding(.horizontal, -16)
                         }
                         .buttonStyle(.plain)
                     } header: {
@@ -145,22 +136,43 @@ struct CreateRouteView: View {
             .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showFavPartenza) {
                 FavoritesPickerSheet { place in
-                    partenza = place.address; partenzaSugg = []
+                    partenza = place.address
+                    partenzaCompleter.clear()
                 }
             }
             .sheet(isPresented: $showFavDestinazione) {
                 FavoritesPickerSheet { place in
-                    destinazione = place.address; destinazioneSugg = []
+                    destinazione = place.address
+                    destinazioneCompleter.clear()
                 }
             }
         }
     }
 
-    // ── Actions ──────────────────────────────────────────────────────────────
+    // ── Riga suggerimento ─────────────────────────────────────────────────────
+    private func suggestionRow(_ s: AddressCompleter.Suggestion, color: Color) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: "mappin").foregroundStyle(color).font(.caption)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(s.title)
+                    .font(.subheadline)
+                    .foregroundStyle(.primary)
+                if !s.subtitle.isEmpty {
+                    Text(s.subtitle)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    // ── Actions ───────────────────────────────────────────────────────────────
 
     private func crea() {
         hideKeyboard()
-        partenzaSugg = []; destinazioneSugg = []
+        partenzaCompleter.clear()
+        destinazioneCompleter.clear()
         isLoading = true
 
         let start = partenza.trimmingCharacters(in: .whitespaces)
@@ -178,7 +190,7 @@ struct CreateRouteView: View {
 
     private func reset() {
         partenza = ""; destinazione = ""
-        partenzaSugg = []; destinazioneSugg = []
+        partenzaCompleter.clear(); destinazioneCompleter.clear()
         result = nil
     }
 
@@ -194,7 +206,7 @@ struct CreateRouteView: View {
                     let addr = await RouterService.reverseGeocode(loc)
                     await MainActor.run {
                         partenza = addr.isEmpty ? "Posizione attuale" : addr
-                        partenzaSugg = []
+                        partenzaCompleter.clear()
                         isGeolocating = false
                     }
                     return

@@ -107,6 +107,7 @@ struct AddFavoritePlaceView: View {
     @State private var tag = ""
     @State private var address = ""
     @State private var isGeolocating = false
+    @StateObject private var addressCompleter = AddressCompleter()
 
     private var canSave: Bool {
         !tag.trimmingCharacters(in: .whitespaces).isEmpty &&
@@ -125,17 +126,39 @@ struct AddFavoritePlaceView: View {
                     HStack {
                         TextField("Indirizzo o nome del luogo", text: $address)
                             .autocorrectionDisabled()
+                            .onChange(of: address) { _ in
+                                addressCompleter.update(query: address)
+                            }
                         if isGeolocating {
                             ProgressView().scaleEffect(0.85)
                         } else {
                             Button(action: usaPosizioneAttuale) {
-                                Image(systemName: "location.fill")
-                                    .foregroundStyle(.blue)
+                                Image(systemName: "location.fill").foregroundStyle(.blue)
                             }.buttonStyle(.plain)
                         }
                     }
+                    // Suggerimenti online
+                    ForEach(addressCompleter.results) { s in
+                        Button {
+                            address = s.fullText
+                            addressCompleter.clear()
+                            hideKeyboard()
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "mappin").foregroundStyle(.orange).font(.caption)
+                                VStack(alignment: .leading, spacing: 1) {
+                                    Text(s.title).font(.subheadline).foregroundStyle(.primary)
+                                    if !s.subtitle.isEmpty {
+                                        Text(s.subtitle).font(.caption2).foregroundStyle(.secondary)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
                 } header: { Text("Indirizzo") }
-                  footer: { Text("Puoi inserire qualsiasi luogo o indirizzo italiano") }
+                  footer: { Text("Inizia a scrivere per vedere i suggerimenti basati su Apple Maps") }
             }
             .navigationTitle("Nuovo preferito")
             .navigationBarTitleDisplayMode(.inline)
@@ -168,13 +191,22 @@ struct AddFavoritePlaceView: View {
                 try? await Task.sleep(nanoseconds: 500_000_000)
                 if let loc = LocationManager.shared.location {
                     let addr = await RouterService.reverseGeocode(loc)
-                    await MainActor.run { address = addr; isGeolocating = false }
+                    await MainActor.run {
+                        address = addr
+                        addressCompleter.clear()
+                        isGeolocating = false
+                    }
                     return
                 }
                 attempts += 1
             }
             await MainActor.run { isGeolocating = false }
         }
+    }
+
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                        to: nil, from: nil, for: nil)
     }
 }
 
@@ -187,6 +219,7 @@ struct EditFavoritePlaceView: View {
     @State private var tag: String
     @State private var address: String
     @State private var isGeolocating = false
+    @StateObject private var addressCompleter = AddressCompleter()
     private let placeId: String
 
     init(place: FavoritePlace) {
@@ -212,16 +245,38 @@ struct EditFavoritePlaceView: View {
                     HStack {
                         TextField("Indirizzo o nome del luogo", text: $address)
                             .autocorrectionDisabled()
+                            .onChange(of: address) { _ in
+                                addressCompleter.update(query: address)
+                            }
                         if isGeolocating {
                             ProgressView().scaleEffect(0.85)
                         } else {
                             Button(action: usaPosizioneAttuale) {
-                                Image(systemName: "location.fill")
-                                    .foregroundStyle(.blue)
+                                Image(systemName: "location.fill").foregroundStyle(.blue)
                             }.buttonStyle(.plain)
                         }
                     }
+                    ForEach(addressCompleter.results) { s in
+                        Button {
+                            address = s.fullText
+                            addressCompleter.clear()
+                            hideKeyboard()
+                        } label: {
+                            HStack(spacing: 10) {
+                                Image(systemName: "mappin").foregroundStyle(.orange).font(.caption)
+                                VStack(alignment: .leading, spacing: 1) {
+                                    Text(s.title).font(.subheadline).foregroundStyle(.primary)
+                                    if !s.subtitle.isEmpty {
+                                        Text(s.subtitle).font(.caption2).foregroundStyle(.secondary)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
                 } header: { Text("Indirizzo") }
+                  footer: { Text("Inizia a scrivere per vedere i suggerimenti") }
             }
             .navigationTitle("Modifica preferito")
             .navigationBarTitleDisplayMode(.inline)
@@ -231,9 +286,6 @@ struct EditFavoritePlaceView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Salva") {
-                        var updated = FavoritePlace(tag: tag.trimmingCharacters(in: .whitespaces),
-                                                   address: address.trimmingCharacters(in: .whitespaces))
-                        // Preserve the original id via a workaround (copy struct and patch)
                         store.updateFavoritePlace(
                             FavoritePlace(id: placeId,
                                           tag: tag.trimmingCharacters(in: .whitespaces),
@@ -258,13 +310,22 @@ struct EditFavoritePlaceView: View {
                 try? await Task.sleep(nanoseconds: 500_000_000)
                 if let loc = LocationManager.shared.location {
                     let addr = await RouterService.reverseGeocode(loc)
-                    await MainActor.run { address = addr; isGeolocating = false }
+                    await MainActor.run {
+                        address = addr
+                        addressCompleter.clear()
+                        isGeolocating = false
+                    }
                     return
                 }
                 attempts += 1
             }
             await MainActor.run { isGeolocating = false }
         }
+    }
+
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                        to: nil, from: nil, for: nil)
     }
 }
 
@@ -319,7 +380,7 @@ struct FavoritesPickerSheet: View {
     }
 }
 
-// Estensione per FavoritePlace con id esterno (per EditFavoritePlaceView)
+// Estensione per creare FavoritePlace con ID specifico (usata in EditFavoritePlaceView)
 extension FavoritePlace {
     init(id: String, tag: String, address: String) {
         self.id = id

@@ -91,13 +91,14 @@ struct ImportRouteView: View {
     // Modalità A→B
     @State private var startText = ""
     @State private var endText   = ""
-    @State private var startSugg: [String] = []
-    @State private var endSugg:   [String] = []
 
     // GPS / Preferiti
     @State private var isGeolocatingStart = false
     @State private var showFavStart = false
     @State private var showFavEnd   = false
+
+    @StateObject private var startCompleter = AddressCompleter()
+    @StateObject private var endCompleter   = AddressCompleter()
 
     // Risultato
     @State private var parsedWaypoints: [ParsedWaypoint] = []
@@ -113,12 +114,6 @@ struct ImportRouteView: View {
             ? !rawInput.trimmingCharacters(in: .whitespaces).isEmpty
             : !startText.trimmingCharacters(in: .whitespaces).isEmpty &&
               !endText.trimmingCharacters(in: .whitespaces).isEmpty)
-    }
-
-    private func sugg(for text: String) -> [String] {
-        let q = text.trimmingCharacters(in: .whitespaces)
-        guard q.count >= 2 else { return [] }
-        return store.allLocations.filter { $0.localizedCaseInsensitiveContains(q) }.prefix(5).map { $0 }
     }
 
     var body: some View {
@@ -195,12 +190,16 @@ struct ImportRouteView: View {
             }
             .sheet(isPresented: $showFavStart) {
                 FavoritesPickerSheet { place in
-                    startText = place.address; startSugg = []; resetResult()
+                    startText = place.address
+                    startCompleter.clear()
+                    resetResult()
                 }
             }
             .sheet(isPresented: $showFavEnd) {
                 FavoritesPickerSheet { place in
-                    endText = place.address; endSugg = []; resetResult()
+                    endText = place.address
+                    endCompleter.clear()
+                    resetResult()
                 }
             }
         }
@@ -243,12 +242,15 @@ struct ImportRouteView: View {
                     Image(systemName: "mappin.circle").foregroundStyle(.green)
                     TextField("Dove parti?", text: $startText)
                         .autocorrectionDisabled()
-                        .onChange(of: startText) { _ in startSugg = sugg(for: startText); resetResult() }
+                        .onChange(of: startText) { _ in
+                            startCompleter.update(query: startText)
+                            resetResult()
+                        }
                     if isGeolocatingStart {
                         ProgressView().scaleEffect(0.85)
                     } else {
                         if !startText.isEmpty {
-                            Button { startText = ""; startSugg = [] } label: {
+                            Button { startText = ""; startCompleter.clear() } label: {
                                 Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
                             }.buttonStyle(.plain)
                         }
@@ -262,25 +264,28 @@ struct ImportRouteView: View {
                         }
                     }
                 }
-                ForEach(startSugg, id: \.self) { s in
-                    Button { startText = s; startSugg = []; hideKeyboard() } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "mappin").foregroundStyle(.green).font(.caption)
-                            Text(s).foregroundStyle(.primary).frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }.buttonStyle(.plain)
+                ForEach(startCompleter.results) { s in
+                    Button {
+                        startText = s.fullText
+                        startCompleter.clear()
+                        hideKeyboard()
+                    } label: { addressSuggestionRow(s, color: .green) }
+                    .buttonStyle(.plain)
                 }
             } header: { Text("Partenza") }
-              footer: { Text("Puoi scrivere qualsiasi luogo, anche se non è nel database") }
+              footer: { Text("Puoi scrivere qualsiasi luogo o indirizzo") }
 
             Section {
                 HStack(spacing: 8) {
                     Image(systemName: "mappin.circle.fill").foregroundStyle(.red)
                     TextField("Dove vuoi arrivare?", text: $endText)
                         .autocorrectionDisabled()
-                        .onChange(of: endText) { _ in endSugg = sugg(for: endText); resetResult() }
+                        .onChange(of: endText) { _ in
+                            endCompleter.update(query: endText)
+                            resetResult()
+                        }
                     if !endText.isEmpty {
-                        Button { endText = ""; endSugg = [] } label: {
+                        Button { endText = ""; endCompleter.clear() } label: {
                             Image(systemName: "xmark.circle.fill").foregroundStyle(.secondary)
                         }.buttonStyle(.plain)
                     }
@@ -290,15 +295,28 @@ struct ImportRouteView: View {
                         }.buttonStyle(.plain)
                     }
                 }
-                ForEach(endSugg, id: \.self) { s in
-                    Button { endText = s; endSugg = []; hideKeyboard() } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "mappin").foregroundStyle(.red).font(.caption)
-                            Text(s).foregroundStyle(.primary).frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                    }.buttonStyle(.plain)
+                ForEach(endCompleter.results) { s in
+                    Button {
+                        endText = s.fullText
+                        endCompleter.clear()
+                        hideKeyboard()
+                    } label: { addressSuggestionRow(s, color: .red) }
+                    .buttonStyle(.plain)
                 }
             } header: { Text("Destinazione") }
+        }
+    }
+
+    private func addressSuggestionRow(_ s: AddressCompleter.Suggestion, color: Color) -> some View {
+        HStack(spacing: 10) {
+            Image(systemName: "mappin").foregroundStyle(color).font(.caption)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(s.title).font(.subheadline).foregroundStyle(.primary)
+                if !s.subtitle.isEmpty {
+                    Text(s.subtitle).font(.caption2).foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -559,7 +577,7 @@ struct ImportRouteView: View {
                     let addr = await RouterService.reverseGeocode(loc)
                     await MainActor.run {
                         startText = addr.isEmpty ? "Posizione attuale" : addr
-                        startSugg = []
+                        startCompleter.clear()
                         isGeolocatingStart = false
                         resetResult()
                     }
