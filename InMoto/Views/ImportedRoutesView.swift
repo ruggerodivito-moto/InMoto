@@ -473,6 +473,8 @@ struct ImportRouteView: View {
                         } else {
                             wps.append(contentsOf: parsed)
                         }
+                    } else if RoadbookParser.isNonPlaceLine(line) {
+                        warns.append("Riga ignorata (non è un luogo): \(line)")
                     } else {
                         wps.append(ParsedWaypoint(displayName: line, gmapsWaypoint: "\(line), Italy", source: nil))
                     }

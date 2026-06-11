@@ -69,22 +69,33 @@ enum RoadbookParser {
                 totaleMin = f.durataMin
 
             case .tappa(let n):
+                let nameLine = f.textLines.first
                 var tappeNomi = f.waypoints.map { $0.displayName }
                 var gwps = f.waypoints.map { geocodeInput($0) }
-                // Tappa con un solo punto (link a luogo): rendila navigabile
-                // partendo dalla fine della tappa precedente
-                if gwps.count == 1,
-                   let prev = items.last(where: { $0.kind == .tappa }),
-                   let prevLastName = prev.tappeNomi.last,
-                   let prevLastWp = prev.waypointsGmaps.last {
-                    tappeNomi.insert(prevLastName, at: 0)
-                    gwps.insert(prevLastWp, at: 0)
+                // Tappa con un solo punto: il link è solo la destinazione (un
+                // segnaposto /place/, non un percorso /dir/). Ricava la partenza:
+                // prima dalla fine della tappa precedente, poi — per la Tappa 1
+                // che non ha precedente — dal nome "Partenza - Arrivo".
+                if gwps.count == 1 {
+                    if let prev = items.last(where: { $0.kind == .tappa }),
+                       let prevLastName = prev.tappeNomi.last,
+                       let prevLastWp = prev.waypointsGmaps.last {
+                        tappeNomi.insert(prevLastName, at: 0)
+                        gwps.insert(prevLastWp, at: 0)
+                    } else if let (start, _) = endpointsFromName(nameLine) {
+                        tappeNomi.insert(start, at: 0)
+                        gwps.insert(start, at: 0)
+                    }
+                } else if gwps.isEmpty, let (start, end) = endpointsFromName(nameLine) {
+                    // Nessun link valido: usa partenza e arrivo dal nome tappa
+                    tappeNomi = [start, end]
+                    gwps = [start, end]
                 }
                 items.append(TripPlanItem(
                     id: "tappa\(n)",
                     kind: .tappa,
                     titolo: "Tappa \(n)",
-                    nome: f.textLines.first ?? defaultName(tappeNomi),
+                    nome: nameLine ?? defaultName(tappeNomi),
                     nota: f.note,
                     oraInizio: f.oraInizio, oraFine: f.oraFine,
                     km: f.km, durataMin: f.durataMin,
@@ -275,6 +286,35 @@ enum RoadbookParser {
             return wp.displayName
         }
         return wp.gmapsWaypoint
+    }
+
+    /// Da "Autogrill Carcare - Colle della Maddalena" ricava (partenza, arrivo).
+    /// Divide solo sul trattino con spazi attorno: così non spezza nomi tipo
+    /// "A6 Torino-Savona". Non forza ", Italy" (i viaggi sconfinano in Francia).
+    private static func endpointsFromName(_ name: String?) -> (start: String, end: String)? {
+        guard let raw = name?.trimmingCharacters(in: .whitespaces), !raw.isEmpty else { return nil }
+        let parts = raw
+            .replacingOccurrences(of: #"\s+[–—]\s+"#, with: " - ", options: .regularExpression)
+            .components(separatedBy: " - ")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+        guard parts.count >= 2, let start = parts.first, let end = parts.last else { return nil }
+        return (start, end)
+    }
+
+    /// True se la riga è chiaramente un metadato (orario, durata/km o
+    /// intestazione di sezione) e non un nome di luogo. Usato da "Importa
+    /// tragitto" per non trasformare righe come "8h 10' 456km" in tappe.
+    static func isNonPlaceLine(_ raw: String) -> Bool {
+        let line = raw.trimmingCharacters(in: .whitespaces)
+        guard !line.isEmpty else { return true }
+        let upper = line.uppercased()
+        for h in ["TAPPA", "PAUSA", "ARRIVO", "PARTENZA", "PER TORNARE", "NOTE"]
+        where upper == h || upper.hasPrefix(h + " ") { return true }
+        if timeRange(line) != nil { return true }
+        if singleTime(line) != nil { return true }
+        if metrics(line) != nil { return true }
+        return false
     }
 
     private static func defaultName(_ tappe: [String]) -> String {
