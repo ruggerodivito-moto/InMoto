@@ -4,13 +4,14 @@ import SwiftUI
 struct ImportedRoutesView: View {
     @EnvironmentObject var store:    RouteStore
     @EnvironmentObject var appState: AppState
-    @State private var showImport  = false
-    @State private var showCompose = false
+    @State private var showImport   = false
+    @State private var showCompose  = false
+    @State private var showRoadbook = false
 
     var body: some View {
         NavigationStack {
             Group {
-                if store.personalRoutes.isEmpty {
+                if store.personalRoutes.isEmpty && store.tripPlans.isEmpty {
                     emptyState
                 } else {
                     routeList
@@ -20,13 +21,19 @@ struct ImportedRoutesView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { showCompose = true } label: {
-                        Image(systemName: "arrow.triangle.merge")
+                    Menu {
+                        Button { showImport = true } label: {
+                            Label("Importa tragitto", systemImage: "link")
+                        }
+                        Button { showRoadbook = true } label: {
+                            Label("Importa roadbook (viaggio)", systemImage: "doc.text")
+                        }
+                        Button { showCompose = true } label: {
+                            Label("Componi viaggio da tragitti", systemImage: "arrow.triangle.merge")
+                        }
+                    } label: {
+                        Image(systemName: "plus")
                     }
-                    .help("Componi viaggio da più tragitti")
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { showImport = true } label: { Image(systemName: "plus") }
                 }
             }
             .sheet(isPresented: $showImport) {
@@ -34,6 +41,9 @@ struct ImportedRoutesView: View {
             }
             .sheet(isPresented: $showCompose) {
                 ComposeTripView()
+            }
+            .sheet(isPresented: $showRoadbook) {
+                RoadbookImportView()
             }
         }
     }
@@ -46,7 +56,7 @@ struct ImportedRoutesView: View {
                 .foregroundStyle(.indigo.opacity(0.4))
             Text("Nessun tragitto personale")
                 .font(.title2.weight(.semibold))
-            Text("Importa i tuoi tragitti da Google Maps\no crea un percorso da A a B.")
+            Text("Importa i tuoi tragitti da Google Maps,\nun roadbook a tappe o crea un percorso da A a B.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
                 .font(.subheadline)
@@ -62,17 +72,58 @@ struct ImportedRoutesView: View {
 
     private var routeList: some View {
         List {
-            ForEach(store.personalRoutes) { route in
-                NavigationLink(destination: RouteDetailView(route: route)) {
-                    RouteCardView(route: route).padding(.vertical, 4)
+            if !store.tripPlans.isEmpty {
+                Section {
+                    ForEach(store.tripPlans) { plan in
+                        NavigationLink(destination: TripPlanDetailView(plan: plan)) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(plan.nome)
+                                    .font(.headline)
+                                if !plan.sottotitolo.isEmpty {
+                                    Text(plan.sottotitolo)
+                                        .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                }
+                                HStack(spacing: 10) {
+                                    Label("\(plan.tappe.count) tappe", systemImage: "flag.checkered")
+                                    if plan.totaleKm > 0 {
+                                        Label("\(plan.totaleKm) km", systemImage: "road.lanes")
+                                    }
+                                    if plan.totaleMin > 0 {
+                                        Label(plan.durataFormattata, systemImage: "clock")
+                                    }
+                                }
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                    .onDelete { offsets in
+                        offsets.forEach { store.deleteTripPlan(store.tripPlans[$0]) }
+                    }
+                } header: {
+                    Text("Viaggi")
                 }
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
-            .onDelete { offsets in
-                offsets.forEach { store.deletePersonalRoute(store.personalRoutes[$0]) }
+
+            if !store.personalRoutes.isEmpty {
+                Section {
+                    ForEach(store.personalRoutes) { route in
+                        NavigationLink(destination: RouteDetailView(route: route)) {
+                            RouteCardView(route: route).padding(.vertical, 4)
+                        }
+                        .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    }
+                    .onDelete { offsets in
+                        offsets.forEach { store.deletePersonalRoute(store.personalRoutes[$0]) }
+                    }
+                } header: {
+                    Text("Tragitti")
+                }
             }
         }
-        .listStyle(.plain)
+        .listStyle(.insetGrouped)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) { EditButton() }
         }

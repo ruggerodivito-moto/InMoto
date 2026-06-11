@@ -10,6 +10,7 @@ class RouteStore: ObservableObject {
     @Published var lastSyncDate: Date?
     @Published var personalRoutes: [MotoRoute] = []
     @Published var favoritePlaces: [FavoritePlace] = []
+    @Published var tripPlans: [TripPlan] = []
 
     private let cacheURL: URL = {
         let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
@@ -26,6 +27,11 @@ class RouteStore: ObservableObject {
         return dir.appendingPathComponent("favorite_places.json")
     }()
 
+    private let tripPlansURL: URL = {
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return dir.appendingPathComponent("trip_plans.json")
+    }()
+
     private let syncDateKey = "lastSyncDate"
 
     // ── Caricamento iniziale ────────────────────────────────────────────────
@@ -34,6 +40,7 @@ class RouteStore: ObservableObject {
         loadFromBundle()
         loadPersonalRoutes()
         loadFavoritePlaces()
+        loadTripPlans()
     }
 
     // ── Tragitti personali ──────────────────────────────────────────────────
@@ -93,6 +100,35 @@ class RouteStore: ObservableObject {
         }
     }
 
+    // ── Viaggi (roadbook) ───────────────────────────────────────────────────
+    func loadTripPlans() {
+        guard FileManager.default.fileExists(atPath: tripPlansURL.path) else { return }
+        if let data = try? Data(contentsOf: tripPlansURL),
+           let loaded = try? JSONDecoder().decode([TripPlan].self, from: data) {
+            tripPlans = loaded
+        }
+    }
+
+    func saveTripPlan(_ plan: TripPlan) {
+        tripPlans.append(plan)
+        persistTripPlans()
+    }
+
+    func deleteTripPlan(_ plan: TripPlan) {
+        tripPlans.removeAll { $0.id == plan.id }
+        // ripulisci i percorsi di navigazione cacheati delle tappe
+        for item in plan.tappe {
+            RouterService.shared.deleteCachedRoute(for: "\(plan.id)_\(item.id)")
+        }
+        persistTripPlans()
+    }
+
+    private func persistTripPlans() {
+        if let data = try? JSONEncoder().encode(tripPlans) {
+            try? data.write(to: tripPlansURL, options: .atomic)
+        }
+    }
+
     private func loadFromBundle() {
         guard let url = Bundle.main.url(forResource: "routes", withExtension: "json") else { return }
         do {
@@ -115,6 +151,7 @@ class RouteStore: ObservableObject {
             lastSyncDate = UserDefaults.standard.object(forKey: syncDateKey) as? Date
             loadPersonalRoutes()
             loadFavoritePlaces()
+            loadTripPlans()
             return true
         } catch {
             return false
