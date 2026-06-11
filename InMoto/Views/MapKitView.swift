@@ -133,10 +133,14 @@ struct MapKitView: UIViewRepresentable {
         }
 
         // Quota in funzione della velocità: più veloce → vista più ampia.
-        // Centro spostato in avanti: la moto resta nel terzo basso dello schermo
-        // e si vede il percorso futuro, come Google Maps.
+        // Lookahead in avanti solo in movimento: da fermo (es. all'avvio della
+        // tappa) la moto resta centrata sulla posizione; in marcia il centro
+        // scivola avanti per mostrare il percorso futuro, come Google Maps.
         let altitude = min(1500.0, 600.0 + speed * 40.0)
-        let center = Self.offset(loc.coordinate, byMeters: altitude * 0.28, bearing: heading)
+        let lookahead = speed > 1 ? min(altitude * 0.28, speed * 16.0) : 0
+        let center = lookahead > 0
+            ? Self.offset(loc.coordinate, byMeters: lookahead, bearing: heading)
+            : loc.coordinate
         let cam = MKMapCamera(lookingAtCenter: center, fromDistance: altitude,
                               pitch: 45, heading: heading)
         // Interpolazione lineare tra un fix GPS e l'altro → movimento fluido
@@ -245,28 +249,27 @@ struct MapKitView: UIViewRepresentable {
             }
         }
 
-        // MARK: Icona moto — freccia di navigazione, punta sempre in su
-        // (la mappa ruota con il heading, quindi la freccia segue la direzione di marcia)
+        // MARK: Icona moto — sagoma di moto stilizzata che marca la posizione.
+        // Niente cerchio: solo la moto arancione con un contorno bianco, così
+        // resta leggibile su qualsiasi sfondo della mappa.
         private func motoPinImage() -> UIImage {
-            let S: CGFloat = 56
+            let S: CGFloat = 50
+            let cfg = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold)
+            let glyph = UIImage(systemName: "motorcycle", withConfiguration: cfg)
             return UIGraphicsImageRenderer(size: CGSize(width: S, height: S)).image { _ in
-                // Alone bianco (shadow)
-                UIColor.white.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: S, height: S)).fill()
-                // Cerchio arancione
-                UIColor.systemOrange.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: S-6, height: S-6)).fill()
-                // Freccia di navigazione bianca che punta in su
-                // (corpo + coda a V, classico stile navigatore)
-                let arrow = UIBezierPath()
-                let cx = S / 2
-                arrow.move(to:     CGPoint(x: cx,      y: 9))       // punta
-                arrow.addLine(to:  CGPoint(x: cx + 14, y: S - 12))  // basso destra
-                arrow.addLine(to:  CGPoint(x: cx,      y: S - 20))  // rientro centrale
-                arrow.addLine(to:  CGPoint(x: cx - 14, y: S - 12))  // basso sinistra
-                arrow.close()
-                UIColor.white.setFill()
-                arrow.fill()
+                guard let glyph else { return }
+                let origin = CGPoint(x: (S - glyph.size.width) / 2,
+                                     y: (S - glyph.size.height) / 2)
+                let rect = CGRect(origin: origin, size: glyph.size)
+                // Contorno bianco: la sagoma ridisegnata sfalsata attorno
+                let white = glyph.withTintColor(.white, renderingMode: .alwaysOriginal)
+                for dx in [-2.5, 0, 2.5] {
+                    for dy in [-2.5, 0, 2.5] where !(dx == 0 && dy == 0) {
+                        white.draw(in: rect.offsetBy(dx: dx, dy: dy))
+                    }
+                }
+                // Moto arancione sopra il contorno
+                glyph.withTintColor(.systemOrange, renderingMode: .alwaysOriginal).draw(in: rect)
             }
         }
 
