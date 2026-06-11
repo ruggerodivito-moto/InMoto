@@ -10,6 +10,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var heading: CLHeading?
 
     private let manager = CLLocationManager()
+    private var pendingStart = false   // start() richiesto prima del permesso
 
     private override init() {
         super.init()
@@ -28,11 +29,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     func start() {
+        pendingStart = true
         manager.startUpdatingLocation()
         manager.startUpdatingHeading()
     }
 
     func stop() {
+        pendingStart = false
         manager.stopUpdatingLocation()
         manager.stopUpdatingHeading()
     }
@@ -40,7 +43,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - CLLocationManagerDelegate
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let loc = locations.last, loc.horizontalAccuracy < 50 else { return }
+        // Accetta anche fix degradati (fino a 100 m): in navigazione è meglio un
+        // aggiornamento impreciso che nessun aggiornamento (gallerie, maltempo)
+        guard let loc = locations.last,
+              loc.horizontalAccuracy >= 0, loc.horizontalAccuracy < 100 else { return }
         location = loc
     }
 
@@ -50,9 +56,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
-        if manager.authorizationStatus == .authorizedAlways ||
+        // Riavvia il GPS solo se una schermata lo aveva già richiesto:
+        // il permesso da solo non deve accendere la localizzazione
+        if pendingStart,
+           manager.authorizationStatus == .authorizedAlways ||
            manager.authorizationStatus == .authorizedWhenInUse {
-            start()
+            manager.startUpdatingLocation()
+            manager.startUpdatingHeading()
         }
     }
 

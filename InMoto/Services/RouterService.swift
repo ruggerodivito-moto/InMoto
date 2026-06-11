@@ -66,10 +66,27 @@ class RouterService {
     func computeLegs(for waypoints: [GeocodedWaypoint]) async throws -> [RouteLeg] {
         var legs: [RouteLeg] = []
         for i in 0..<(waypoints.count - 1) {
-            let leg = try await computeLeg(from: waypoints[i], to: waypoints[i + 1])
+            let from = waypoints[i], to = waypoints[i + 1]
+            // Le tratte sono cacheate per coppia di coordinate: viaggi diversi
+            // che condividono gli stessi nodi riusano i calcoli già fatti
+            if let cached = cachedLeg(from: from, to: to) {
+                legs.append(cached)
+                continue
+            }
+            let leg = try await directionsLeg(fromName: from.name, fromCoordinate: from.coordinate,
+                                              toName: to.name, toCoordinate: to.coordinate)
+            storeLeg(leg, from: from, to: to)
             legs.append(leg)
         }
         return legs
+    }
+
+    /// Tratta di collegamento dalla posizione attuale a una tappa
+    /// (usata dal ricalcolo fuori percorso — non viene cacheata)
+    func connectorLeg(from coordinate: CLLocationCoordinate2D,
+                      to waypoint: GeocodedWaypoint) async throws -> RouteLeg {
+        try await directionsLeg(fromName: "Posizione attuale", fromCoordinate: coordinate,
+                                toName: waypoint.name, toCoordinate: waypoint.coordinate)
     }
 
     func cacheRoute(_ route: NavigationRoute) {
@@ -118,16 +135,17 @@ class RouterService {
         }
     }
 
-    private func computeLeg(from: GeocodedWaypoint, to: GeocodedWaypoint) async throws -> RouteLeg {
+    private func directionsLeg(fromName: String, fromCoordinate: CLLocationCoordinate2D,
+                               toName: String, toCoordinate: CLLocationCoordinate2D) async throws -> RouteLeg {
         return try await withCheckedThrowingContinuation { continuation in
             let request = MKDirections.Request()
-            request.source      = MKMapItem(placemark: MKPlacemark(coordinate: from.coordinate))
-            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: to.coordinate))
+            request.source      = MKMapItem(placemark: MKPlacemark(coordinate: fromCoordinate))
+            request.destination = MKMapItem(placemark: MKPlacemark(coordinate: toCoordinate))
             request.transportType = .automobile
 
             MKDirections(request: request).calculate { response, _ in
                 guard let route = response?.routes.first else {
-                    continuation.resume(throwing: RouterError.routingFailed("\(from.name) → \(to.name)"))
+                    continuation.resume(throwing: RouterError.routingFailed("\(fromName) → \(toName)"))
                     return
                 }
 
@@ -145,13 +163,13 @@ class RouterService {
                     return RouteStep(
                         instruction: step.instructions,
                         distanceMeters: step.distance,
-                        coordinate: sc.first ?? from.coordinate
+                        coordinate: sc.first ?? fromCoordinate
                     )
                 }
 
                 continuation.resume(returning: RouteLeg(
-                    fromName: from.name,
-                    toName: to.name,
+                    fromName: fromName,
+                    toName: toName,
                     distanceMeters: route.distance,
                     durationSeconds: route.expectedTravelTime,
                     polylineCoordinates: coords,
@@ -164,5 +182,32 @@ class RouterService {
     private func cacheURL(for routeId: String) -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("nav_\(routeId).json")
+    }
+
+    // MARK: - Cache tratte per coppia di nodi
+    // Arrotondamento a 4 decimali (~11 m): lo stesso nodo geocodificato da
+    // tragitti diversi finisce sulla stessa chiave
+
+    private func legPairURL(from: GeocodedWaypoint, to: GeocodedWaypoint) -> URL {
+        let key = String(format: "legpair_%.4f_%.4f__%.4f_%.4f",
+                         from.latitude, from.longitude, to.latitude, to.longitude)
+        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("\(key).json")
+    }
+
+    private func cachedLeg(from: GeocodedWaypoint, to: GeocodedWaypoint) -> RouteLeg? {
+        guard let data = try? Data(contentsOf: legPairURL(from: from, to: to)),
+              let leg = try? JSONDecoder().decode(RouteLeg.self, from: data) else { return nil }
+        // Riscrivi i nomi: la cache può venire da un tragitto con etichette diverse
+        return RouteLeg(fromName: from.name, toName: to.name,
+                        distanceMeters: leg.distanceMeters,
+                        durationSeconds: leg.durationSeconds,
+                        polylineCoordinates: leg.polylineCoordinates,
+                        steps: leg.steps)
+    }
+
+    private func storeLeg(_ leg: RouteLeg, from: GeocodedWaypoint, to: GeocodedWaypoint) {
+        guard let data = try? JSONEncoder().encode(leg) else { return }
+        try? data.write(to: legPairURL(from: from, to: to), options: .atomic)
     }
 }

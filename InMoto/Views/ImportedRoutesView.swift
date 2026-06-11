@@ -4,7 +4,8 @@ import SwiftUI
 struct ImportedRoutesView: View {
     @EnvironmentObject var store:    RouteStore
     @EnvironmentObject var appState: AppState
-    @State private var showImport = false
+    @State private var showImport  = false
+    @State private var showCompose = false
 
     var body: some View {
         NavigationStack {
@@ -19,11 +20,20 @@ struct ImportedRoutesView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    Button { showCompose = true } label: {
+                        Image(systemName: "arrow.triangle.merge")
+                    }
+                    .help("Componi viaggio da più tragitti")
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button { showImport = true } label: { Image(systemName: "plus") }
                 }
             }
             .sheet(isPresented: $showImport) {
                 ImportRouteView()
+            }
+            .sheet(isPresented: $showCompose) {
+                ComposeTripView()
             }
         }
     }

@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreLocation
 
 // MARK: - ViewModel
 
@@ -35,15 +36,24 @@ class DownloadPreparationViewModel: ObservableObject {
             return
         }
 
-        // Step 1 — Geocoding
+        // Step 1 — Geocoding (gestisce anche coordinate "lat,lon" dai link importati)
         geocodingStatus = .inProgress
         let waypoints: [GeocodedWaypoint]
         do {
-            waypoints = try await RouterService.shared.geocodeWaypoints(route.waypointsGmaps)
+            let raw = try await RouterService.shared.geocodeWaypointsMixed(route.waypointsGmaps)
+            // Nei viaggi composti i tragitti condividono nodi: comprimi i
+            // waypoint consecutivi che ricadono nello stesso punto
+            waypoints = Self.mergeCloseWaypoints(raw)
             geocodingStatus = .done
         } catch {
             geocodingStatus = .failed
             self.error = error.localizedDescription
+            return
+        }
+
+        guard waypoints.count >= 2 else {
+            geocodingStatus = .failed
+            self.error = "Servono almeno due tappe distinte"
             return
         }
 
@@ -70,6 +80,23 @@ class DownloadPreparationViewModel: ObservableObject {
         RouterService.shared.cacheRoute(navRoute)
         cachingStatus = .done
         navigationRoute = navRoute
+    }
+
+    /// Comprime waypoint consecutivi più vicini di `threshold` metri: succede
+    /// quando si concatenano tragitti con nodi in comune, dove lo stesso luogo
+    /// (anche con nomi diversi) viene geocodificato due volte
+    static func mergeCloseWaypoints(_ wps: [GeocodedWaypoint],
+                                    threshold: Double = 250) -> [GeocodedWaypoint] {
+        var out: [GeocodedWaypoint] = []
+        for wp in wps {
+            if let last = out.last,
+               CLLocation(latitude: last.latitude, longitude: last.longitude)
+                   .distance(from: CLLocation(latitude: wp.latitude, longitude: wp.longitude)) < threshold {
+                continue
+            }
+            out.append(wp)
+        }
+        return out
     }
 }
 

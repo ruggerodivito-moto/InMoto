@@ -4,8 +4,11 @@ import CoreLocation
 
 struct MapKitView: UIViewRepresentable {
     let navRoute: NavigationRoute
+    let routeVersion: Int                  // incrementa dopo un ricalcolo percorso
+    let routePoints: [CLLocationCoordinate2D]
+    let matchedPointIndex: Int             // posizione agganciata sul percorso
     let currentLegIndex: Int
-    let currentStepIndex: Int
+    let upcomingTurns: [NavigationSession.UpcomingTurn]
     let userLocation: CLLocation?
     let userHeading: Double?
     @Binding var isFollowingUser: Bool
@@ -35,91 +38,111 @@ struct MapKitView: UIViewRepresentable {
     }
 
     func updateUIView(_ map: MKMapView, context: Context) {
-        // Ricarica overlay e pin solo quando cambia tratta o step
-        let key = currentLegIndex * 10_000 + currentStepIndex
-        if context.coordinator.lastKey != key {
-            context.coordinator.lastKey = key
-            reloadRoute(map)
+        let coord = context.coordinator
+        coord.parent = self
+
+        // 1. Geometria del percorso: ricostruita solo dopo un ricalcolo
+        if coord.lastVersion != routeVersion {
+            coord.lastVersion    = routeVersion
+            coord.lastSplitIndex = -1
+            coord.lastLegIndex   = -1
+            coord.lastTurnKey    = Int.min
+            map.removeOverlays(map.overlays)
+            if routePoints.count >= 2 {
+                let border = MKPolyline(coordinates: routePoints, count: routePoints.count)
+                border.title = "border"
+                map.addOverlay(border, level: .aboveRoads)
+            }
             if !isFollowingUser { showOverview(map) }
         }
 
-        // Icona moto: crea al primo fix GPS, poi aggiorna coordinate via KVO
-        if let loc = userLocation {
-            if let ann = context.coordinator.motoPin {
-                ann.coordinate = loc.coordinate
-            } else {
-                let ann = MotoPin(coordinate: loc.coordinate)
-                map.addAnnotation(ann)
-                context.coordinator.motoPin = ann
+        // 2. Percorso già fatto (grigio) / futuro (blu), spezzati sulla posizione
+        if coord.lastSplitIndex != matchedPointIndex, routePoints.count >= 2 {
+            coord.lastSplitIndex = matchedPointIndex
+            let old = map.overlays.compactMap { $0 as? MKPolyline }
+                .filter { $0.title == "done" || $0.title == "todo" }
+            map.removeOverlays(old)
+
+            let split = min(max(matchedPointIndex, 0), routePoints.count - 1)
+            if split >= 1 {
+                let done = MKPolyline(coordinates: Array(routePoints[0...split]), count: split + 1)
+                done.title = "done"
+                map.addOverlay(done, level: .aboveRoads)
+            }
+            if split <= routePoints.count - 2 {
+                let todo = MKPolyline(coordinates: Array(routePoints[split...]),
+                                      count: routePoints.count - split)
+                todo.title = "todo"
+                map.addOverlay(todo, level: .aboveRoads)
             }
         }
 
-        // Camera: segui l'utente solo in modalità navigazione attiva
+        // 3. Pin tappe (stato fatto/attiva/da fare)
+        if coord.lastLegIndex != currentLegIndex {
+            coord.lastLegIndex = currentLegIndex
+            map.removeAnnotations(map.annotations.filter { $0 is WaypointPin })
+            for (i, wp) in navRoute.waypoints.enumerated() {
+                map.addAnnotation(WaypointPin(
+                    coordinate: wp.coordinate,
+                    label: "\(i + 1)",
+                    state: i < currentLegIndex ? .done : i == currentLegIndex ? .active : .todo
+                ))
+            }
+        }
+
+        // 4. Marcatori prossime svolte
+        let turnKey = upcomingTurns.first?.key ?? -1
+        if coord.lastTurnKey != turnKey {
+            coord.lastTurnKey = turnKey
+            map.removeAnnotations(map.annotations.filter { $0 is TurnPin })
+            for t in upcomingTurns {
+                map.addAnnotation(TurnPin(
+                    coordinate: t.coordinate,
+                    direction: t.direction,
+                    title: t.instruction,
+                    isPrimary: t.isPrimary
+                ))
+            }
+        }
+
+        // 5. Icona moto: crea al primo fix GPS, poi anima verso la nuova posizione
+        if let loc = userLocation {
+            if let ann = coord.motoPin {
+                UIView.animate(withDuration: 0.9, delay: 0,
+                               options: [.curveLinear, .beginFromCurrentState]) {
+                    ann.coordinate = loc.coordinate
+                }
+            } else {
+                let ann = MotoPin(coordinate: loc.coordinate)
+                map.addAnnotation(ann)
+                coord.motoPin = ann
+            }
+        }
+
+        // 6. Camera: segui l'utente solo in modalità navigazione attiva
         guard isFollowingUser, let loc = userLocation else { return }
 
-        let hdg = userHeading.flatMap { $0 >= 0 ? $0 : nil }
-                  ?? (loc.course >= 0 ? loc.course : map.camera.heading)
-
-        // pitch=20° → la mappa è quasi in pianta, il percorso è ben visibile
-        // altitude=700m → mostra ~1.5km di strada davanti
-        let cam = MKMapCamera()
-        cam.centerCoordinate = loc.coordinate
-        cam.heading          = hdg
-        cam.pitch            = 20
-        cam.altitude         = 700
-        map.setCamera(cam, animated: false)
-    }
-
-    // MARK: - Percorso
-
-    private func reloadRoute(_ map: MKMapView) {
-        map.removeOverlays(map.overlays)
-        map.removeAnnotations(map.annotations.filter { !($0 is MotoPin) })
-
-        // Linee percorso
-        for (i, leg) in navRoute.legs.enumerated() {
-            let pts = leg.polylineCoordinates
-            guard pts.count >= 2 else { continue }
-
-            // Bordo bianco (disegnato per primo, più largo → crea il contorno)
-            let border = MKPolyline(coordinates: pts, count: pts.count)
-            border.title = "border"
-            map.addOverlay(border, level: .aboveRoads)
-
-            // Linea colorata sopra il bordo
-            let line = MKPolyline(coordinates: pts, count: pts.count)
-            line.title = i < currentLegIndex  ? "done"
-                       : i == currentLegIndex ? "active"
-                       : "todo"
-            map.addOverlay(line, level: .aboveRoads)
+        let speed = max(0, loc.speed)
+        let heading: Double
+        if loc.course >= 0, speed > 2 {
+            heading = loc.course            // in movimento: direzione di marcia
+        } else if let h = userHeading, h >= 0 {
+            heading = h                     // fermo: bussola
+        } else {
+            heading = map.camera.heading
         }
 
-        // Pin tappe principali
-        for (i, wp) in navRoute.waypoints.enumerated() {
-            map.addAnnotation(WaypointPin(
-                coordinate: wp.coordinate,
-                label: "\(i + 1)",
-                state: i < currentLegIndex ? .done : i == currentLegIndex ? .active : .todo
-            ))
-        }
-
-        // Marcatori prossime 2 svolte
-        guard currentLegIndex < navRoute.legs.count else { return }
-        let steps = navRoute.legs[currentLegIndex].steps
-        let from  = min(currentStepIndex, steps.count - 1)
-        var shown = 0
-        for i in from..<steps.count where shown < 2 {
-            let s = steps[i]
-            guard !s.instruction.isEmpty else { continue }
-            let dir = TurnDirection.parse(s.instruction)
-            guard dir != .straight || i == from else { continue }
-            map.addAnnotation(TurnPin(
-                coordinate: s.coordinate,
-                direction: dir,
-                title: s.instruction,
-                isPrimary: shown == 0
-            ))
-            shown += 1
+        // Quota in funzione della velocità: più veloce → vista più ampia.
+        // Centro spostato in avanti: la moto resta nel terzo basso dello schermo
+        // e si vede il percorso futuro, come Google Maps.
+        let altitude = min(1500.0, 600.0 + speed * 40.0)
+        let center = Self.offset(loc.coordinate, byMeters: altitude * 0.28, bearing: heading)
+        let cam = MKMapCamera(lookingAtCenter: center, fromDistance: altitude,
+                              pitch: 45, heading: heading)
+        // Interpolazione lineare tra un fix GPS e l'altro → movimento fluido
+        UIView.animate(withDuration: 0.9, delay: 0,
+                       options: [.curveLinear, .allowUserInteraction, .beginFromCurrentState]) {
+            map.camera = cam
         }
     }
 
@@ -136,11 +159,28 @@ struct MapKitView: UIViewRepresentable {
                               animated: true)
     }
 
+    /// Sposta una coordinata di `meters` metri nella direzione `bearing` (gradi)
+    private static func offset(_ c: CLLocationCoordinate2D,
+                               byMeters meters: Double,
+                               bearing: Double) -> CLLocationCoordinate2D {
+        let R = 6_371_000.0
+        let br = bearing * .pi / 180
+        let lat1 = c.latitude * .pi / 180
+        let lon1 = c.longitude * .pi / 180
+        let lat2 = asin(sin(lat1) * cos(meters / R) + cos(lat1) * sin(meters / R) * cos(br))
+        let lon2 = lon1 + atan2(sin(br) * sin(meters / R) * cos(lat1),
+                                cos(meters / R) - sin(lat1) * sin(lat2))
+        return CLLocationCoordinate2D(latitude: lat2 * 180 / .pi, longitude: lon2 * 180 / .pi)
+    }
+
     // MARK: - Coordinator
 
     class Coordinator: NSObject, MKMapViewDelegate, UIGestureRecognizerDelegate {
         var parent: MapKitView
-        var lastKey = -1
+        var lastVersion    = -1
+        var lastSplitIndex = -1
+        var lastLegIndex   = -1
+        var lastTurnKey    = Int.min
         var motoPin: MotoPin?
 
         init(_ parent: MapKitView) { self.parent = parent }
@@ -163,16 +203,13 @@ struct MapKitView: UIViewRepresentable {
             switch poly.title {
             case "border":
                 r.strokeColor = UIColor.white.withAlphaComponent(0.9)
-                r.lineWidth   = 14
-            case "active":
-                r.strokeColor = UIColor.systemBlue
-                r.lineWidth   = 10
-            case "todo":
-                r.strokeColor = UIColor.systemBlue.withAlphaComponent(0.45)
+                r.lineWidth   = 13
+            case "done":
+                r.strokeColor = UIColor.systemGray3
                 r.lineWidth   = 8
-            default: // done
-                r.strokeColor = UIColor.systemGray4
-                r.lineWidth   = 7
+            default: // todo (percorso futuro)
+                r.strokeColor = UIColor.systemBlue
+                r.lineWidth   = 9
             }
             return r
         }

@@ -1,128 +1,7 @@
 import SwiftUI
 import CoreLocation
-import AVFoundation
-
-// MARK: - NavigationSession
-
-@MainActor
-class NavigationSession: ObservableObject {
-    @Published var currentLegIndex: Int = 0
-    @Published var currentStepIndex: Int = 0
-    @Published var arrivedAtDestination: Bool = false
-    @Published var distanceToNextWaypoint: Double = 0   // metri
-    @Published var distanceToNextStep: Double = 0       // metri
-
-    let navRoute: NavigationRoute
-    private let arrivalThreshold: Double = 150          // metri
-    private let synthesizer = AVSpeechSynthesizer()
-    private var lastSpokenStepIndex: Int = -1
-    private var hasAnnouncedArrival: Bool = false
-
-    init(navRoute: NavigationRoute) {
-        self.navRoute = navRoute
-    }
-
-    // Chiamato ad ogni aggiornamento GPS
-    func update(userLocation: CLLocation) {
-        guard !arrivedAtDestination, currentLegIndex < navRoute.legs.count else { return }
-
-        let target = navRoute.waypoints[currentLegIndex + 1]
-        let targetLoc = CLLocation(latitude: target.latitude, longitude: target.longitude)
-        distanceToNextWaypoint = userLocation.distance(from: targetLoc)
-
-        // Prossimo step della tratta corrente
-        if currentLegIndex < navRoute.legs.count {
-            let leg = navRoute.legs[currentLegIndex]
-            if currentStepIndex < leg.steps.count {
-                let step = leg.steps[currentStepIndex]
-                let stepLoc = CLLocation(latitude: step.latitude, longitude: step.longitude)
-                distanceToNextStep = userLocation.distance(from: stepLoc)
-
-                // Annuncia istruzione quando sei a meno di 200m dallo step
-                if distanceToNextStep < 200, lastSpokenStepIndex != currentStepIndex {
-                    speak(step.instruction)
-                    lastSpokenStepIndex = currentStepIndex
-                }
-
-                // Passa allo step successivo quando sei a meno di 30m
-                if distanceToNextStep < 30, currentStepIndex + 1 < leg.steps.count {
-                    currentStepIndex += 1
-                }
-            }
-        }
-
-        // Controllo arrivo alla tappa successiva
-        if distanceToNextWaypoint < arrivalThreshold {
-            let nextWpIndex = currentLegIndex + 1
-            if nextWpIndex < navRoute.waypoints.count - 1 {
-                // Tappa intermedia raggiunta → avanza
-                let nextName = shortName(navRoute.waypoints[nextWpIndex + 1].name)
-                speak("Tappa raggiunta. Prossima destinazione: \(nextName)")
-                currentLegIndex += 1
-                currentStepIndex = 0
-                lastSpokenStepIndex = -1
-            } else if nextWpIndex == navRoute.waypoints.count - 1 {
-                // Destinazione finale
-                if !hasAnnouncedArrival {
-                    speak("Sei arrivato a destinazione. Buona moto!")
-                    hasAnnouncedArrival = true
-                    arrivedAtDestination = true
-                }
-            }
-        }
-    }
-
-    var currentInstruction: String {
-        guard currentLegIndex < navRoute.legs.count else { return "Destinazione raggiunta" }
-        let leg = navRoute.legs[currentLegIndex]
-        guard currentStepIndex < leg.steps.count else {
-            return "Prosegui verso \(shortName(leg.toName))"
-        }
-        return leg.steps[currentStepIndex].instruction
-    }
-
-    var nextWaypointName: String {
-        let idx = min(currentLegIndex + 1, navRoute.waypoints.count - 1)
-        return shortName(navRoute.waypoints[idx].name)
-    }
-
-    var progressText: String {
-        let done = currentLegIndex
-        let total = navRoute.legs.count
-        return "Tappa \(done + 1) / \(total + 1)"
-    }
-
-    var etaCurrentLeg: String {
-        guard currentLegIndex < navRoute.legs.count else { return "" }
-        let secs = navRoute.legs[currentLegIndex].durationSeconds
-        let m = Int(secs) / 60
-        return m < 60 ? "\(m) min" : "\(m / 60)h \(m % 60)min"
-    }
-
-    var formattedDistance: String {
-        if distanceToNextWaypoint < 1000 {
-            return String(format: "%.0f m", distanceToNextWaypoint)
-        }
-        return String(format: "%.1f km", distanceToNextWaypoint / 1000)
-    }
-
-    private func speak(_ text: String) {
-        synthesizer.stopSpeaking(at: .immediate)
-        let utt = AVSpeechUtterance(string: text)
-        utt.voice = AVSpeechSynthesisVoice(language: "it-IT")
-        utt.rate = 0.52
-        synthesizer.speak(utt)
-    }
-
-    private func shortName(_ full: String) -> String {
-        full.components(separatedBy: ",").first ?? full
-    }
-}
-
-// MARK: - NavigatorView
 
 struct NavigatorView: View {
-    let navRoute: NavigationRoute
     let motoRoute: MotoRoute
 
     @StateObject private var session: NavigationSession
@@ -134,18 +13,20 @@ struct NavigatorView: View {
     @State private var hasStartedNavigation = false   // true dopo tap "Avvia"
 
     init(navRoute: NavigationRoute, motoRoute: MotoRoute) {
-        self.navRoute = navRoute
         self.motoRoute = motoRoute
         _session = StateObject(wrappedValue: NavigationSession(navRoute: navRoute))
     }
 
     var body: some View {
         ZStack(alignment: .top) {
-            // Mappa a tutto schermo con vista in primo piano
+            // Mappa a tutto schermo: percorso futuro davanti, già percorso in grigio
             MapKitView(
-                navRoute: navRoute,
+                navRoute: session.navRoute,
+                routeVersion: session.routeVersion,
+                routePoints: session.routePoints,
+                matchedPointIndex: session.matchedPointIndex,
                 currentLegIndex: session.currentLegIndex,
-                currentStepIndex: session.currentStepIndex,
+                upcomingTurns: session.upcomingTurns,
                 userLocation: locationMgr.location,
                 userHeading: locationMgr.heading?.trueHeading,
                 isFollowingUser: $isFollowingUser
@@ -154,6 +35,9 @@ struct NavigatorView: View {
 
             VStack(spacing: 0) {
                 instructionBanner
+                if session.isRerouting || session.isOffRoute {
+                    rerouteBanner
+                }
                 Spacer()
                 progressFooter
             }
@@ -184,9 +68,11 @@ struct NavigatorView: View {
         }
         .onDisappear {
             locationMgr.stop()
+            session.endAudio()
             UIApplication.shared.isIdleTimerDisabled = false
         }
         .onReceive(locationMgr.$location.compactMap { $0 }) { loc in
+            guard hasStartedNavigation else { return }
             session.update(userLocation: loc)
         }
         .onChange(of: session.arrivedAtDestination) { arrived in
@@ -207,6 +93,7 @@ struct NavigatorView: View {
             Button(action: {
                 hasStartedNavigation = true
                 isFollowingUser = true
+                session.beginAudio()
                 locationMgr.start()
             }) {
                 Label("Avvia navigazione GPS", systemImage: "location.north.fill")
@@ -302,11 +189,32 @@ struct NavigatorView: View {
         }
     }
 
+    // MARK: - Banner ricalcolo / fuori percorso
+
+    private var rerouteBanner: some View {
+        HStack(spacing: 8) {
+            if session.isRerouting {
+                ProgressView()
+                    .tint(.white)
+                    .scaleEffect(0.8)
+                Text("Ricalcolo percorso…")
+            } else {
+                Image(systemName: "exclamationmark.triangle.fill")
+                Text("Fuori percorso")
+            }
+        }
+        .font(.subheadline.weight(.semibold))
+        .foregroundStyle(.white)
+        .padding(.vertical, 8)
+        .frame(maxWidth: .infinity)
+        .background(Color.orange.opacity(0.95))
+    }
+
     // MARK: - Footer progresso (in basso)
 
     private var progressFooter: some View {
         VStack(spacing: 0) {
-            // Barra progresso tappe
+            // Barra progresso continua (metri percorsi / totali)
             progressBar
 
             HStack(spacing: 0) {
@@ -315,7 +223,7 @@ struct NavigatorView: View {
                     Text(session.progressText)
                         .font(.caption2.weight(.semibold))
                         .foregroundStyle(.secondary)
-                    Text(shortName(navRoute.waypoints[session.currentLegIndex].name))
+                    Text(shortName(session.navRoute.waypoints[session.currentLegIndex].name))
                         .font(.subheadline.weight(.medium))
                         .lineLimit(1)
                 }
@@ -341,7 +249,7 @@ struct NavigatorView: View {
                     Text("Rimanente")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
-                    Text(remainingDistance)
+                    Text(session.remainingFormatted)
                         .font(.subheadline.weight(.semibold))
                 }
                 .frame(maxWidth: .infinity)
@@ -360,28 +268,16 @@ struct NavigatorView: View {
                 Rectangle()
                     .fill(Color.orange)
                     .frame(
-                        width: geo.size.width * progress,
+                        width: geo.size.width * session.progressFraction,
                         height: 4
                     )
-                    .animation(.easeInOut, value: session.currentLegIndex)
+                    .animation(.easeInOut, value: session.progressFraction)
             }
         }
         .frame(height: 4)
     }
 
     // MARK: - Computed helpers
-
-    private var progress: Double {
-        guard navRoute.legs.count > 0 else { return 0 }
-        return Double(session.currentLegIndex) / Double(navRoute.legs.count)
-    }
-
-    private var remainingDistance: String {
-        let done = navRoute.legs.prefix(session.currentLegIndex).reduce(0) { $0 + $1.distanceMeters }
-        let remaining = max(0, navRoute.totalDistanceMeters - done)
-        if remaining < 1000 { return String(format: "%.0f m", remaining) }
-        return String(format: "%.0f km", remaining / 1000)
-    }
 
     private func shortName(_ full: String) -> String {
         full.components(separatedBy: ",").first ?? full
