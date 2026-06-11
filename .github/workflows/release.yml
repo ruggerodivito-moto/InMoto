@@ -58,6 +58,9 @@ jobs:
           cp -r "$APP" "$RUNNER_TEMP/Payload/"
           cd "$RUNNER_TEMP"
           zip -qr InMoto.ipa Payload/
+          # Copia con la versione nel nome (per riconoscerla nei Download).
+          # InMoto.ipa resta come nome stabile per SideStore/apps.json e script.
+          cp InMoto.ipa "InMoto-${{ steps.version.outputs.tag }}.ipa"
           SIZE=$(du -sh InMoto.ipa | cut -f1)
           echo "IPA: $SIZE"
           echo "ipa_path=$RUNNER_TEMP/InMoto.ipa" >> $GITHUB_ENV
@@ -112,6 +115,8 @@ jobs:
             3. **SideStore**: aggiungi la sorgente nei settings (vedi README)
 
             ### File
-            - `InMoto.ipa` — app non firmata (la firma avviene durante l'installazione)
+            - `InMoto.ipa` — app non firmata, nome stabile (SideStore / script)
+            - `InMoto-${{ steps.version.outputs.tag }}.ipa` — stessa app, versione nel nome
           files: |
             ${{ runner.temp }}/InMoto.ipa
+            ${{ runner.temp }}/InMoto-${{ steps.version.outputs.tag }}.ipa
