@@ -1,12 +1,15 @@
 import SwiftUI
+import MapKit
+import CoreLocation
 
 // ═════════════════════════════════════════════════════════════════════════════
-// Dettaglio viaggio: timeline tappe/pause, ogni tappa si avvia nel navigatore
+// Dettaglio viaggio: timeline tappe/pause. Ogni riga è navigabile —
+//   · tappa  → dettaglio percorso su mappa + avvio navigazione
+//   · pausa/arrivo → posizione del luogo su mappa
 // ═════════════════════════════════════════════════════════════════════════════
 
 struct TripPlanDetailView: View {
     let plan: TripPlan
-    @State private var stageToNavigate: MotoRoute?
 
     var body: some View {
         List {
@@ -35,12 +38,16 @@ struct TripPlanDetailView: View {
             // ── Timeline ─────────────────────────────────────────────────────
             Section {
                 ForEach(plan.items) { item in
-                    TripItemRow(item: item) {
-                        stageToNavigate = plan.motoRoute(for: item)
+                    NavigationLink {
+                        destination(for: item)
+                    } label: {
+                        TripItemRow(item: item)
                     }
                 }
             } header: {
                 Text("Programma")
+            } footer: {
+                Text("Tocca una tappa per vederne il percorso e avviare la navigazione. Tocca una pausa per vederne la posizione.")
             }
 
             // ── Nota finale ───────────────────────────────────────────────────
@@ -56,110 +63,72 @@ struct TripPlanDetailView: View {
         }
         .navigationTitle(plan.nome)
         .navigationBarTitleDisplayMode(.inline)
-        .fullScreenCover(item: $stageToNavigate) { route in
-            DownloadPreparationView(route: route)
+    }
+
+    @ViewBuilder
+    private func destination(for item: TripPlanItem) -> some View {
+        switch item.kind {
+        case .tappa:
+            TripStageDetailView(plan: plan, item: item)
+        case .pausa, .arrivo:
+            TripPlaceView(item: item)
         }
     }
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// Riga della timeline (tappa / pausa / arrivo)
+// Riga della timeline (tappa / pausa / arrivo) — solo presentazione
 // ═════════════════════════════════════════════════════════════════════════════
 
 struct TripItemRow: View {
     let item: TripPlanItem
-    var onStart: (() -> Void)? = nil   // nil = anteprima senza pulsante
-
-    @State private var showWaypoints = false
-
-    private var navigable: Bool { item.kind == .tappa && item.waypointsGmaps.count >= 2 }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .top, spacing: 12) {
-                iconBadge
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack {
-                        Text(item.titolo)
-                            .font(.caption.weight(.bold))
-                            .foregroundStyle(badgeColor)
-                        Spacer()
-                        if !item.orarioFormattato.isEmpty {
-                            Text(item.orarioFormattato)
-                                .font(.caption.weight(.semibold))
-                                .foregroundStyle(.secondary)
+        HStack(alignment: .top, spacing: 12) {
+            iconBadge
+            VStack(alignment: .leading, spacing: 3) {
+                HStack {
+                    Text(item.titolo)
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(badgeColor)
+                    Spacer()
+                    if !item.orarioFormattato.isEmpty {
+                        Text(item.orarioFormattato)
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Text(item.nome)
+                    .font(.subheadline.weight(.medium))
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if item.kind == .tappa, item.km > 0 || item.durataMin > 0 {
+                    HStack(spacing: 10) {
+                        if item.km > 0 {
+                            Label("\(item.km) km", systemImage: "road.lanes")
+                        }
+                        if item.durataMin > 0 {
+                            let h = item.durataMin / 60, m = item.durataMin % 60
+                            Label(h > 0 ? "\(h)h\(m > 0 ? " \(m)'" : "")" : "\(m)'",
+                                  systemImage: "clock")
                         }
                     }
-                    Text(item.nome)
-                        .font(.subheadline.weight(.medium))
-
-                    if item.kind == .tappa, item.km > 0 || item.durataMin > 0 {
-                        HStack(spacing: 10) {
-                            if item.km > 0 {
-                                Text("\(item.km) km")
-                            }
-                            if item.durataMin > 0 {
-                                let h = item.durataMin / 60, m = item.durataMin % 60
-                                Text(h > 0 ? "\(h)h\(m > 0 ? " \(m)'" : "")" : "\(m)'")
-                            }
-                        }
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    }
-
-                    if !item.nota.isEmpty {
-                        Label(item.nota, systemImage: "info.circle")
-                            .font(.caption)
-                            .foregroundStyle(.orange)
-                    }
-                }
-            }
-
-            // Punti di passaggio (solo tappe, espandibili)
-            if item.kind == .tappa, item.tappeNomi.count > 2 {
-                Button {
-                    withAnimation { showWaypoints.toggle() }
-                } label: {
-                    Label("\(item.tappeNomi.count) punti di passaggio",
-                          systemImage: showWaypoints ? "chevron.down" : "chevron.right")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-                .buttonStyle(.plain)
-                .padding(.leading, 44)
-
-                if showWaypoints {
-                    VStack(alignment: .leading, spacing: 4) {
-                        ForEach(Array(item.tappeNomi.enumerated()), id: \.offset) { i, name in
-                            HStack(spacing: 8) {
-                                Text("\(i + 1)")
-                                    .font(.caption2.weight(.bold))
-                                    .frame(width: 18, height: 18)
-                                    .background(Circle().fill(Color.orange.opacity(0.18)))
-                                Text(name.components(separatedBy: ",").first ?? name)
-                                    .font(.caption)
-                            }
-                        }
-                    }
-                    .padding(.leading, 44)
-                }
-            }
-
-            // Pulsante avvio navigazione
-            if navigable, let onStart {
-                Button(action: onStart) {
-                    Label("Avvia navigazione", systemImage: "location.north.fill")
-                        .font(.subheadline.weight(.semibold))
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.orange)
-                .padding(.leading, 44)
-            } else if item.kind == .tappa, !navigable {
-                Label("Tappa senza percorso riconosciuto", systemImage: "exclamationmark.triangle")
                     .font(.caption)
-                    .foregroundStyle(.red)
-                    .padding(.leading, 44)
+                    .foregroundStyle(.secondary)
+                }
+
+                if item.kind == .tappa, item.tappeNomi.count > 2 {
+                    Text("\(item.tappeNomi.count) punti di passaggio")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                if !item.nota.isEmpty {
+                    Label(item.nota, systemImage: "info.circle")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
         .padding(.vertical, 6)
@@ -190,6 +159,352 @@ struct TripItemRow: View {
         case .pausa:  return "cup.and.saucer.fill"
         case .arrivo: return "flag.checkered"
         }
+    }
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// Dettaglio di una tappa: percorso su mappa + punti di passaggio + avvio
+// ═════════════════════════════════════════════════════════════════════════════
+
+struct TripStageDetailView: View {
+    let plan: TripPlan
+    let item: TripPlanItem
+
+    @StateObject private var vm = DownloadPreparationViewModel()
+    @State private var navigating: PreparedNav?
+
+    private var motoRoute: MotoRoute { plan.motoRoute(for: item) }
+    private var navigable: Bool { item.waypointsGmaps.count >= 2 }
+
+    var body: some View {
+        List {
+            // ── Mappa anteprima percorso ──────────────────────────────────────
+            Section {
+                StageMapPreview(navRoute: vm.navigationRoute, status: previewStatus)
+                    .frame(height: 240)
+                    .listRowInsets(EdgeInsets())
+            }
+
+            // ── Riepilogo ─────────────────────────────────────────────────────
+            Section {
+                if !item.orarioFormattato.isEmpty {
+                    Label(item.orarioFormattato, systemImage: "clock")
+                }
+                HStack(spacing: 18) {
+                    if let nav = vm.navigationRoute {
+                        Label(nav.formattedDistance, systemImage: "road.lanes")
+                        Label(nav.formattedDuration, systemImage: "timer")
+                    } else {
+                        if item.km > 0 { Label("\(item.km) km", systemImage: "road.lanes") }
+                        if item.durataMin > 0 {
+                            let h = item.durataMin / 60, m = item.durataMin % 60
+                            Label(h > 0 ? "\(h)h \(m)min" : "\(m)min", systemImage: "timer")
+                        }
+                    }
+                }
+                .font(.subheadline)
+                if !item.nota.isEmpty {
+                    Label(item.nota, systemImage: "info.circle")
+                        .foregroundStyle(.orange)
+                        .font(.subheadline)
+                }
+            }
+
+            // ── Punti di passaggio ────────────────────────────────────────────
+            if item.tappeNomi.count >= 2 {
+                Section {
+                    ForEach(Array(item.tappeNomi.enumerated()), id: \.offset) { i, name in
+                        HStack(spacing: 12) {
+                            ZStack {
+                                Circle()
+                                    .fill(i == 0 ? Color.green
+                                          : i == item.tappeNomi.count - 1 ? Color.red
+                                          : Color.orange)
+                                    .frame(width: 26, height: 26)
+                                Text("\(i + 1)")
+                                    .font(.caption.weight(.bold))
+                                    .foregroundStyle(.white)
+                            }
+                            Text(name.components(separatedBy: ",").first ?? name)
+                                .font(.subheadline)
+                        }
+                    }
+                } header: {
+                    Text("Punti di passaggio")
+                }
+            }
+
+            // ── Avvio navigazione ─────────────────────────────────────────────
+            Section {
+                if let err = vm.error {
+                    Label(err, systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.red)
+                        .font(.subheadline)
+                    Button {
+                        Task { await vm.prepare(route: motoRoute) }
+                    } label: {
+                        Label("Riprova", systemImage: "arrow.clockwise")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.orange)
+                } else if let nav = vm.navigationRoute {
+                    Button {
+                        navigating = PreparedNav(navRoute: nav, motoRoute: motoRoute)
+                    } label: {
+                        Label("Inizia navigazione", systemImage: "location.north.fill")
+                            .frame(maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.orange)
+
+                    Text("Avanzamento automatico tra i punti: superato un punto, la navigazione passa da sola al successivo, senza toccare il telefono.")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                } else if navigable {
+                    HStack {
+                        ProgressView()
+                        Text("Preparazione percorso…")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                } else {
+                    Label("Tappa senza percorso riconosciuto (link mancante o non leggibile).",
+                          systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.red)
+                        .font(.subheadline)
+                }
+            }
+        }
+        .navigationTitle(item.titolo)
+        .navigationBarTitleDisplayMode(.inline)
+        .task {
+            if navigable, vm.navigationRoute == nil, vm.error == nil {
+                await vm.prepare(route: motoRoute)
+            }
+        }
+        .fullScreenCover(item: $navigating) { prepared in
+            NavigationStack {
+                NavigatorView(navRoute: prepared.navRoute, motoRoute: prepared.motoRoute)
+            }
+        }
+    }
+
+    private var previewStatus: StageMapPreview.Status {
+        if vm.navigationRoute != nil { return .ready }
+        if vm.error != nil { return .failed }
+        return navigable ? .loading : .failed
+    }
+}
+
+/// Percorso preparato pronto per la navigazione (item per fullScreenCover).
+private struct PreparedNav: Identifiable {
+    let id = UUID()
+    let navRoute: NavigationRoute
+    let motoRoute: MotoRoute
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// Mappa statica del percorso di una tappa (polilinea + pin tappe)
+// ═════════════════════════════════════════════════════════════════════════════
+
+struct StageMapPreview: View {
+    enum Status { case loading, ready, failed }
+
+    let navRoute: NavigationRoute?
+    let status: Status
+
+    var body: some View {
+        ZStack {
+            if let nav = navRoute {
+                let points = nav.legs.flatMap { $0.polylineCoordinates }
+                Map(initialPosition: .region(MapMath.region(fitting: points.isEmpty
+                                                             ? nav.waypoints.map { $0.coordinate }
+                                                             : points))) {
+                    if points.count >= 2 {
+                        MapPolyline(coordinates: points)
+                            .stroke(.blue, lineWidth: 5)
+                    }
+                    ForEach(Array(nav.waypoints.enumerated()), id: \.offset) { i, wp in
+                        Marker("\(i + 1)", coordinate: wp.coordinate)
+                            .tint(i == 0 ? .green
+                                  : i == nav.waypoints.count - 1 ? .red : .orange)
+                    }
+                }
+            } else {
+                Rectangle().fill(Color(.systemGray6))
+                VStack(spacing: 8) {
+                    switch status {
+                    case .loading:
+                        ProgressView()
+                        Text("Calcolo percorso…")
+                    case .failed:
+                        Image(systemName: "map")
+                            .font(.largeTitle)
+                            .foregroundStyle(.secondary)
+                        Text("Anteprima non disponibile")
+                    case .ready:
+                        EmptyView()
+                    }
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// Posizione di una pausa / arrivo: mappa con pin + apertura in Mappe
+// ═════════════════════════════════════════════════════════════════════════════
+
+struct TripPlaceView: View {
+    let item: TripPlanItem
+
+    @State private var coordinate: CLLocationCoordinate2D?
+    @State private var isLoading = true
+    @State private var failed = false
+
+    private var placeName: String {
+        item.tappeNomi.first ?? item.nome
+    }
+
+    var body: some View {
+        List {
+            Section {
+                ZStack {
+                    if let coord = coordinate {
+                        Map(initialPosition: .region(
+                            MKCoordinateRegion(center: coord,
+                                               span: MKCoordinateSpan(latitudeDelta: 0.02,
+                                                                      longitudeDelta: 0.02)))) {
+                            Marker(placeName.components(separatedBy: ",").first ?? placeName,
+                                   coordinate: coord)
+                                .tint(item.kind == .arrivo ? .green : .teal)
+                        }
+                    } else {
+                        Rectangle().fill(Color(.systemGray6))
+                        VStack(spacing: 8) {
+                            if isLoading {
+                                ProgressView()
+                                Text("Localizzazione…")
+                            } else {
+                                Image(systemName: "mappin.slash")
+                                    .font(.largeTitle)
+                                    .foregroundStyle(.secondary)
+                                Text("Posizione non trovata")
+                            }
+                        }
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(height: 260)
+                .listRowInsets(EdgeInsets())
+            }
+
+            Section {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(item.nome)
+                        .font(.headline)
+                    if !item.orarioFormattato.isEmpty {
+                        Label(item.orarioFormattato, systemImage: "clock")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                if !item.nota.isEmpty {
+                    Label(item.nota, systemImage: "info.circle")
+                        .font(.subheadline)
+                        .foregroundStyle(.orange)
+                }
+            }
+
+            if coordinate != nil {
+                Section {
+                    Button(action: openAppleMaps) {
+                        Label("Apri in Mappe", systemImage: "map.fill")
+                            .frame(maxWidth: .infinity)
+                            .fontWeight(.semibold)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.teal)
+
+                    Button(action: openGoogleMaps) {
+                        Label("Apri in Google Maps", systemImage: "globe")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.indigo)
+                }
+            }
+        }
+        .navigationTitle(item.titolo)
+        .navigationBarTitleDisplayMode(.inline)
+        .task { await locate() }
+    }
+
+    private func locate() async {
+        let input = item.waypointsGmaps.first ?? placeName
+        guard let geo = try? await RouterService.shared.geocodeWaypointsMixed([input]),
+              let wp = geo.first else {
+            await MainActor.run { isLoading = false; failed = true }
+            return
+        }
+        await MainActor.run {
+            coordinate = wp.coordinate
+            isLoading = false
+        }
+    }
+
+    private func openAppleMaps() {
+        guard let coord = coordinate else { return }
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coord))
+        mapItem.name = placeName.components(separatedBy: ",").first ?? placeName
+        mapItem.openInMaps()
+    }
+
+    private func openGoogleMaps() {
+        guard let coord = coordinate else { return }
+        let q = "\(coord.latitude),\(coord.longitude)"
+        if let scheme = URL(string: "comgooglemaps://"),
+           UIApplication.shared.canOpenURL(scheme),
+           let url = URL(string: "comgooglemaps://?q=\(q)&center=\(q)") {
+            UIApplication.shared.open(url)
+            return
+        }
+        if let url = URL(string: "https://www.google.com/maps/search/?api=1&query=\(q)") {
+            UIApplication.shared.open(url)
+        }
+    }
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// Utility geografiche
+// ═════════════════════════════════════════════════════════════════════════════
+
+enum MapMath {
+    /// Regione che inquadra un insieme di coordinate, con un margine attorno.
+    static func region(fitting coords: [CLLocationCoordinate2D],
+                       padding: Double = 1.4) -> MKCoordinateRegion {
+        guard let first = coords.first else {
+            return MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: 45.0, longitude: 8.0),
+                span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+        }
+        var minLat = first.latitude, maxLat = first.latitude
+        var minLon = first.longitude, maxLon = first.longitude
+        for c in coords {
+            minLat = min(minLat, c.latitude); maxLat = max(maxLat, c.latitude)
+            minLon = min(minLon, c.longitude); maxLon = max(maxLon, c.longitude)
+        }
+        let center = CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2,
+                                            longitude: (minLon + maxLon) / 2)
+        let span = MKCoordinateSpan(
+            latitudeDelta: max(0.01, (maxLat - minLat) * padding),
+            longitudeDelta: max(0.01, (maxLon - minLon) * padding))
+        return MKCoordinateRegion(center: center, span: span)
     }
 }
 
