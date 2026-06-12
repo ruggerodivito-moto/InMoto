@@ -31,6 +31,14 @@ final class NavigationSession: ObservableObject {
     @Published private(set) var isRerouting = false
     @Published private(set) var upcomingStepIdx: Int?
 
+    /// Voce di navigazione disattivata dall'utente (persistita tra le sessioni)
+    @Published var isMuted: Bool = UserDefaults.standard.bool(forKey: "nav_voice_muted") {
+        didSet {
+            UserDefaults.standard.set(isMuted, forKey: "nav_voice_muted")
+            if isMuted { synthesizer.stopSpeaking(at: .immediate) }
+        }
+    }
+
     private(set) var geometry: RouteGeometry
 
     // MARK: - Stato interno di matching
@@ -328,6 +336,7 @@ final class NavigationSession: ObservableObject {
     }
 
     private func speak(_ text: String) {
+        guard !isMuted else { return }
         // Accoda senza interrompere l'annuncio in corso
         let utt = AVSpeechUtterance(string: text)
         utt.voice = AVSpeechSynthesisVoice(language: "it-IT")

@@ -34,14 +34,15 @@ struct NavigatorView: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
+                // Riepilogo tappa/ETA/rimanente in alto: in basso gli angoli
+                // arrotondati dell'iPhone tagliavano le scritte
+                progressHeader
                 instructionBanner
                 if session.isRerouting || session.isOffRoute {
                     rerouteBanner
                 }
                 Spacer()
-                progressFooter
             }
-            .ignoresSafeArea(edges: .bottom)
 
             // Pulsante avvia (prima volta) o ricentra (dopo aver avviato)
             if !hasStartedNavigation {
@@ -59,6 +60,16 @@ struct NavigatorView: View {
                         .foregroundStyle(.white)
                         .shadow(radius: 3)
                 }
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: { session.isMuted.toggle() }) {
+                    Image(systemName: session.isMuted ? "speaker.slash.circle.fill"
+                                                      : "speaker.wave.2.circle.fill")
+                        .font(.title2)
+                        .foregroundStyle(session.isMuted ? .red : .white)
+                        .shadow(radius: 3)
+                }
+                .accessibilityLabel(session.isMuted ? "Riattiva voce" : "Disattiva voce")
             }
         }
         .onAppear {
@@ -104,7 +115,7 @@ struct NavigatorView: View {
             .buttonStyle(.borderedProminent)
             .tint(.orange)
             .padding(.horizontal, 20)
-            .padding(.bottom, 130)
+            .padding(.bottom, 44)
             .shadow(color: .black.opacity(0.25), radius: 8, x: 0, y: 4)
         }
         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -128,7 +139,7 @@ struct NavigatorView: View {
                         .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                 }
                 .padding(.trailing, 16)
-                .padding(.bottom, 130)   // sopra il footer di navigazione
+                .padding(.bottom, 44)
             }
         }
         .transition(.scale.combined(with: .opacity))
@@ -210,13 +221,10 @@ struct NavigatorView: View {
         .background(Color.orange.opacity(0.95))
     }
 
-    // MARK: - Footer progresso (in basso)
+    // MARK: - Riepilogo progresso (in alto, sopra le indicazioni)
 
-    private var progressFooter: some View {
+    private var progressHeader: some View {
         VStack(spacing: 0) {
-            // Barra progresso continua (metri percorsi / totali)
-            progressBar
-
             HStack(spacing: 0) {
                 // Tappa corrente
                 VStack(spacing: 2) {
@@ -256,6 +264,9 @@ struct NavigatorView: View {
             }
             .padding(.vertical, 12)
             .background(.regularMaterial)
+
+            // Barra avanzamento continua (metri percorsi / totali)
+            progressBar
         }
     }
 

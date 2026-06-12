@@ -122,12 +122,17 @@ struct MapKitView: UIViewRepresentable {
         // 6. Camera: segui l'utente solo in modalità navigazione attiva
         guard isFollowingUser, let loc = userLocation else { return }
 
+        // Mappa sempre orientata con la direzione di marcia verso l'alto
+        // (course-up), anche nelle curve a bassa velocità: si preferisce la
+        // rotta GPS appena ci si muove, la bussola da fermi, mai si "congela".
         let speed = max(0, loc.speed)
         let heading: Double
-        if loc.course >= 0, speed > 2 {
+        if loc.course >= 0, speed > 1 {
             heading = loc.course            // in movimento: direzione di marcia
         } else if let h = userHeading, h >= 0 {
-            heading = h                     // fermo: bussola
+            heading = h                     // fermo/lento: bussola
+        } else if loc.course >= 0 {
+            heading = loc.course            // bussola assente: usa comunque la rotta
         } else {
             heading = map.camera.heading
         }
