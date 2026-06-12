@@ -28,6 +28,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.requestAlwaysAuthorization()
     }
 
+    /// Richiede un singolo fix di posizione, senza avviare la navigazione
+    /// continua: serve per confronti una tantum (es. "sono al punto di partenza?")
+    func requestOneShot() {
+        manager.requestLocation()
+    }
+
     func start() {
         pendingStart = true
         manager.startUpdatingLocation()

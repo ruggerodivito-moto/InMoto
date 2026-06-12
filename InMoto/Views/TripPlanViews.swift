@@ -171,10 +171,17 @@ struct TripStageDetailView: View {
     let item: TripPlanItem
 
     @StateObject private var vm = DownloadPreparationViewModel()
+    @ObservedObject private var locationMgr = LocationManager.shared
     @State private var navigating: PreparedNav?
+    @State private var startPrompt: StartFromHerePrompt?
+    @State private var addingCurrentPosition = false
 
     private var motoRoute: MotoRoute { plan.motoRoute(for: item) }
     private var navigable: Bool { item.waypointsGmaps.count >= 2 }
+
+    /// Oltre questa distanza dal primo punto della tappa si chiede se aggiungere
+    /// la posizione attuale come partenza (sotto, si è "già sul posto")
+    private let startProximityThreshold: Double = 300
 
     var body: some View {
         List {
@@ -250,14 +257,22 @@ struct TripStageDetailView: View {
                     .tint(.orange)
                 } else if let nav = vm.navigationRoute {
                     Button {
-                        navigating = PreparedNav(navRoute: nav, motoRoute: motoRoute)
+                        onStartTapped(nav)
                     } label: {
-                        Label("Inizia navigazione", systemImage: "location.north.fill")
-                            .frame(maxWidth: .infinity)
-                            .fontWeight(.semibold)
+                        HStack {
+                            if addingCurrentPosition {
+                                ProgressView().tint(.white)
+                                Text("Calcolo collegamento…")
+                            } else {
+                                Label("Inizia navigazione", systemImage: "location.north.fill")
+                            }
+                        }
+                        .frame(maxWidth: .infinity)
+                        .fontWeight(.semibold)
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.orange)
+                    .disabled(addingCurrentPosition)
 
                     Text("Avanzamento automatico tra i punti: superato un punto, la navigazione passa da sola al successivo, senza toccare il telefono.")
                         .font(.caption2)
@@ -284,11 +299,81 @@ struct TripStageDetailView: View {
                 await vm.prepare(route: motoRoute)
             }
         }
+        .onAppear {
+            // Un fix di posizione pronto per capire se sei già al punto di partenza
+            locationMgr.requestPermission()
+            locationMgr.requestOneShot()
+        }
+        .confirmationDialog("Non sei al punto di partenza della tappa",
+                            isPresented: Binding(get: { startPrompt != nil },
+                                                 set: { if !$0 { startPrompt = nil } }),
+                            titleVisibility: .visible,
+                            presenting: startPrompt) { prompt in
+            Button("Aggiungi la mia posizione attuale") {
+                startWithCurrentPosition(prompt.nav, from: prompt.here)
+            }
+            Button("Parti dalla prima tappa") {
+                navigating = PreparedNav(navRoute: prompt.nav, motoRoute: motoRoute)
+            }
+            Button("Annulla", role: .cancel) {}
+        } message: { prompt in
+            Text("Sei a circa \(formatDistance(prompt.distance)) dall'inizio della tappa. Vuoi aggiungere la tua posizione attuale come punto di partenza, prima del primo punto della tappa?")
+        }
         .fullScreenCover(item: $navigating) { prepared in
             NavigationStack {
                 NavigatorView(navRoute: prepared.navRoute, motoRoute: prepared.motoRoute)
             }
         }
+    }
+
+    // MARK: - Avvio navigazione
+
+    /// Tap su "Inizia navigazione": se la posizione attuale è nota ed è lontana
+    /// dal primo punto della tappa, chiede se anteporre la posizione attuale.
+    private func onStartTapped(_ nav: NavigationRoute) {
+        // Aggiorna il fix per la prossima volta
+        locationMgr.requestOneShot()
+        if let here = locationMgr.location?.coordinate, let first = nav.waypoints.first {
+            let distance = CLLocation(latitude: here.latitude, longitude: here.longitude)
+                .distance(from: CLLocation(latitude: first.latitude, longitude: first.longitude))
+            if distance > startProximityThreshold {
+                startPrompt = StartFromHerePrompt(nav: nav, here: here, distance: distance)
+                return
+            }
+        }
+        navigating = PreparedNav(navRoute: nav, motoRoute: motoRoute)
+    }
+
+    /// Antepone la posizione attuale come primo waypoint, calcolando la tratta
+    /// di collegamento fino al primo punto della tappa, poi avvia la navigazione.
+    private func startWithCurrentPosition(_ nav: NavigationRoute,
+                                          from here: CLLocationCoordinate2D) {
+        guard let first = nav.waypoints.first else {
+            navigating = PreparedNav(navRoute: nav, motoRoute: motoRoute)
+            return
+        }
+        addingCurrentPosition = true
+        Task {
+            defer { addingCurrentPosition = false }
+            let current = GeocodedWaypoint(name: "Posizione attuale",
+                                           latitude: here.latitude, longitude: here.longitude)
+            do {
+                let connector = try await RouterService.shared.connectorLeg(from: here, to: first)
+                let merged = NavigationRoute(routeId: nav.routeId,
+                                             routeName: nav.routeName,
+                                             waypoints: [current] + nav.waypoints,
+                                             legs: [connector] + nav.legs)
+                navigating = PreparedNav(navRoute: merged, motoRoute: motoRoute)
+            } catch {
+                // Collegamento non calcolabile: parti comunque dalla prima tappa
+                navigating = PreparedNav(navRoute: nav, motoRoute: motoRoute)
+            }
+        }
+    }
+
+    private func formatDistance(_ meters: Double) -> String {
+        if meters < 1000 { return "\(Int((meters / 50).rounded()) * 50) m" }
+        return String(format: "%.1f km", meters / 1000)
     }
 
     private var previewStatus: StageMapPreview.Status {
@@ -303,6 +388,14 @@ private struct PreparedNav: Identifiable {
     let id = UUID()
     let navRoute: NavigationRoute
     let motoRoute: MotoRoute
+}
+
+/// Richiesta di conferma per anteporre la posizione attuale alla partenza.
+private struct StartFromHerePrompt: Identifiable {
+    let id = UUID()
+    let nav: NavigationRoute
+    let here: CLLocationCoordinate2D
+    let distance: Double
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
