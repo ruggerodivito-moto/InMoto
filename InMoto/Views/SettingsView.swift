@@ -5,9 +5,16 @@ struct SettingsView: View {
     @EnvironmentObject var store: RouteStore
     @State private var showCopied = false
 
+    /// Versione e build reali dal bundle (impostate dalla pipeline di rilascio)
+    private var appVersion: String {
+        let info = Bundle.main.infoDictionary
+        let short = info?["CFBundleShortVersionString"] as? String ?? "—"
+        let build = info?["CFBundleVersion"] as? String ?? "—"
+        return "\(short) (\(build))"
+    }
+
     var body: some View {
-        NavigationStack {
-            Form {
+        Form {
                 // ── Connessione server ─────────────────────────────────────
                 Section {
                     HStack {
@@ -91,14 +98,13 @@ struct SettingsView: View {
 
                 // ── Info app ───────────────────────────────────────────────
                 Section {
-                    LabeledContent("Versione", value: "1.0.0")
+                    LabeledContent("Versione", value: appVersion)
                     LabeledContent("Itinerari bundle", value: "196")
                     Link(destination: URL(string: "https://www.google.com/maps")!) {
                         Label("Google Maps", systemImage: "map")
                     }
                 } header: { Text("Informazioni") }
-            }
-            .navigationTitle("Impostazioni")
         }
+        .navigationTitle("Impostazioni")
     }
 }

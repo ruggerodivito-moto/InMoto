@@ -9,42 +9,40 @@ struct ImportedRoutesView: View {
     @State private var showRoadbook = false
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if store.personalRoutes.isEmpty && store.tripPlans.isEmpty {
-                    emptyState
-                } else {
-                    routeList
-                }
+        Group {
+            if store.personalRoutes.isEmpty && store.tripPlans.isEmpty {
+                emptyState
+            } else {
+                routeList
             }
-            .navigationTitle("Tragitti personali")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Menu {
-                        Button { showImport = true } label: {
-                            Label("Importa tragitto", systemImage: "link")
-                        }
-                        Button { showRoadbook = true } label: {
-                            Label("Importa roadbook (viaggio)", systemImage: "doc.text")
-                        }
-                        Button { showCompose = true } label: {
-                            Label("Componi viaggio da tragitti", systemImage: "arrow.triangle.merge")
-                        }
-                    } label: {
-                        Image(systemName: "plus")
+        }
+        .navigationTitle("Tragitti personali")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button { showImport = true } label: {
+                        Label("Importa tragitto", systemImage: "link")
                     }
+                    Button { showRoadbook = true } label: {
+                        Label("Importa roadbook (viaggio)", systemImage: "doc.text")
+                    }
+                    Button { showCompose = true } label: {
+                        Label("Componi viaggio da tragitti", systemImage: "arrow.triangle.merge")
+                    }
+                } label: {
+                    Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $showImport) {
-                ImportRouteView()
-            }
-            .sheet(isPresented: $showCompose) {
-                ComposeTripView()
-            }
-            .sheet(isPresented: $showRoadbook) {
-                RoadbookImportView()
-            }
+        }
+        .sheet(isPresented: $showImport) {
+            ImportRouteView()
+        }
+        .sheet(isPresented: $showCompose) {
+            ComposeTripView()
+        }
+        .sheet(isPresented: $showRoadbook) {
+            RoadbookImportView()
         }
     }
 

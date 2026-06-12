@@ -9,27 +9,25 @@ struct FavoritePlacesView: View {
     @State private var editingPlace: FavoritePlace? = nil
 
     var body: some View {
-        NavigationStack {
-            Group {
-                if store.favoritePlaces.isEmpty {
-                    emptyState
-                } else {
-                    placesList
-                }
+        Group {
+            if store.favoritePlaces.isEmpty {
+                emptyState
+            } else {
+                placesList
             }
-            .navigationTitle("Luoghi Preferiti")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { showAdd = true } label: { Image(systemName: "plus") }
-                }
+        }
+        .navigationTitle("Luoghi Preferiti")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button { showAdd = true } label: { Image(systemName: "plus") }
             }
-            .sheet(isPresented: $showAdd) {
-                AddFavoritePlaceView()
-            }
-            .sheet(item: $editingPlace) { place in
-                EditFavoritePlaceView(place: place)
-            }
+        }
+        .sheet(isPresented: $showAdd) {
+            AddFavoritePlaceView()
+        }
+        .sheet(item: $editingPlace) { place in
+            EditFavoritePlaceView(place: place)
         }
     }
 
