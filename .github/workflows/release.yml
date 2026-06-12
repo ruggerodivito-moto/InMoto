@@ -3,6 +3,10 @@ name: Build & Release IPA
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'android/**'
+      - '**.md'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:

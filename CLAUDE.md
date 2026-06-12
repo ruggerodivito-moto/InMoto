@@ -176,29 +176,21 @@ dal `.env` del server). `RouteStore.syncFromServer()` chiama
 
 ---
 
-## 🟡 PROGETTO APERTO — Versione Android (da riprendere)
+## 🟢 PROGETTO IN CORSO — Versione Android (`android/`)
 
-L'utente ha chiesto di creare **una versione Android dell'app**. Lavoro **non
-ancora iniziato**: prima di generare codice servono 4 decisioni (l'utente ha
-interrotto le domande chiedendo di annotare tutto qui). Quando si riprende,
- riproporre queste scelte (con le raccomandazioni) e poi partire.
+Versione Android dell'app, in sviluppo nella cartella **`android/`** dello stesso
+repo. **Decisioni prese** (sessione 2026-06-12):
 
-### Decisioni da prendere (con raccomandazione)
-1. **Tecnologia** → *consiglio: Kotlin + Jetpack Compose* (nativa, rispecchia
-   SwiftUI, l'app iOS resta invariata). Alternative: Flutter (codice unico ma
-   riscrittura futura di iOS), Kotlin Multiplatform (condivide logica, UI separate).
-2. **Scope v1** → *consiglio: base prima, navigazione dopo* — v1 = sfoglia
-   itinerari offline + import roadbook/viaggi + mappe statiche + apertura in Google
-   Maps; fase 2 = navigatore live (map-matching, avanzamento automatico, voce,
-   course-up). La parità completa subito è molto più lunga.
-3. **Provider mappe** → *consiglio per partire: MapLibre/OSM (nessuna API key né
-   costi; routing via OSRM pubblico)*. Alternativa: Google Maps SDK (resa migliore
-   ma richiede API key Google Cloud, possibili costi oltre soglia gratuita).
-4. **Build/installazione** → *consiglio: GitHub Actions → APK debug* (come iOS ma
-   più semplice: l'APK si installa diretto, niente firma per sideload; serve un
-   device Android per provarlo). Alternative: Android Studio locale; oppure solo
-   progetto+codice se non c'è ancora un device. **Verificare se l'utente ha un
-   telefono Android / emulatore.**
+1. **Tecnologia** → **Kotlin + Jetpack Compose** (nativa; l'app iOS resta intatta).
+2. **Scope v1** → **parità completa**, incluso il navigatore live.
+3. **Provider mappe** → **MapLibre/OSM** + routing **OSRM pubblico** (nessuna API key).
+4. **Build** → **GitHub Actions → APK debug** (workflow Android dedicato).
+
+> Manca da verificare con l'utente: ha un **telefono Android / emulatore** per provare l'APK?
+
+### Stato avanzamento
+Vedi i task della sessione. Ordine: scaffold Gradle → modelli → repository+routes.json
+→ parser roadbook → routing OSRM/geocoding → UI 2 tab → mappe MapLibre → navigazione live → CI.
 
 ### Riusabile dall'app iOS (non riscrivere la logica da zero)
 - `InMoto/Resources/routes.json` — i 196 itinerari: copiabile tale e quale negli

@@ -1,0 +1,6970 @@
+[
+  {
+    "id": "valle-daosta-65df5898",
+    "nome": "Gran San Bernardo e Colle del Gran San Bernardo",
+    "partenza": "Aosta",
+    "arrivo": "Martigny (CH) andata/ritorno",
+    "regione": "Valle d'Aosta",
+    "km": 120,
+    "durataMin": 180,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "Salita al valico alpino più famoso d'Europa, percorso della via romana Alpis Poenina. Curve mozzafiato sopra i 2400 metri con vista sul Monte Bianco.",
+    "tappe": [
+      "Aosta",
+      "Saint-Rhémy-en-Bosses",
+      "Colle Gran San Bernardo 2473m",
+      "Martigny"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Saint-Rhémy-en-Bosses, Italy",
+      "Colle Gran San Bernardo, Italy",
+      "Martigny, Switzerland"
+    ],
+    "tags": [
+      "passo alpino",
+      "storico",
+      "panoramico",
+      "confine svizzero"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-settembre"
+  },
+  {
+    "id": "valle-daosta-f31dbd4c",
+    "nome": "Colle del Nivolet - Il tetto della Valle d'Aosta",
+    "partenza": "Ceresole Reale",
+    "arrivo": "Colle del Nivolet 2612m",
+    "regione": "Valle d'Aosta",
+    "km": 95,
+    "durataMin": 150,
+    "difficolta": "difficile",
+    "stelle": 5.0,
+    "descrizione": "Una delle strade più alte e spettacolari delle Alpi italiane. Laghi alpini turchesi, marmotte, stambecchi. La strada termina al colle a 2612m nel Parco Nazionale del Gran Paradiso.",
+    "tappe": [
+      "Ceresole Reale",
+      "Lago Serrù",
+      "Lago Agnel",
+      "Colle del Nivolet"
+    ],
+    "waypointsGmaps": [
+      "Ceresole Reale, Italy",
+      "Lago Serrù, Italy",
+      "Colle del Nivolet, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "parco nazionale",
+      "laghi alpini",
+      "fauna alpina",
+      "alta quota"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "valle-daosta-d4b9aaf5",
+    "nome": "Piccolo San Bernardo - La porta delle Alpi occidentali",
+    "partenza": "Aosta",
+    "arrivo": "La Thuile - Colle Piccolo San Bernardo 2188m",
+    "regione": "Valle d'Aosta",
+    "km": 110,
+    "durataMin": 160,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Valico storico verso la Francia attraverso la Valle della Thuile. Panorami sul Monte Bianco e sulla catena del Rutor. Cromlech e resti romani al colle.",
+    "tappe": [
+      "Aosta",
+      "Morgex",
+      "La Salle",
+      "La Thuile",
+      "Colle Piccolo San Bernardo"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Morgex, Italy",
+      "La Thuile, Italy",
+      "Colle Piccolo San Bernardo, Switzerland"
+    ],
+    "tags": [
+      "passo alpino",
+      "confine francese",
+      "Monte Bianco",
+      "storico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-settembre"
+  },
+  {
+    "id": "valle-daosta-eab01ef0",
+    "nome": "Colle del Mont Cenis - Anello delle Alpi Graie",
+    "partenza": "Aosta",
+    "arrivo": "Susa (TO) via Mont Cenis",
+    "regione": "Valle d'Aosta",
+    "km": 145,
+    "durataMin": 195,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Grande anello con passaggio dal traforo del Monte Bianco verso la Francia e rientro dal Colle del Moncenisio. Lago artificiale al colle, panorami grandiosi.",
+    "tappe": [
+      "Aosta",
+      "Courmayeur",
+      "Traforo Monte Bianco",
+      "Chamonix",
+      "Colle Mont Cenis",
+      "Susa"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Courmayeur, Italy",
+      "Mont Blanc Tunnel, Italy",
+      "Colle del Mont Cenis, Italy",
+      "Susa, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "anello",
+      "Francia",
+      "traforo",
+      "lago montagna"
+    ],
+    "fonte": "dueruote.it",
+    "stagione": "giugno-settembre"
+  },
+  {
+    "id": "valle-daosta-b659a444",
+    "nome": "Valpelline e Colle Serena",
+    "partenza": "Aosta",
+    "arrivo": "Bionaz - Lago Place Moulin",
+    "regione": "Valle d'Aosta",
+    "km": 75,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Valle laterale selvaggia e poco frequentata. La strada sale fino al lago artificiale Place Moulin circondato da ghiacciai. Paesaggio lunare e grandioso.",
+    "tappe": [
+      "Aosta",
+      "Valpelline",
+      "Oyace",
+      "Bionaz",
+      "Lago Place Moulin"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Valpelline, Italy",
+      "Bionaz, Italy",
+      "Lago Place Moulin, Italy"
+    ],
+    "tags": [
+      "valle laterale",
+      "lago alpino",
+      "ghiacciai",
+      "isolato"
+    ],
+    "fonte": "lovevda.it",
+    "stagione": "giugno-settembre"
+  },
+  {
+    "id": "valle-daosta-82721a09",
+    "nome": "Cervinia e Colle Superiore delle Cime Bianche",
+    "partenza": "Châtillon",
+    "arrivo": "Breuil-Cervinia",
+    "regione": "Valle d'Aosta",
+    "km": 80,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "Salita al celebre comprensorio sciistico ai piedi del Cervino. La strada finale con tornanti panoramici offre viste iconiche sul4478m del Cervino.",
+    "tappe": [
+      "Châtillon",
+      "Saint-Vincent",
+      "Antey-Saint-André",
+      "Chamois (funivia)",
+      "Breuil-Cervinia"
+    ],
+    "waypointsGmaps": [
+      "Châtillon, Italy",
+      "Antey-Saint-André, Italy",
+      "Breuil-Cervinia, Italy"
+    ],
+    "tags": [
+      "Cervino",
+      "alta quota",
+      "panoramico",
+      "resort alpino"
+    ],
+    "fonte": "lovevda.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "valle-daosta-f09b7f61",
+    "nome": "Valle del Gran Paradiso - Cogne e Valnontey",
+    "partenza": "Aosta",
+    "arrivo": "Valnontey - Cogne",
+    "regione": "Valle d'Aosta",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Strada panoramica nel cuore del Parco Nazionale del Gran Paradiso verso il pittoresco villaggio di Cogne. Stambecchi avvistabili lungo il percorso.",
+    "tappe": [
+      "Aosta",
+      "Villeneuve",
+      "Introd",
+      "Cogne",
+      "Valnontey"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Villeneuve, Italy",
+      "Cogne, Italy",
+      "Valnontey, Italy"
+    ],
+    "tags": [
+      "parco nazionale",
+      "Gran Paradiso",
+      "fauna alpina",
+      "borghi"
+    ],
+    "fonte": "lovevda.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "valle-daosta-4f117452",
+    "nome": "Anello della Valle d'Aosta Centrale",
+    "partenza": "Aosta",
+    "arrivo": "Aosta (anello)",
+    "regione": "Valle d'Aosta",
+    "km": 130,
+    "durataMin": 180,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Anello della valle principale con deviazioni nelle valli laterali. Castelli medievali (Saint-Pierre, Sarre, Fénis), borghi alpini, vigneti eroici.",
+    "tappe": [
+      "Aosta",
+      "Saint-Pierre",
+      "Arvier",
+      "La Salle",
+      "Morgex",
+      "Pré-Saint-Didier",
+      "Courmayeur",
+      "Entrèves",
+      "rientro via SS26"
+    ],
+    "waypointsGmaps": [
+      "Aosta, Italy",
+      "Saint-Pierre, Italy",
+      "Morgex, Italy",
+      "Courmayeur, Italy",
+      "Aosta, Italy"
+    ],
+    "tags": [
+      "castelli",
+      "anello",
+      "borghi",
+      "vigneti eroici"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "valle-daosta-ffb5067c",
+    "nome": "Colle di Joux e Saint-Vincent",
+    "partenza": "Saint-Vincent",
+    "arrivo": "Colle di Joux 1640m - Brusson",
+    "regione": "Valle d'Aosta",
+    "km": 65,
+    "durataMin": 100,
+    "difficolta": "media",
+    "stelle": 4.1,
+    "descrizione": "Valico che collega la Valle Centrale alla Valle d'Ayas. Percorso tra boschi di larici e pascoli alpini. Ottima alternativa ai valichi più frequentati.",
+    "tappe": [
+      "Saint-Vincent",
+      "Châtillon",
+      "Colle di Joux",
+      "Brusson",
+      "Ayas"
+    ],
+    "waypointsGmaps": [
+      "Saint-Vincent, Italy",
+      "Colle di Joux, Italy",
+      "Brusson, Italy"
+    ],
+    "tags": [
+      "passo minore",
+      "Valle d'Ayas",
+      "boschi",
+      "tranquillo"
+    ],
+    "fonte": "motoitinerari.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "valle-daosta-b7a00b1a",
+    "nome": "Valle d'Ayas e Monte Rosa",
+    "partenza": "Verrès",
+    "arrivo": "Champoluc",
+    "regione": "Valle d'Aosta",
+    "km": 70,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Risalita della Valle d'Ayas ai piedi del Monte Rosa. Borghi valdostani tipici, architettura in pietra e legno, viste sulla catena del Monte Rosa.",
+    "tappe": [
+      "Verrès",
+      "Challand-Saint-Anselme",
+      "Brusson",
+      "Antagnod",
+      "Champoluc"
+    ],
+    "waypointsGmaps": [
+      "Verrès, Italy",
+      "Brusson, Italy",
+      "Antagnod, Italy",
+      "Champoluc, Italy"
+    ],
+    "tags": [
+      "Monte Rosa",
+      "borghi alpini",
+      "valle laterale",
+      "panoramico"
+    ],
+    "fonte": "lovevda.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "piemonte-594fd804",
+    "nome": "Colle dell'Agnello - Il tetto delle Alpi Cozie",
+    "partenza": "Cuneo",
+    "arrivo": "Pontechianale - Colle dell'Agnello 2744m",
+    "regione": "Piemonte",
+    "km": 130,
+    "durataMin": 180,
+    "difficolta": "difficile",
+    "stelle": 5.0,
+    "descrizione": "Uno dei passi più alti d'Europa a 2744m. Tornanti mozzafiato sulla parete rocciosa, il lago di Pontechianale in basso, la Francia dall'altra parte. Imperdibile.",
+    "tappe": [
+      "Cuneo",
+      "Saluzzo",
+      "Barge",
+      "Casteldelfino",
+      "Pontechianale",
+      "Colle dell'Agnello"
+    ],
+    "waypointsGmaps": [
+      "Cuneo, Italy",
+      "Saluzzo, Italy",
+      "Casteldelfino, Italy",
+      "Colle dell'Agnello, Italy"
+    ],
+    "tags": [
+      "alta quota",
+      "confine francese",
+      "tornanti",
+      "lago alpino",
+      "estremo"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "luglio-agosto"
+  },
+  {
+    "id": "piemonte-e2a0941f",
+    "nome": "Colle della Lombarda e Vallée de l'Ubaye",
+    "partenza": "Cuneo",
+    "arrivo": "Isola 2000 (F) via Colle Lombarda 2351m",
+    "regione": "Piemonte",
+    "km": 150,
+    "durataMin": 200,
+    "difficolta": "difficile",
+    "stelle": 4.8,
+    "descrizione": "Percorso alpino di grande classe tra le Alpi Marittime. La discesa francese è spettacolare. Possibile anello via Colle di Tenda.",
+    "tappe": [
+      "Cuneo",
+      "Borgo San Dalmazzo",
+      "Vinadio",
+      "Bagni di Vinadio",
+      "Colle della Lombarda",
+      "Saint-Étienne-de-Tinée"
+    ],
+    "waypointsGmaps": [
+      "Cuneo, Italy",
+      "Vinadio, Italy",
+      "Colle della Lombarda, Italy",
+      "Saint-Étienne-de-Tinée, France"
+    ],
+    "tags": [
+      "passo alpino",
+      "confine francese",
+      "Alpi Marittime",
+      "alta quota"
+    ],
+    "fonte": "insella.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "piemonte-981feb47",
+    "nome": "Colle di Tenda - Le Alpi Marittime tra Italia e Francia",
+    "partenza": "Cuneo",
+    "arrivo": "Tenda (F) via Colle di Tenda 1871m",
+    "regione": "Piemonte",
+    "km": 100,
+    "durataMin": 150,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "La vecchia strada del Colle di Tenda offre una delle salite più emozionanti delle Alpi Marittime. Gallerie storiche, tornanti stretti, profumo di avventura.",
+    "tappe": [
+      "Cuneo",
+      "Borgo San Dalmazzo",
+      "Vernante",
+      "Limone Piemonte",
+      "Colle di Tenda",
+      "Tenda"
+    ],
+    "waypointsGmaps": [
+      "Cuneo, Italy",
+      "Limone Piemonte, Italy",
+      "Colle di Tenda, Italy",
+      "Tende, France"
+    ],
+    "tags": [
+      "passo alpino",
+      "storico",
+      "gallerie",
+      "Alpi Marittime",
+      "confine"
+    ],
+    "fonte": "insella.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "piemonte-13aa32c6",
+    "nome": "Lago d'Orta e Mottarone",
+    "partenza": "Novara",
+    "arrivo": "Orta San Giulio - Mottarone 1491m",
+    "regione": "Piemonte",
+    "km": 120,
+    "durataMin": 160,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Lago d'Orta è uno dei gioielli nascosti del Piemonte. La salita al Mottarone regala panorami su tutti i laghi prealpini e sulle Alpi.",
+    "tappe": [
+      "Novara",
+      "Borgomanero",
+      "Orta San Giulio",
+      "Armeno",
+      "Mottarone",
+      "Stresa"
+    ],
+    "waypointsGmaps": [
+      "Novara, Italy",
+      "Orta San Giulio, Italy",
+      "Mottarone, Italy",
+      "Stresa, Italy"
+    ],
+    "tags": [
+      "lago",
+      "panoramico",
+      "borghi lacustri",
+      "prealpino"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "piemonte-4e5eab9f",
+    "nome": "Langhe e Monferrato - Le colline del vino",
+    "partenza": "Asti",
+    "arrivo": "Alba - La Morra - Barolo",
+    "regione": "Piemonte",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Tra i filari di Barolo e Barbaresco, il paesaggio UNESCO delle Langhe offre curve dolci, borghi medievali, cantine e un panorama da cartolina.",
+    "tappe": [
+      "Asti",
+      "Canelli",
+      "Santo Stefano Belbo",
+      "Alba",
+      "La Morra",
+      "Barolo",
+      "Serralunga d'Alba"
+    ],
+    "waypointsGmaps": [
+      "Asti, Italy",
+      "Alba, Italy",
+      "La Morra, Italy",
+      "Barolo, Italy"
+    ],
+    "tags": [
+      "vino",
+      "UNESCO",
+      "gastronomia",
+      "colline",
+      "borghi"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "piemonte-11ce5954",
+    "nome": "Valle Maira e Colle Esischie",
+    "partenza": "Cuneo",
+    "arrivo": "Marmora - Colle Esischie 2370m",
+    "regione": "Piemonte",
+    "km": 125,
+    "durataMin": 170,
+    "difficolta": "difficile",
+    "stelle": 4.7,
+    "descrizione": "Valle Maira è una delle valli alpine più selvagge e autentiche del Piemonte. La strada verso il Colle Esischie regala solitudine e paesaggi di rara bellezza.",
+    "tappe": [
+      "Cuneo",
+      "Dronero",
+      "Acceglio",
+      "Marmora",
+      "Colle Esischie"
+    ],
+    "waypointsGmaps": [
+      "Cuneo, Italy",
+      "Dronero, Italy",
+      "Acceglio, Italy",
+      "Colle Esischie, Italy"
+    ],
+    "tags": [
+      "valle alpina",
+      "selvaggio",
+      "alta quota",
+      "isolato"
+    ],
+    "fonte": "insella.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "piemonte-73349a56",
+    "nome": "Valsesia e Monte Rosa - La via dei walser",
+    "partenza": "Vercelli",
+    "arrivo": "Alagna Valsesia",
+    "regione": "Piemonte",
+    "km": 115,
+    "durataMin": 150,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "La Valsesia conduce al cospetto del Monte Rosa attraverso borghi Walser. Varallo con il Sacro Monte UNESCO e Alagna, punto di partenza per ghiacciai.",
+    "tappe": [
+      "Vercelli",
+      "Borgosesia",
+      "Varallo",
+      "Scopello",
+      "Alagna Valsesia"
+    ],
+    "waypointsGmaps": [
+      "Vercelli, Italy",
+      "Borgosesia, Italy",
+      "Varallo, Italy",
+      "Alagna Valsesia, Italy"
+    ],
+    "tags": [
+      "Monte Rosa",
+      "Walser",
+      "Sacro Monte",
+      "UNESCO",
+      "ghiacciai"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "piemonte-4053be36",
+    "nome": "Colle del Moncenisio - Il valico napoleonico",
+    "partenza": "Susa",
+    "arrivo": "Lanslebourg (F) via Colle Moncenisio 2083m",
+    "regione": "Piemonte",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Il valico storico di Napoleone. La strada italiana è impegnativa con larghi tornanti esposti. Il lago artificiale al colle è di straordinaria bellezza.",
+    "tappe": [
+      "Susa",
+      "Venaus",
+      "Colle del Moncenisio",
+      "Lago del Moncenisio",
+      "Lanslebourg"
+    ],
+    "waypointsGmaps": [
+      "Susa, Italy",
+      "Colle del Moncenisio, Italy",
+      "Lago del Moncenisio, Italy",
+      "Lanslebourg, France"
+    ],
+    "tags": [
+      "passo alpino",
+      "storico",
+      "napoleonico",
+      "lago di montagna",
+      "confine"
+    ],
+    "fonte": "insella.it",
+    "stagione": "giugno-settembre"
+  },
+  {
+    "id": "piemonte-17a0c3ba",
+    "nome": "Valle Ossola e Passo del Sempione",
+    "partenza": "Verbania",
+    "arrivo": "Brig (CH) via Passo Sempione 2005m",
+    "regione": "Piemonte",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Il Passo del Sempione unisce Piemonte e Canton Vallese svizzero. Strada napoleonica storica con gallerie e tornanti nel paesaggio alpino d'alta quota.",
+    "tappe": [
+      "Verbania",
+      "Domodossola",
+      "Varzo",
+      "Passo del Sempione",
+      "Brig"
+    ],
+    "waypointsGmaps": [
+      "Verbania, Italy",
+      "Domodossola, Italy",
+      "Passo del Sempione, Italy",
+      "Brig, Switzerland"
+    ],
+    "tags": [
+      "passo alpino",
+      "confine svizzero",
+      "storico",
+      "napoleonico"
+    ],
+    "fonte": "insella.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "piemonte-a50c12c9",
+    "nome": "Alta Val di Susa - Sestriere e Colle del Monginevro",
+    "partenza": "Susa",
+    "arrivo": "Briançon (F) via Monginevro 1854m",
+    "regione": "Piemonte",
+    "km": 105,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "L'Alta Val di Susa con Sestriere e il Monginevro offre un percorso olimpico (Torino 2006) tra i più panoramici delle Alpi Cozie.",
+    "tappe": [
+      "Susa",
+      "Oulx",
+      "Cesana Torinese",
+      "Sestriere",
+      "Colle del Monginevro",
+      "Briançon"
+    ],
+    "waypointsGmaps": [
+      "Susa, Italy",
+      "Sestriere, Italy",
+      "Colle del Monginevro, Italy",
+      "Briançon, France"
+    ],
+    "tags": [
+      "passo alpino",
+      "olimpico",
+      "confine francese",
+      "Alpi Cozie"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "liguria-92aad691",
+    "nome": "Passo del Turchino - Il passo 'mari e monti' di Ponente",
+    "partenza": "Ovada",
+    "arrivo": "Voltri (GE) via Passo Turchino 532m",
+    "regione": "Liguria",
+    "km": 85,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Passo famoso per la Classica di ciclismo Milano-Sanremo. Collega l'entroterra piemontese alla Riviera di Ponente. Paesaggio tra boschi e vigneti del Monferrato ligure.",
+    "tappe": [
+      "Ovada",
+      "Molare",
+      "Passo del Turchino 532m",
+      "Masone",
+      "Voltri"
+    ],
+    "waypointsGmaps": [
+      "Ovada, Italy",
+      "Molare, Italy",
+      "Passo del Turchino, Italy",
+      "Masone, Italy",
+      "Voltri, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "ciclismo storico",
+      "riviera",
+      "Milano-Sanremo"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-a36dd5af",
+    "nome": "Passo del Faiallo - Il balcone sul golfo di Genova",
+    "partenza": "Genova Voltri",
+    "arrivo": "Sassello via Passo del Faiallo 1044m",
+    "regione": "Liguria",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Il Faiallo è uno dei passi liguri più amati. Dal 1044m si gode una vista straordinaria sul Golfo di Genova. La strada attraversa il Parco Naturale del Beigua tra pascoli e boschi di faggio.",
+    "tappe": [
+      "Genova Voltri",
+      "Passo del Turchino",
+      "Alpicella",
+      "Passo del Faiallo 1044m",
+      "Parco Beigua",
+      "Sassello"
+    ],
+    "waypointsGmaps": [
+      "Voltri, Italy",
+      "Passo del Turchino, Italy",
+      "Passo del Faiallo, Italy",
+      "Sassello, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "panoramico",
+      "Parco Beigua",
+      "golfo di Genova"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "liguria-9485df33",
+    "nome": "Colle del Melogno - Le faggete del Savonese",
+    "partenza": "Finale Ligure",
+    "arrivo": "Millesimo via Colle del Melogno 708m",
+    "regione": "Liguria",
+    "km": 75,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Colle del Melogno è circondato da splendide faggete. La strada è ampia e ben asfaltata, molto apprezzata dai motociclisti per la qualità dell'asfalto e la bellezza del paesaggio boschivo.",
+    "tappe": [
+      "Finale Ligure",
+      "Pietra Ligure",
+      "Borgio Verezzi",
+      "Colle del Melogno 708m",
+      "Calice Ligure",
+      "Millesimo"
+    ],
+    "waypointsGmaps": [
+      "Finale Ligure, Italy",
+      "Colle del Melogno, Italy",
+      "Calice Ligure, Italy",
+      "Millesimo, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "faggeta",
+      "Savonese",
+      "asfalto ottimo"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-e66c1527",
+    "nome": "Passo del Bocco - Il valico tra Genova e La Spezia",
+    "partenza": "Genova Recco",
+    "arrivo": "Borzonasca - Passo del Bocco 956m",
+    "regione": "Liguria",
+    "km": 95,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Il Passo del Bocco collega la Val Fontanabuona alla Val di Vara. Uno dei valichi più panoramici dell'Appennino ligure-spezzino con vista sulla val di Vara e sui monti circostanti.",
+    "tappe": [
+      "Recco GE",
+      "Uscio",
+      "Cicagna",
+      "Borzonasca",
+      "Passo del Bocco 956m",
+      "Varese Ligure"
+    ],
+    "waypointsGmaps": [
+      "Recco, Italy",
+      "Cicagna, Italy",
+      "Borzonasca, Italy",
+      "Passo del Bocco, Italy",
+      "Varese Ligure, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "Val Fontanabuona",
+      "Val di Vara",
+      "panoramico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-a87f0923",
+    "nome": "Passo di Caprauna - Le Alpi Liguri selvagge",
+    "partenza": "Albenga",
+    "arrivo": "Garessio (CN) via Passo di Caprauna 1379m",
+    "regione": "Liguria",
+    "km": 100,
+    "durataMin": 155,
+    "difficolta": "difficile",
+    "stelle": 4.7,
+    "descrizione": "Passo tra le Alpi Liguri che collega la Val Pennavaira alla Valle Tanaro. Strada tortuosa e impegnativa tra paesaggi montani selvaggi. Traffico quasi assente.",
+    "tappe": [
+      "Albenga",
+      "Cisano sul Neva",
+      "Erli",
+      "Caprauna",
+      "Passo di Caprauna 1379m",
+      "Garessio"
+    ],
+    "waypointsGmaps": [
+      "Albenga, Italy",
+      "Cisano sul Neva, Italy",
+      "Caprauna, Italy",
+      "Garessio, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "Alpi Liguri",
+      "selvaggio",
+      "traffico scarso",
+      "difficile"
+    ],
+    "fonte": "insella.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "liguria-88fa4eff",
+    "nome": "Colle di Nava - Il nodo tra Liguria e Piemonte",
+    "partenza": "Imperia",
+    "arrivo": "Garessio (CN) via Colle di Nava 934m",
+    "regione": "Liguria",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Il Colle di Nava è un valico classico tra il mare ligure e le valli piemontesi. La strada sale dolcemente attraverso la Valle Arroscia fino al colle. Ottima base per esplorare le Alpi Liguri.",
+    "tappe": [
+      "Imperia",
+      "Pontedassio",
+      "Pieve di Teco",
+      "Colle di Nava 934m",
+      "Ormea",
+      "Garessio"
+    ],
+    "waypointsGmaps": [
+      "Imperia, Italy",
+      "Pieve di Teco, Italy",
+      "Colle di Nava, Italy",
+      "Ormea, Italy",
+      "Garessio, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "Valle Arroscia",
+      "Piemonte-Liguria",
+      "accessibile"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-00a8e497",
+    "nome": "Passo della Teglia - L'Alpe alta dell'imperiese",
+    "partenza": "Imperia",
+    "arrivo": "Triora - Passo della Teglia 1385m",
+    "regione": "Liguria",
+    "km": 95,
+    "durataMin": 150,
+    "difficolta": "difficile",
+    "stelle": 4.8,
+    "descrizione": "Il Passo della Teglia è uno dei valichi più alti delle Alpi Liguri nel versante imperiese. Strada stretta e tortuosa verso Triora, il 'borgo delle streghe'. Paesaggio alpino sorprendente.",
+    "tappe": [
+      "Imperia",
+      "Pontedassio",
+      "Lucinasco",
+      "Cesio",
+      "Rezzo",
+      "Triora",
+      "Passo della Teglia 1385m"
+    ],
+    "waypointsGmaps": [
+      "Imperia, Italy",
+      "Rezzo, Italy",
+      "Triora, Italy",
+      "Passo della Teglia, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "Alpi Liguri",
+      "Triora",
+      "borgo streghe",
+      "alta quota"
+    ],
+    "fonte": "insella.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "liguria-110a4db4",
+    "nome": "Passo del Bracco - Tra Genova e la Riviera di Levante",
+    "partenza": "Sestri Levante",
+    "arrivo": "Brugnato (SP) via Passo del Bracco 615m",
+    "regione": "Liguria",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Il Passo del Bracco divide la Riviera di Levante dalla Val di Vara. La strada storica offre scorci sulla costa e sull'entroterra ligure. Punto di passaggio sulla SS1 Aurelia storica.",
+    "tappe": [
+      "Sestri Levante",
+      "Casarza Ligure",
+      "Passo del Bracco 615m",
+      "Brugnato",
+      "Varese Ligure"
+    ],
+    "waypointsGmaps": [
+      "Sestri Levante, Italy",
+      "Passo del Bracco, Italy",
+      "Brugnato, Italy",
+      "Varese Ligure, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "Riviera di Levante",
+      "Val di Vara",
+      "storico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-b80d7ce3",
+    "nome": "Passo di Cento Croci - Tra Liguria ed Emilia",
+    "partenza": "La Spezia",
+    "arrivo": "Borgotaro (PR) via Passo Cento Croci 1059m",
+    "regione": "Liguria",
+    "km": 95,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Valico appenninico che collega la Liguria all'Emilia. La strada è molto apprezzata per le curve fluide e il panorama sulle valli. Varese Ligure, borgata medievale, è una tappa imperdibile.",
+    "tappe": [
+      "La Spezia",
+      "Sesta Godano",
+      "Varese Ligure",
+      "Passo di Cento Croci 1059m",
+      "Bardi",
+      "Borgotaro"
+    ],
+    "waypointsGmaps": [
+      "La Spezia, Italy",
+      "Varese Ligure, Italy",
+      "Passo di Cento Croci, Italy",
+      "Borgotaro, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "confine Emilia",
+      "Varese Ligure",
+      "curve fluide"
+    ],
+    "fonte": "insella.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-e53cedd0",
+    "nome": "Valle Argentina e Valle Nervia - L'entroterra di Sanremo",
+    "partenza": "Sanremo",
+    "arrivo": "Triora - Pigna - Dolceacqua",
+    "regione": "Liguria",
+    "km": 120,
+    "durataMin": 175,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Anello spettacolare nell'entroterra della provincia di Imperia. Valle Argentina con Triora (borgo delle streghe), Valle Nervia con Dolceacqua (ponte preferito da Monet). Borghi medievali, olivi e castagni.",
+    "tappe": [
+      "Sanremo",
+      "Taggia",
+      "Badalucco",
+      "Triora",
+      "Pigna",
+      "Dolceacqua",
+      "Ventimiglia"
+    ],
+    "waypointsGmaps": [
+      "Sanremo, Italy",
+      "Taggia, Italy",
+      "Triora, Italy",
+      "Pigna, Italy",
+      "Dolceacqua, Italy",
+      "Ventimiglia, Italy"
+    ],
+    "tags": [
+      "anello",
+      "borghi medievali",
+      "Valle Argentina",
+      "Valle Nervia",
+      "entroterra"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "liguria-64f7c2a1",
+    "nome": "Val Trebbia e Val d'Aveto - L'Appennino ligure genovese",
+    "partenza": "Genova",
+    "arrivo": "Santo Stefano d'Aveto - Rezzoaglio",
+    "regione": "Liguria",
+    "km": 130,
+    "durataMin": 180,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "L'entroterra genovese nasconde valli di rara bellezza. Val Trebbia ligure con il borgo medievale di Pentema, Val d'Aveto con laghetti alpini e faggete. Strade strette e panoramiche quasi senza traffico.",
+    "tappe": [
+      "Genova",
+      "Busalla",
+      "Ronco Scrivia",
+      "Torriglia",
+      "Pentema",
+      "Santo Stefano d'Aveto",
+      "Rezzoaglio",
+      "Borzonasca"
+    ],
+    "waypointsGmaps": [
+      "Genova, Italy",
+      "Torriglia, Italy",
+      "Santo Stefano d'Aveto, Italy",
+      "Rezzoaglio, Italy"
+    ],
+    "tags": [
+      "entroterra genovese",
+      "Val Trebbia",
+      "Val d'Aveto",
+      "borghi",
+      "faggeta"
+    ],
+    "fonte": "motoreporter.it",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "liguria-25599672",
+    "nome": "Riviera di Ponente e Riviera di Levante - La SS1 Aurelia panoramica",
+    "partenza": "Ventimiglia",
+    "arrivo": "La Spezia via Aurelia costiera",
+    "regione": "Liguria",
+    "km": 250,
+    "durataMin": 300,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "La traversata completa della costa ligure sulla SS1 Aurelia. Tratti panoramici da brivido tra rocce a picco sul mare, borghi marinari, Cinque Terre sullo sfondo. Il percorso per eccellenza della Liguria.",
+    "tappe": [
+      "Ventimiglia",
+      "Sanremo",
+      "Imperia",
+      "Savona",
+      "Genova",
+      "Rapallo",
+      "Sestri Levante",
+      "Monterosso",
+      "La Spezia"
+    ],
+    "waypointsGmaps": [
+      "Ventimiglia, Italy",
+      "Sanremo, Italy",
+      "Savona, Italy",
+      "Genova, Italy",
+      "Rapallo, Italy",
+      "Sestri Levante, Italy",
+      "La Spezia, Italy"
+    ],
+    "tags": [
+      "costa",
+      "Aurelia",
+      "Riviera",
+      "borghi marinari",
+      "Cinque Terre"
+    ],
+    "fonte": "nonsoloturisti.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lombardia-04ddb9a3",
+    "nome": "Lago di Como - Il triangolo lariano",
+    "partenza": "Como",
+    "arrivo": "Como (anello Triangolo Lariano)",
+    "regione": "Lombardia",
+    "km": 130,
+    "durataMin": 180,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "L'anello del Lago di Como è uno dei percorsi motociclistici più famosi d'Europa. Strade strette sul bordo del lago, ville storiche, Bellagio la 'perla del Lario'. Traffico intenso in estate.",
+    "tappe": [
+      "Como",
+      "Bellagio",
+      "Varenna",
+      "Menaggio",
+      "Tremezzo",
+      "Argegno",
+      "Como"
+    ],
+    "waypointsGmaps": [
+      "Como, Italy",
+      "Bellagio, Italy",
+      "Varenna, Italy",
+      "Menaggio, Italy",
+      "Tremezzo, Italy",
+      "Como, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Lago di Como",
+      "ville storiche",
+      "panoramico",
+      "famoso"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "lombardia-c2b82af3",
+    "nome": "Passo dello Stelvio - Il colosso delle Alpi",
+    "partenza": "Bormio",
+    "arrivo": "Prato allo Stelvio via Passo Stelvio 2758m",
+    "regione": "Lombardia",
+    "km": 85,
+    "durataMin": 150,
+    "difficolta": "difficile",
+    "stelle": 5.0,
+    "descrizione": "Il Passo dello Stelvio a 2758m è il secondo passo più alto d'Europa. 48 tornanti sul versante di Bormio, 38 tornanti sul versante altoatesino. Meta di pellegrinaggio per ogni motociclista.",
+    "tappe": [
+      "Bormio",
+      "Passo dello Stelvio 2758m",
+      "Trafoi",
+      "Prato allo Stelvio"
+    ],
+    "waypointsGmaps": [
+      "Bormio, Italy",
+      "Passo dello Stelvio, Italy",
+      "Trafoi, Italy",
+      "Prato allo Stelvio, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "alta quota",
+      "tornanti",
+      "iconico",
+      "Giro d'Italia"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "lombardia-738b986b",
+    "nome": "Lago di Garda occidentale - La SS45bis dei Gardesani",
+    "partenza": "Brescia",
+    "arrivo": "Riva del Garda (TN) via sponda ovest",
+    "regione": "Lombardia",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "La sponda occidentale del Garda è famosa per la SS45bis con gallerie scavate nella roccia. La 'Strada della Forra' di Tremosine è stata definita 'la strada più bella del mondo' dal Daily Telegraph.",
+    "tappe": [
+      "Brescia",
+      "Salò",
+      "Gardone Riviera",
+      "Gargnano",
+      "Tremosine",
+      "Limone sul Garda",
+      "Riva del Garda"
+    ],
+    "waypointsGmaps": [
+      "Brescia, Italy",
+      "Salò, Italy",
+      "Gargnano, Italy",
+      "Limone sul Garda, Italy",
+      "Riva del Garda, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Lago di Garda",
+      "gallerie",
+      "Strada della Forra",
+      "famoso"
+    ],
+    "fonte": "insella.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lombardia-5f450b90",
+    "nome": "Valchiavenna e Maloja - Lo svizzero dalla Valtellina",
+    "partenza": "Sondrio",
+    "arrivo": "Maloja (CH) via Chiavenna",
+    "regione": "Lombardia",
+    "km": 120,
+    "durataMin": 160,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Da Sondrio lungo l'Adda fino a Chiavenna, poi su verso la Svizzera attraverso l'Engadina. Uno dei percorsi alpini più vari: fondovalle, gole, passi e la famosa discesa del Maloja.",
+    "tappe": [
+      "Sondrio",
+      "Morbegno",
+      "Chiavenna",
+      "Piuro",
+      "Castasegna",
+      "Maloja",
+      "St. Moritz"
+    ],
+    "waypointsGmaps": [
+      "Sondrio, Italy",
+      "Chiavenna, Italy",
+      "Maloja, Switzerland",
+      "Saint Moritz, Switzerland"
+    ],
+    "tags": [
+      "passo alpino",
+      "Svizzera",
+      "Engadina",
+      "Valtellina",
+      "Chiavenna"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "lombardia-40daa828",
+    "nome": "Valtellina e Livigno - Il Piccolo Tibet",
+    "partenza": "Sondrio",
+    "arrivo": "Livigno via Passo dell'Eira 2210m",
+    "regione": "Lombardia",
+    "km": 110,
+    "durataMin": 155,
+    "difficolta": "difficile",
+    "stelle": 4.7,
+    "descrizione": "Livigno è un'enclave doganale a 1800m tra le montagne. Il percorso attraversa il Passo dell'Eira e il Passo del Foscagno. Paesaggi alpini altissimi e strade panoramiche.",
+    "tappe": [
+      "Sondrio",
+      "Tirano",
+      "Aprica",
+      "Edolo",
+      "Passo Aprica 1181m",
+      "Livigno",
+      "Passo dell'Eira 2210m"
+    ],
+    "waypointsGmaps": [
+      "Sondrio, Italy",
+      "Tirano, Italy",
+      "Aprica, Italy",
+      "Livigno, Italy"
+    ],
+    "tags": [
+      "alta quota",
+      "Livigno",
+      "zona franca",
+      "passo alpino",
+      "panoramico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "lombardia-841bef37",
+    "nome": "Franciacorta e Lago d'Iseo",
+    "partenza": "Brescia",
+    "arrivo": "Bergamo via Lago d'Iseo",
+    "regione": "Lombardia",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "La Franciacorta, terra di vini pregiati, precede il Lago d'Iseo, il meno conosciuto dei grandi laghi lombardi. Monte Isola, la grande isola lacustre, è visibile lungo il percorso.",
+    "tappe": [
+      "Brescia",
+      "Rovato",
+      "Erbusco",
+      "Sarnico",
+      "Lago d'Iseo",
+      "Pisogne",
+      "Lovere",
+      "Bergamo"
+    ],
+    "waypointsGmaps": [
+      "Brescia, Italy",
+      "Erbusco, Italy",
+      "Sarnico, Italy",
+      "Lovere, Italy",
+      "Bergamo, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Franciacorta",
+      "vino",
+      "Monte Isola",
+      "colline"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lombardia-97ebeb1a",
+    "nome": "Valcamonica - La valle dei segni rupestri",
+    "partenza": "Brescia",
+    "arrivo": "Ponte di Legno via Passo del Tonale 1884m",
+    "regione": "Lombardia",
+    "km": 130,
+    "durataMin": 170,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "La Valcamonica è un sito UNESCO per le sue incisioni rupestri preistoriche. La strada sale fino al Passo del Tonale con vista sui ghiacciai dell'Adamello.",
+    "tappe": [
+      "Brescia",
+      "Pisogne",
+      "Breno",
+      "Capo di Ponte (incisioni rupestri)",
+      "Edolo",
+      "Ponte di Legno",
+      "Passo del Tonale"
+    ],
+    "waypointsGmaps": [
+      "Brescia, Italy",
+      "Breno, Italy",
+      "Capo di Ponte, Italy",
+      "Edolo, Italy",
+      "Ponte di Legno, Italy",
+      "Passo del Tonale, Italy"
+    ],
+    "tags": [
+      "UNESCO",
+      "incisioni rupestri",
+      "passo alpino",
+      "ghiacciai",
+      "preistoria"
+    ],
+    "fonte": "insella.it",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "lombardia-5bd2c239",
+    "nome": "Lago Maggiore - Anello della sponda lombarda",
+    "partenza": "Varese",
+    "arrivo": "Verbania (VB) via Angera e Arona",
+    "regione": "Lombardia",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "La sponda piemontese e lombarda del Lago Maggiore con le famose Isole Borromee. Da Angera con la Rocca alla stazione di Stresa, elegante resort lacustre.",
+    "tappe": [
+      "Varese",
+      "Sesto Calende",
+      "Angera",
+      "Arona",
+      "Stresa",
+      "Pallanza",
+      "Verbania"
+    ],
+    "waypointsGmaps": [
+      "Varese, Italy",
+      "Sesto Calende, Italy",
+      "Angera, Italy",
+      "Arona, Italy",
+      "Stresa, Italy",
+      "Verbania, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Lago Maggiore",
+      "Isole Borromee",
+      "ville",
+      "elegante"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lombardia-e3d5f626",
+    "nome": "Val Brembana e Passo San Marco",
+    "partenza": "Bergamo",
+    "arrivo": "Morbegno (SO) via Passo San Marco 1985m",
+    "regione": "Lombardia",
+    "km": 100,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Il Passo San Marco collega la Val Brembana alla Valtellina. Dopo San Pellegrino Terme (Grand Hotel Belle Époque), la strada si fa più impegnativa fino al passo con vista sull'Orobie.",
+    "tappe": [
+      "Bergamo",
+      "Zogno",
+      "San Pellegrino Terme",
+      "Branzi",
+      "Carona",
+      "Passo San Marco",
+      "Morbegno"
+    ],
+    "waypointsGmaps": [
+      "Bergamo, Italy",
+      "San Pellegrino Terme, Italy",
+      "Branzi, Italy",
+      "Passo San Marco, Italy",
+      "Morbegno, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "Val Brembana",
+      "Valtellina",
+      "Orobie",
+      "termale"
+    ],
+    "fonte": "insella.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "lombardia-df1fb370",
+    "nome": "Triangolo Lariano - Asso, Bellagio e Valassina",
+    "partenza": "Lecco",
+    "arrivo": "Como via Bellagio e Valassina",
+    "regione": "Lombardia",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Il triangolo di terra tra i due rami del Lario. La strada da Lecco a Bellagio lungo il lago è spettacolare. L'interno con Asso e la Valassina offre curve più tranquille.",
+    "tappe": [
+      "Lecco",
+      "Mandello del Lario",
+      "Abbadia Lariana",
+      "Bellagio",
+      "Asso",
+      "Valassina",
+      "Como"
+    ],
+    "waypointsGmaps": [
+      "Lecco, Italy",
+      "Abbadia Lariana, Italy",
+      "Bellagio, Italy",
+      "Asso, Italy",
+      "Como, Italy"
+    ],
+    "tags": [
+      "Lago di Como",
+      "Bellagio",
+      "lacustre",
+      "panoramico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-5e11f897",
+    "nome": "Sellaronda - Il Giro dei Quattro Passi",
+    "partenza": "Canazei",
+    "arrivo": "Canazei (anello)",
+    "regione": "Trentino-Alto Adige",
+    "km": 55,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 5.0,
+    "descrizione": "Il giro più famoso delle Dolomiti: quattro passi alpini in 55km con vette a 3000m. Paesaggi marziani, pareti verticali, fiori di montagna. L'itinerario moto più iconico d'Italia.",
+    "tappe": [
+      "Canazei",
+      "Passo Sella 2244m",
+      "Selva di Val Gardena",
+      "Passo Gardena 2121m",
+      "Corvara",
+      "Passo Campolongo 1875m",
+      "Arabba",
+      "Passo Pordoi 2239m",
+      "Canazei"
+    ],
+    "waypointsGmaps": [
+      "Canazei, Italy",
+      "Passo Sella, Italy",
+      "Passo Gardena, Italy",
+      "Passo Campolongo, Italy",
+      "Passo Pordoi, Italy",
+      "Canazei, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "UNESCO",
+      "passi alpini",
+      "iconico",
+      "anello"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-1af1c2be",
+    "nome": "Passo dello Stelvio versante trentino - Da Prato allo Stelvio",
+    "partenza": "Merano",
+    "arrivo": "Passo dello Stelvio 2758m",
+    "regione": "Trentino-Alto Adige",
+    "km": 75,
+    "durataMin": 130,
+    "difficolta": "difficile",
+    "stelle": 4.9,
+    "descrizione": "Il versante altoatesino dello Stelvio attraversa il Parco Nazionale dello Stelvio. Trafoi con la sua chiesa è uno dei punti panoramici più famosi delle Alpi.",
+    "tappe": [
+      "Merano",
+      "Silandro",
+      "Glorenza",
+      "Prato allo Stelvio",
+      "Trafoi",
+      "Passo Stelvio"
+    ],
+    "waypointsGmaps": [
+      "Merano, Italy",
+      "Silandro, Italy",
+      "Glorenza, Italy",
+      "Prato allo Stelvio, Italy",
+      "Passo dello Stelvio, Italy"
+    ],
+    "tags": [
+      "passo alpino",
+      "Stelvio",
+      "Parco Nazionale",
+      "alta quota"
+    ],
+    "fonte": "trentinoinmoto.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "trentino-alto-adige-464fb3c0",
+    "nome": "Anello dei Passi Trentini - Manghen, San Pellegrino, Rolle",
+    "partenza": "Borgo Valsugana",
+    "arrivo": "Borgo Valsugana (anello)",
+    "regione": "Trentino-Alto Adige",
+    "km": 185,
+    "durataMin": 240,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "L'anello 'segreto' del Trentino che collega tre passi meno frequentati rispetto al Sellaronda. Il Manghen è il più selvaggio, il Rolle offre le viste più spettacolari sulla Pale di San Martino.",
+    "tappe": [
+      "Borgo Valsugana",
+      "Passo del Manghen 2047m",
+      "Cavalese",
+      "Passo di San Pellegrino 1918m",
+      "Moena",
+      "Predazzo",
+      "Passo del Rolle 1989m",
+      "Fiera di Primiero",
+      "Borgo Valsugana"
+    ],
+    "waypointsGmaps": [
+      "Borgo Valsugana, Italy",
+      "Passo del Manghen, Italy",
+      "Cavalese, Italy",
+      "Passo San Pellegrino, Italy",
+      "Passo del Rolle, Italy",
+      "Borgo Valsugana, Italy"
+    ],
+    "tags": [
+      "anello",
+      "Pale di San Martino",
+      "Dolomiti",
+      "meno frequentato"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-72558210",
+    "nome": "Passo Falzarego e Passo Valparola",
+    "partenza": "Cortina d'Ampezzo",
+    "arrivo": "Corvara via Passo Falzarego 2105m",
+    "regione": "Trentino-Alto Adige",
+    "km": 70,
+    "durataMin": 110,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "Il Falzarego è la strada d'autore delle Dolomiti. Torri rocciose verticali, il Lagazuoi, i campi di battaglia della Grande Guerra. Una delle strade più fotografate del mondo.",
+    "tappe": [
+      "Cortina d'Ampezzo",
+      "Passo Falzarego 2105m",
+      "Passo Valparola 2192m",
+      "Corvara",
+      "La Villa"
+    ],
+    "waypointsGmaps": [
+      "Cortina d'Ampezzo, Italy",
+      "Passo Falzarego, Italy",
+      "Passo Valparola, Italy",
+      "Corvara, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "Grande Guerra",
+      "UNESCO",
+      "fotogenico",
+      "panoramico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-046bc116",
+    "nome": "Alta Pusteria e Tre Cime di Lavaredo",
+    "partenza": "Brunico",
+    "arrivo": "Misurina via Tre Cime",
+    "regione": "Trentino-Alto Adige",
+    "km": 95,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.9,
+    "descrizione": "L'Alta Pusteria è una valle alpina di rara bellezza. Il lago di Misurina e la strada a pagamento per le Tre Cime di Lavaredo: il simbolo delle Dolomiti.",
+    "tappe": [
+      "Brunico",
+      "San Candido",
+      "Dobbiaco",
+      "Lago di Misurina",
+      "Tre Cime di Lavaredo"
+    ],
+    "waypointsGmaps": [
+      "Brunico, Italy",
+      "San Candido, Italy",
+      "Dobbiaco, Italy",
+      "Lago di Misurina, Italy",
+      "Tre Cime di Lavaredo, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "Tre Cime di Lavaredo",
+      "UNESCO",
+      "Alta Pusteria",
+      "iconico"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-e3321756",
+    "nome": "Strada del Vino dell'Alto Adige",
+    "partenza": "Bolzano",
+    "arrivo": "Merano via Strada del Vino",
+    "regione": "Trentino-Alto Adige",
+    "km": 80,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "La Strada del Vino Altoatesina tra vigneti, castelli e borghi tirolesi. Il Lago di Caldaro, i frutteti, i panorami sulle Dolomiti creano un paesaggio unico in Italia.",
+    "tappe": [
+      "Bolzano",
+      "Appiano",
+      "Caldaro",
+      "Termeno",
+      "Cortaccia",
+      "Magré",
+      "Salorno",
+      "Merano"
+    ],
+    "waypointsGmaps": [
+      "Bolzano, Italy",
+      "Appiano, Italy",
+      "Caldaro, Italy",
+      "Termeno, Italy",
+      "Merano, Italy"
+    ],
+    "tags": [
+      "vino",
+      "Strada del Vino",
+      "borghi tirolesi",
+      "lago",
+      "castelli"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "trentino-alto-adige-5ddf6b70",
+    "nome": "Passo del Brennero e Val d'Isarco",
+    "partenza": "Bolzano",
+    "arrivo": "Innsbruck (A) via Passo Brennero 1374m",
+    "regione": "Trentino-Alto Adige",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Il Brennero è il valico alpino più frequentato d'Europa. La strada SS12 della Val d'Isarco offre una alternativa più panoramica all'autostrada con viste sull'Isarco e sui borghi medievali.",
+    "tappe": [
+      "Bolzano",
+      "Bressanone",
+      "Vipiteno",
+      "Passo del Brennero 1374m",
+      "Innsbruck"
+    ],
+    "waypointsGmaps": [
+      "Bolzano, Italy",
+      "Bressanone, Italy",
+      "Vipiteno, Italy",
+      "Brennero, Austria",
+      "Innsbruck, Austria"
+    ],
+    "tags": [
+      "passo alpino",
+      "Austria",
+      "Val d'Isarco",
+      "Brennero",
+      "confine"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "trentino-alto-adige-ac26c93c",
+    "nome": "Passo di Resia e Val Venosta",
+    "partenza": "Merano",
+    "arrivo": "Resia via Passo di Resia 1504m",
+    "regione": "Trentino-Alto Adige",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "La Val Venosta porta al Lago di Resia con il campanile sommerso di Curon. Il Passo di Resia confina con l'Austria. Paesaggio aperto e grandioso, ottime strade.",
+    "tappe": [
+      "Merano",
+      "Silandro",
+      "Passo di Resia 1504m",
+      "Lago di Resia",
+      "Curon Venosta"
+    ],
+    "waypointsGmaps": [
+      "Merano, Italy",
+      "Silandro, Italy",
+      "Passo di Resia, Italy",
+      "Lago di Resia, Italy",
+      "Curon Venosta, Italy"
+    ],
+    "tags": [
+      "Val Venosta",
+      "Lago di Resia",
+      "campanile sommerso",
+      "Austria",
+      "panoramico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "trentino-alto-adige-1a18f99e",
+    "nome": "Altopiano di Siusi e Alpe di Siusi",
+    "partenza": "Bolzano",
+    "arrivo": "Alpe di Siusi via Castelrotto",
+    "regione": "Trentino-Alto Adige",
+    "km": 65,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "L'Alpe di Siusi è il più grande altopiano d'Europa (50 km²). La strada che sale da Castelrotto offre viste iconiche sulla piana d'erba con lo sfondo delle Odle e del Sassolungo.",
+    "tappe": [
+      "Bolzano",
+      "Ponte Gardena",
+      "Castelrotto",
+      "Alpe di Siusi",
+      "Compatsch"
+    ],
+    "waypointsGmaps": [
+      "Bolzano, Italy",
+      "Ponte Gardena, Italy",
+      "Castelrotto, Italy",
+      "Alpe di Siusi, Italy"
+    ],
+    "tags": [
+      "Alpe di Siusi",
+      "altopiano",
+      "Dolomiti",
+      "UNESCO",
+      "panoramico"
+    ],
+    "fonte": "trentinoinmoto.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "trentino-alto-adige-48d74891",
+    "nome": "Lago di Carezza e Nova Levante",
+    "partenza": "Bolzano",
+    "arrivo": "Passo di Costalunga via Lago di Carezza",
+    "regione": "Trentino-Alto Adige",
+    "km": 55,
+    "durataMin": 90,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "Il Lago di Carezza è uno dei laghi più fotografati delle Dolomiti. L'acqua cambia colore durante la giornata. La strada continua verso il Passo di Costalunga con vista sul Catinaccio/Rosengarten.",
+    "tappe": [
+      "Bolzano",
+      "Nova Levante",
+      "Lago di Carezza",
+      "Passo di Costalunga 1745m"
+    ],
+    "waypointsGmaps": [
+      "Bolzano, Italy",
+      "Nova Levante, Italy",
+      "Lago di Carezza, Italy",
+      "Passo di Costalunga, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "lago",
+      "UNESCO",
+      "Catinaccio",
+      "fotogenico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "veneto-549e07a2",
+    "nome": "Passo Pordoi e Arabba - Il tetto del Veneto dolomitico",
+    "partenza": "Belluno",
+    "arrivo": "Arabba via Passo Pordoi 2239m",
+    "regione": "Veneto",
+    "km": 110,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "Il Pordoi è il passo simbolo del Giro d'Italia. La salita dal Veneto attraversa paesaggi dolomitici di straordinaria bellezza. Arabba è il balcone sul Sellaronda.",
+    "tappe": [
+      "Belluno",
+      "Agordo",
+      "Caprile",
+      "Rocca Pietore",
+      "Passo Pordoi 2239m",
+      "Arabba"
+    ],
+    "waypointsGmaps": [
+      "Belluno, Italy",
+      "Agordo, Italy",
+      "Caprile, Italy",
+      "Passo Pordoi, Italy",
+      "Arabba, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "Giro d'Italia",
+      "passo alpino",
+      "panoramico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "veneto-cfd5a03d",
+    "nome": "Cortina d'Ampezzo - Il giro delle Dolomiti ampezzane",
+    "partenza": "Belluno",
+    "arrivo": "Cortina d'Ampezzo",
+    "regione": "Veneto",
+    "km": 75,
+    "durataMin": 110,
+    "difficolta": "media",
+    "stelle": 4.9,
+    "descrizione": "La strada verso Cortina attraversa le Dolomiti più spettacolari. Il Cadore, patria di Tiziano Vecellio, e Cortina, regina delle Dolomiti, circondati da guglie verticali.",
+    "tappe": [
+      "Belluno",
+      "Longarone",
+      "Pieve di Cadore",
+      "Auronzo di Cadore",
+      "Cortina d'Ampezzo"
+    ],
+    "waypointsGmaps": [
+      "Belluno, Italy",
+      "Longarone, Italy",
+      "Pieve di Cadore, Italy",
+      "Cortina d'Ampezzo, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "UNESCO",
+      "Cortina",
+      "Cadore",
+      "panoramico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "veneto-2d85f9e7",
+    "nome": "Passo Giau e Colle Santa Lucia",
+    "partenza": "Cortina d'Ampezzo",
+    "arrivo": "Caprile via Passo Giau 2236m",
+    "regione": "Veneto",
+    "km": 60,
+    "durataMin": 100,
+    "difficolta": "difficile",
+    "stelle": 5.0,
+    "descrizione": "Il Passo Giau è considerato uno dei più belli d'Europa. La vista dalla sommità sulle Dolomiti è indescrivibile. Strada stretta e tecnica che richiede attenzione.",
+    "tappe": [
+      "Cortina d'Ampezzo",
+      "Passo Giau 2236m",
+      "Colle Santa Lucia",
+      "Caprile"
+    ],
+    "waypointsGmaps": [
+      "Cortina d'Ampezzo, Italy",
+      "Passo Giau, Italy",
+      "Colle Santa Lucia, Italy",
+      "Caprile, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "UNESCO",
+      "passo estremo",
+      "fotogenico",
+      "tecnico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "luglio-settembre"
+  },
+  {
+    "id": "veneto-da465f19",
+    "nome": "Lago di Garda orientale - Da Verona a Riva",
+    "partenza": "Verona",
+    "arrivo": "Riva del Garda via sponda est",
+    "regione": "Veneto",
+    "km": 120,
+    "durataMin": 155,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "La sponda veronese del Garda con Bardolino, terra di vini, e Malcesine con il castello scaligero. La strada finale verso Riva offre scorci spettacolari tra lago e montagna.",
+    "tappe": [
+      "Verona",
+      "Lazise",
+      "Bardolino",
+      "Garda",
+      "Torri del Benaco",
+      "Malcesine",
+      "Torbole",
+      "Riva del Garda"
+    ],
+    "waypointsGmaps": [
+      "Verona, Italy",
+      "Lazise, Italy",
+      "Garda, Italy",
+      "Malcesine, Italy",
+      "Torbole, Italy",
+      "Riva del Garda, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Lago di Garda",
+      "Scaligeri",
+      "vino",
+      "panoramico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-81b87426",
+    "nome": "Colli Euganei e Riviera del Brenta",
+    "partenza": "Padova",
+    "arrivo": "Venezia via Riviera del Brenta",
+    "regione": "Veneto",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Dai Colli Euganei vulcanici alla Riviera del Brenta con le ville veneziane patrimonio UNESCO. Un percorso tra arte, terme e paesaggio unico nel suo genere.",
+    "tappe": [
+      "Padova",
+      "Abano Terme",
+      "Arquà Petrarca",
+      "Este",
+      "Monselice",
+      "Dolo",
+      "Riviera del Brenta",
+      "Mira",
+      "Venezia Mestre"
+    ],
+    "waypointsGmaps": [
+      "Padova, Italy",
+      "Arquà Petrarca, Italy",
+      "Monselice, Italy",
+      "Dolo, Italy",
+      "Mira, Italy",
+      "Venezia, Italy"
+    ],
+    "tags": [
+      "Colli Euganei",
+      "ville venete",
+      "Brenta",
+      "UNESCO",
+      "pianura"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-a3e784b8",
+    "nome": "Altopiano di Asiago e Sette Comuni",
+    "partenza": "Vicenza",
+    "arrivo": "Asiago - Gallio",
+    "regione": "Veneto",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "L'Altopiano di Asiago è un vasto pianoro a 1000m con boschi, prati e borghi cimbri. Paesaggio malinconico e maestoso, pieno di memorie della Grande Guerra.",
+    "tappe": [
+      "Vicenza",
+      "Thiene",
+      "Piovene Rocchette",
+      "Asiago",
+      "Gallio",
+      "Foza",
+      "Enego"
+    ],
+    "waypointsGmaps": [
+      "Vicenza, Italy",
+      "Thiene, Italy",
+      "Asiago, Italy",
+      "Gallio, Italy",
+      "Enego, Italy"
+    ],
+    "tags": [
+      "altopiano",
+      "Grande Guerra",
+      "Cimbri",
+      "boschi",
+      "panoramico"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-5f208463",
+    "nome": "Valpolicella e Monte Lessini",
+    "partenza": "Verona",
+    "arrivo": "Bosco Chiesanuova via Monte Lessini",
+    "regione": "Veneto",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "La Valpolicella, terra dell'Amarone, porta ai Monte Lessini. Cantine storiche, villaggi preistorici (Fumane), e l'ampio altopiano dei Lessini con fossili di pesci.",
+    "tappe": [
+      "Verona",
+      "Sant'Ambrogio di Valpolicella",
+      "Fumane",
+      "Marano di Valpolicella",
+      "Monte Lessini",
+      "Bosco Chiesanuova"
+    ],
+    "waypointsGmaps": [
+      "Verona, Italy",
+      "Sant'Ambrogio di Valpolicella, Italy",
+      "Fumane, Italy",
+      "Bosco Chiesanuova, Italy"
+    ],
+    "tags": [
+      "vino",
+      "Amarone",
+      "Valpolicella",
+      "Monte Lessini",
+      "preistorico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-ec9be744",
+    "nome": "Prealpi Trevigiane e Vittorio Veneto",
+    "partenza": "Treviso",
+    "arrivo": "Vittorio Veneto - Fadalto",
+    "regione": "Veneto",
+    "km": 75,
+    "durataMin": 105,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Le Prealpi trevigiane con le colline del Prosecco UNESCO e Vittorio Veneto, città della Grande Guerra. Il Lago di Santa Croce incorniciato dalle Dolomiti.",
+    "tappe": [
+      "Treviso",
+      "Conegliano",
+      "Vittorio Veneto",
+      "Serravalle",
+      "Lago di Santa Croce",
+      "Fadalto"
+    ],
+    "waypointsGmaps": [
+      "Treviso, Italy",
+      "Conegliano, Italy",
+      "Vittorio Veneto, Italy",
+      "Lago di Santa Croce, Italy",
+      "Fadalto, Italy"
+    ],
+    "tags": [
+      "Prosecco",
+      "UNESCO",
+      "Grande Guerra",
+      "lago prealpino"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-c93d318b",
+    "nome": "Soave e i Colli Berici",
+    "partenza": "Verona",
+    "arrivo": "Vicenza via Soave e Colli Berici",
+    "regione": "Veneto",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Soave con il suo castello medievale intatto e i vigneti di Garganega. I Colli Berici, rilievi calcarei a forma di ferro di cavallo a sud di Vicenza.",
+    "tappe": [
+      "Verona",
+      "Soave",
+      "Monteforte d'Alpone",
+      "Arcole",
+      "Colli Berici",
+      "Brendola",
+      "Vicenza"
+    ],
+    "waypointsGmaps": [
+      "Verona, Italy",
+      "Soave, Italy",
+      "Monteforte d'Alpone, Italy",
+      "Brendola, Italy",
+      "Vicenza, Italy"
+    ],
+    "tags": [
+      "vino",
+      "castello",
+      "colline venete",
+      "gastronomia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "veneto-5a9393f9",
+    "nome": "Passo Tre Croci e Auronzo - Le Dolomiti di Cadore",
+    "partenza": "Belluno",
+    "arrivo": "Auronzo via Passo Tre Croci 1809m",
+    "regione": "Veneto",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "Il percorso cadorino attraverso Auronzo verso il Passo Tre Croci. Vista sulle Tre Cime di Lavaredo dal Lago di Misurina. Uno dei set fotografici naturali più famosi delle Dolomiti.",
+    "tappe": [
+      "Belluno",
+      "Domegge di Cadore",
+      "Lozzo di Cadore",
+      "Auronzo di Cadore",
+      "Misurina",
+      "Passo Tre Croci 1809m",
+      "Cortina"
+    ],
+    "waypointsGmaps": [
+      "Belluno, Italy",
+      "Auronzo di Cadore, Italy",
+      "Lago di Misurina, Italy",
+      "Passo Tre Croci, Italy",
+      "Cortina d'Ampezzo, Italy"
+    ],
+    "tags": [
+      "Dolomiti",
+      "Cadore",
+      "Tre Cime",
+      "Misurina",
+      "UNESCO"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-59e66032",
+    "nome": "Passo dello Zoncolan - Il muro del Friuli",
+    "partenza": "Tolmezzo",
+    "arrivo": "Ravascletto via Passo Zoncolan 1750m",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 70,
+    "durataMin": 120,
+    "difficolta": "difficile",
+    "stelle": 4.7,
+    "descrizione": "Lo Zoncolan è la salita più dura del Giro d'Italia. Pendenze fino al 22%. Dal lato di Ovaro la strada è un susseguirsi di tornanti impossibili. Vista sulla Carnia dall'alto.",
+    "tappe": [
+      "Tolmezzo",
+      "Sutrio",
+      "Ravascletto",
+      "Passo dello Zoncolan 1750m",
+      "Ovaro"
+    ],
+    "waypointsGmaps": [
+      "Tolmezzo, Italy",
+      "Sutrio, Italy",
+      "Ravascletto, Italy",
+      "Passo Zoncolan, Italy",
+      "Ovaro, Italy"
+    ],
+    "tags": [
+      "Carnia",
+      "Giro d'Italia",
+      "salita estrema",
+      "panoramico"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-eb927a73",
+    "nome": "Tarvisiano e Passo del Predil",
+    "partenza": "Udine",
+    "arrivo": "Tarvisio via Passo del Predil 1156m",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 120,
+    "durataMin": 160,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Il Tarvisiano è il crocevia alpino tra Italia, Austria e Slovenia. Il Lago del Predil è uno dei più belli delle Alpi giulie. Il passo confina con la Slovenia.",
+    "tappe": [
+      "Udine",
+      "Gemona del Friuli",
+      "Moggio Udinese",
+      "Pontebba",
+      "Tarvisio",
+      "Passo del Predil",
+      "Cave del Predil",
+      "Lago del Predil"
+    ],
+    "waypointsGmaps": [
+      "Udine, Italy",
+      "Gemona del Friuli, Italy",
+      "Tarvisio, Italy",
+      "Passo del Predil, Italy",
+      "Lago del Predil, Italy"
+    ],
+    "tags": [
+      "Alpi Giulie",
+      "Slovenia",
+      "Austria",
+      "lago alpino",
+      "triconfine"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-cda48672",
+    "nome": "Dolomiti Friulane - Da Maniago a Erto",
+    "partenza": "Maniago",
+    "arrivo": "Erto e Casso - Vajont",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Le Dolomiti Friulane sono un Parco Naturale UNESCO poco conosciuto. La strada verso Erto e Casso porta alla diga del Vajont, tragedia storica del 1963.",
+    "tappe": [
+      "Maniago",
+      "Meduno",
+      "Frisanco",
+      "Dolomiti Friulane",
+      "Cimolais",
+      "Erto e Casso"
+    ],
+    "waypointsGmaps": [
+      "Maniago, Italy",
+      "Meduno, Italy",
+      "Cimolais, Italy",
+      "Erto e Casso, Italy"
+    ],
+    "tags": [
+      "Dolomiti Friulane",
+      "UNESCO",
+      "Vajont",
+      "Parco Naturale",
+      "storia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-830ea064",
+    "nome": "Carso e Costiera triestina",
+    "partenza": "Trieste",
+    "arrivo": "Duino via Carso e costa",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 65,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Carso triestino è un altopiano carsico a picco sul mare Adriatico. La Costiera triestina con Sistiana e il Castello di Duino è uno dei tratti costieri più belli d'Italia.",
+    "tappe": [
+      "Trieste",
+      "Opicina",
+      "Carso triestino",
+      "Sistiana",
+      "Duino",
+      "Castello di Duino"
+    ],
+    "waypointsGmaps": [
+      "Trieste, Italy",
+      "Opicina, Italy",
+      "Sistiana, Italy",
+      "Duino, Italy"
+    ],
+    "tags": [
+      "Carso",
+      "Adriatico",
+      "costiero",
+      "castello",
+      "Trieste"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "friuli-venezia-giulia-89c7b1ec",
+    "nome": "Laguna di Grado e Aquileia",
+    "partenza": "Trieste",
+    "arrivo": "Grado via Aquileia",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Il percorso costiero da Trieste verso la laguna di Grado. Aquileia con il suo porto romano e i mosaici paleocristiani (patrimonio UNESCO). Grado, l'isola d'oro.",
+    "tappe": [
+      "Trieste",
+      "Monfalcone",
+      "Aquileia",
+      "Laguna di Grado",
+      "Grado"
+    ],
+    "waypointsGmaps": [
+      "Trieste, Italy",
+      "Monfalcone, Italy",
+      "Aquileia, Italy",
+      "Grado, Italy"
+    ],
+    "tags": [
+      "UNESCO",
+      "romano",
+      "laguna",
+      "Aquileia",
+      "costiero"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "friuli-venezia-giulia-e89a7514",
+    "nome": "Via dei Laghi - Cornino, Cavazzo, Barcis",
+    "partenza": "Udine",
+    "arrivo": "Barcis via Laghi friulani",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "I laghi del Friuli occidentale: Cavazzo (il più grande del Friuli), Cornino con l'avvoltoio grifone, Barcis incastonato nelle Dolomiti Friulane.",
+    "tappe": [
+      "Udine",
+      "Osoppo",
+      "Lago di Cavazzo",
+      "Lago di Cornino",
+      "Forgaria nel Friuli",
+      "Sequals",
+      "Barcis"
+    ],
+    "waypointsGmaps": [
+      "Udine, Italy",
+      "Lago di Cavazzo, Italy",
+      "Lago di Cornino, Italy",
+      "Forgaria nel Friuli, Italy",
+      "Barcis, Italy"
+    ],
+    "tags": [
+      "laghi",
+      "avvoltoio grifone",
+      "Dolomiti Friulane",
+      "natura"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-f3532515",
+    "nome": "Forni di Sopra e Passo della Mauria",
+    "partenza": "Tolmezzo",
+    "arrivo": "Lorenzago di Cadore (BL) via Passo Mauria 1298m",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Forni di Sopra è uno dei borghi più belli del Friuli montano. Il Passo della Mauria collega la Carnia al Cadore bellunese attraverso un paesaggio alpino selvaggio.",
+    "tappe": [
+      "Tolmezzo",
+      "Ampezzo UD",
+      "Forni di Sopra",
+      "Passo della Mauria 1298m",
+      "Lorenzago di Cadore"
+    ],
+    "waypointsGmaps": [
+      "Tolmezzo, Italy",
+      "Forni di Sopra, Italy",
+      "Passo della Mauria, Italy",
+      "Lorenzago di Cadore, Italy"
+    ],
+    "tags": [
+      "Carnia",
+      "Cadore",
+      "passo alpino",
+      "borghi",
+      "selvaggio"
+    ],
+    "fonte": "motoitinerari.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-8ad8e63d",
+    "nome": "Collio e Cormons - Le colline del vino",
+    "partenza": "Gorizia",
+    "arrivo": "Cividale del Friuli via Collio",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Il Collio goriziano è una delle zone vinicole più rinomate d'Italia. Strade strette tra vigneti al confine con la Slovenia. Cividale, città longobarda patrimonio UNESCO.",
+    "tappe": [
+      "Gorizia",
+      "Cormons",
+      "Dolegna del Collio",
+      "San Floriano del Collio",
+      "Cividale del Friuli"
+    ],
+    "waypointsGmaps": [
+      "Gorizia, Italy",
+      "Cormons, Italy",
+      "San Floriano del Collio, Italy",
+      "Cividale del Friuli, Italy"
+    ],
+    "tags": [
+      "vino",
+      "Collio",
+      "UNESCO",
+      "Longobardi",
+      "Slovenia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-5125df33",
+    "nome": "Passo della Futa e Passo della Raticosa - La via degli Dei in moto",
+    "partenza": "Bologna",
+    "arrivo": "Firenze via Passo della Futa 903m",
+    "regione": "Emilia-Romagna",
+    "km": 115,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "La strada storica che collega Bologna a Firenze attraverso i passi appenninici. La Via Emilia dei motociclisti. Il Cimitero Militare Tedesco alla Futa è una tappa obbligata.",
+    "tappe": [
+      "Bologna",
+      "Marzabotto",
+      "Grizzana Morandi",
+      "Passo della Raticosa 968m",
+      "Passo della Futa 903m",
+      "Firenzuola",
+      "Firenze"
+    ],
+    "waypointsGmaps": [
+      "Bologna, Italy",
+      "Marzabotto, Italy",
+      "Passo della Raticosa, Italy",
+      "Passo della Futa, Italy",
+      "Firenzuola, Italy",
+      "Firenze, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "storico",
+      "cimitero militare",
+      "Bologna-Firenze"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-2e1b2a8d",
+    "nome": "Passo del Cerreto e Passo dei Carpinelli",
+    "partenza": "Reggio Emilia",
+    "arrivo": "Aulla (MS) via Passo del Cerreto 1261m",
+    "regione": "Emilia-Romagna",
+    "km": 120,
+    "durataMin": 165,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "L'Appennino Reggiano con le Pietra di Bismantova (celebrata da Dante). Il Passo del Cerreto collega l'Emilia alla Lunigiana toscana. Paesaggi di grande bellezza.",
+    "tappe": [
+      "Reggio Emilia",
+      "Castelnovo ne' Monti",
+      "Ligonchio",
+      "Passo del Cerreto 1261m",
+      "Fivizzano",
+      "Aulla"
+    ],
+    "waypointsGmaps": [
+      "Reggio Emilia, Italy",
+      "Castelnovo ne' Monti, Italy",
+      "Ligonchio, Italy",
+      "Passo del Cerreto, Italy",
+      "Fivizzano, Italy",
+      "Aulla, Italy"
+    ],
+    "tags": [
+      "Pietra Bismantova",
+      "Dante",
+      "Appennino Reggiano",
+      "passo"
+    ],
+    "fonte": "insella.it",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "emilia-romagna-fdd06133",
+    "nome": "Passo del Lagastrello e Val di Secchia",
+    "partenza": "Reggio Emilia",
+    "arrivo": "Pontremoli (MS) via Passo Lagastrello 1193m",
+    "regione": "Emilia-Romagna",
+    "km": 100,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Il Lagastrello è un piccolo passo appenninico circondato da laghi e faggete. La discesa su Pontremoli attraverso la Lunigiana è di grande suggestione.",
+    "tappe": [
+      "Reggio Emilia",
+      "Castelnovo ne' Monti",
+      "Busana",
+      "Ramiseto",
+      "Passo del Lagastrello 1193m",
+      "Pontremoli"
+    ],
+    "waypointsGmaps": [
+      "Reggio Emilia, Italy",
+      "Castelnovo ne' Monti, Italy",
+      "Passo del Lagastrello, Italy",
+      "Pontremoli, Italy"
+    ],
+    "tags": [
+      "passo appenninico",
+      "lago",
+      "faggeta",
+      "Lunigiana"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "emilia-romagna-968ad72a",
+    "nome": "Motor Valley - Maranello, Modena, Bologna",
+    "partenza": "Modena",
+    "arrivo": "Bologna via Maranello e Vignola",
+    "regione": "Emilia-Romagna",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "La Motor Valley emiliana: Ferrari a Maranello, Lamborghini a Sant'Agata, Ducati a Borgo Panigale, Maserati a Modena. Un pellegrinaggio laico per gli appassionati di motori.",
+    "tappe": [
+      "Modena",
+      "Maranello (Ferrari)",
+      "Fiorano Modenese",
+      "Sassuolo",
+      "Vignola",
+      "Bologna"
+    ],
+    "waypointsGmaps": [
+      "Modena, Italy",
+      "Maranello, Italy",
+      "Fiorano Modenese, Italy",
+      "Vignola, Italy",
+      "Bologna, Italy"
+    ],
+    "tags": [
+      "Motor Valley",
+      "Ferrari",
+      "Lamborghini",
+      "Ducati",
+      "motori"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-43f21c0f",
+    "nome": "Romagna - Da Riccione a San Marino e oltre",
+    "partenza": "Riccione",
+    "arrivo": "San Marino - Pennabilli",
+    "regione": "Emilia-Romagna",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Dalla Riviera romagnola verso la Repubblica di San Marino. Gradara con il castello dantesco di Paolo e Francesca. San Marino, lo stato più piccolo d'Europa. Pennabilli, borgo d'artisti.",
+    "tappe": [
+      "Riccione",
+      "Cattolica",
+      "Gradara",
+      "Pesaro (deviazione)",
+      "San Marino",
+      "Verucchio",
+      "Pennabilli"
+    ],
+    "waypointsGmaps": [
+      "Riccione, Italy",
+      "Gradara, Italy",
+      "San Marino RSM, San marino",
+      "Verucchio, Italy",
+      "Pennabilli, Italy"
+    ],
+    "tags": [
+      "San Marino",
+      "Rimini",
+      "Gradara",
+      "borghi",
+      "riviera"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-528bb6da",
+    "nome": "Passo del Giogo di Scarperia - L'Appennino bolognese",
+    "partenza": "Bologna",
+    "arrivo": "Scarperia via Passo del Giogo 882m",
+    "regione": "Emilia-Romagna",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Il percorso più rapido tra Bologna e il Mugello toscano. Il Passo del Giogo di Scarperia è un classico dell'Appennino tosco-emiliano. Il Mugello con il famoso autodromo.",
+    "tappe": [
+      "Bologna",
+      "Loiano",
+      "Monghidoro",
+      "Passo del Giogo 882m",
+      "Scarperia",
+      "Mugello"
+    ],
+    "waypointsGmaps": [
+      "Bologna, Italy",
+      "Loiano, Italy",
+      "Monghidoro, Italy",
+      "Passo del Giogo, Italy",
+      "Scarperia, Italy"
+    ],
+    "tags": [
+      "Appennino",
+      "Mugello",
+      "autodromo",
+      "passo"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-675103e3",
+    "nome": "Val Trebbia - La Valle Selvaggia",
+    "partenza": "Piacenza",
+    "arrivo": "Bobbio - Genova via Val Trebbia",
+    "regione": "Emilia-Romagna",
+    "km": 110,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "Ernest Hemingway definì la Val Trebbia la più bella valle del mondo. Bobbio con la sua abbazia medievale e il ponte gobbo sul fiume. Strade sinuose tra boschi e rocce.",
+    "tappe": [
+      "Piacenza",
+      "Rivergaro",
+      "Bobbio",
+      "Passo del Penice 1149m",
+      "Ottone",
+      "Gorreto",
+      "Genova"
+    ],
+    "waypointsGmaps": [
+      "Piacenza, Italy",
+      "Bobbio, Italy",
+      "Passo del Penice, France",
+      "Ottone, Italy",
+      "Genova, Italy"
+    ],
+    "tags": [
+      "Val Trebbia",
+      "Bobbio",
+      "Hemingway",
+      "medievale",
+      "selvaggio"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "emilia-romagna-f650b45e",
+    "nome": "Appennino parmense - Passo della Cisa e Parma",
+    "partenza": "Parma",
+    "arrivo": "La Spezia via Passo della Cisa 1039m",
+    "regione": "Emilia-Romagna",
+    "km": 115,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "La Cisa è il principale valico dell'Appennino ligure-emiliano sulla via Francigena. Da Parma al mare in un percorso storico che i pellegrini medievali percorrevano.",
+    "tappe": [
+      "Parma",
+      "Fornovo di Taro",
+      "Berceto",
+      "Passo della Cisa 1039m",
+      "Pontremoli",
+      "La Spezia"
+    ],
+    "waypointsGmaps": [
+      "Parma, Italy",
+      "Fornovo di Taro, Italy",
+      "Berceto, Italy",
+      "Passo della Cisa, Italy",
+      "Pontremoli, Italy",
+      "La Spezia, Italy"
+    ],
+    "tags": [
+      "Via Francigena",
+      "storico",
+      "passo appenninico",
+      "Lunigiana"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "emilia-romagna-f5718606",
+    "nome": "Appennino Forlivese - Premilcuore e Corniolo",
+    "partenza": "Forlì",
+    "arrivo": "Santa Sofia - Passo dei Mandrioli 1173m",
+    "regione": "Emilia-Romagna",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Il Forlivese appenninico con le foreste di Campigna. Il Passo dei Mandrioli (o Passo del Muraglione) porta in Toscana attraverso bellissime faggete.",
+    "tappe": [
+      "Forlì",
+      "Meldola",
+      "Cusercoli",
+      "Premilcuore",
+      "Campigna",
+      "Santa Sofia",
+      "Passo dei Mandrioli"
+    ],
+    "waypointsGmaps": [
+      "Forlì, Italy",
+      "Premilcuore, Italy",
+      "Campigna, Italy",
+      "Santa Sofia, Italy",
+      "Passo dei Mandrioli, Italy"
+    ],
+    "tags": [
+      "Foreste Casentinesi",
+      "faggeta",
+      "passo",
+      "natura"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "emilia-romagna-6b23e7ab",
+    "nome": "Delta del Po e Ferrara",
+    "partenza": "Ferrara",
+    "arrivo": "Porto Garibaldi - Delta del Po",
+    "regione": "Emilia-Romagna",
+    "km": 85,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Il Delta del Po è patrimonio UNESCO per la sua biodiversità. Comacchio con le sue valli e il centro storico su isolotti. Labirinto di argini, valli e lagune.",
+    "tappe": [
+      "Ferrara",
+      "Comacchio",
+      "Valle Fattibello",
+      "Lido di Spina",
+      "Porto Garibaldi",
+      "Oasi di Mesola"
+    ],
+    "waypointsGmaps": [
+      "Ferrara, Italy",
+      "Comacchio, Italy",
+      "Lido di Spina, Italy",
+      "Porto Garibaldi, Italy",
+      "Mesola, Italy"
+    ],
+    "tags": [
+      "Delta del Po",
+      "UNESCO",
+      "Comacchio",
+      "laguna",
+      "pianura"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-fdb891e9",
+    "nome": "Chianti Classico - Le strade del vino tra Siena e Firenze",
+    "partenza": "Firenze",
+    "arrivo": "Siena via Via Chiantigiana SS222",
+    "regione": "Toscana",
+    "km": 120,
+    "durataMin": 165,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "La Via Chiantigiana SS222 è uno dei percorsi più romantici d'Europa. Cipressi, vigneti di Sangiovese, borghi medievali e cantine storiche. Il cuore del Chianti Classico.",
+    "tappe": [
+      "Firenze",
+      "Greve in Chianti",
+      "Panzano in Chianti",
+      "Radda in Chianti",
+      "Gaiole in Chianti",
+      "Castelnuovo Berardenga",
+      "Siena"
+    ],
+    "waypointsGmaps": [
+      "Firenze, Italy",
+      "Greve in Chianti, Italy",
+      "Panzano in Chianti, Italy",
+      "Radda in Chianti, Italy",
+      "Siena, Italy"
+    ],
+    "tags": [
+      "Chianti",
+      "vino",
+      "cipressi",
+      "borghi",
+      "gastronomia"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-20d8a4c2",
+    "nome": "Val d'Orcia - La Toscana da cartolina",
+    "partenza": "Siena",
+    "arrivo": "Pitigliano via Val d'Orcia",
+    "regione": "Toscana",
+    "km": 160,
+    "durataMin": 210,
+    "difficolta": "facile",
+    "stelle": 5.0,
+    "descrizione": "La Val d'Orcia UNESCO è il paesaggio toscano per eccellenza. Strade bianche tra poggi e cipressi, Montalcino e il Brunello, Pienza città ideale rinascimentale, le terme di Bagno Vignoni.",
+    "tappe": [
+      "Siena",
+      "Montalcino",
+      "Pienza",
+      "San Quirico d'Orcia",
+      "Bagno Vignoni",
+      "Castiglione d'Orcia",
+      "Piancastagnaio",
+      "Sorano",
+      "Pitigliano"
+    ],
+    "waypointsGmaps": [
+      "Siena, Italy",
+      "Montalcino, Italy",
+      "Pienza, Italy",
+      "San Quirico d'Orcia, Italy",
+      "Pitigliano, Italy"
+    ],
+    "tags": [
+      "Val d'Orcia",
+      "UNESCO",
+      "strade bianche",
+      "Brunello",
+      "terme"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-c9dfe3b7",
+    "nome": "Garfagnana e Alpi Apuane",
+    "partenza": "Lucca",
+    "arrivo": "Castelnuovo di Garfagnana - Passo delle Radici 1529m",
+    "regione": "Toscana",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "La Garfagnana è una valle remota tra le Alpi Apuane e l'Appennino Tosco-Emiliano. Marmo di Carrara visibile sulle cime bianche. Il Passo delle Radici confina con l'Emilia.",
+    "tappe": [
+      "Lucca",
+      "Bagni di Lucca",
+      "Barga",
+      "Castelnuovo di Garfagnana",
+      "San Pellegrino in Alpe",
+      "Passo delle Radici 1529m"
+    ],
+    "waypointsGmaps": [
+      "Lucca, Italy",
+      "Bagni di Lucca, Italy",
+      "Barga, Italy",
+      "Castelnuovo di Garfagnana, Italy",
+      "Passo delle Radici, Italy"
+    ],
+    "tags": [
+      "Garfagnana",
+      "Alpi Apuane",
+      "marmo",
+      "passo",
+      "selvaggio"
+    ],
+    "fonte": "lemacinaie.it",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "toscana-f01ebd52",
+    "nome": "Monte Amiata - Il vulcano spento della Toscana",
+    "partenza": "Grosseto",
+    "arrivo": "Monte Amiata 1738m - Abbadia San Salvatore",
+    "regione": "Toscana",
+    "km": 105,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "L'Amiata è il rilievo più alto della Toscana meridionale. La strada sale attraverso boschi di castagni e faggi fino alla cima con la grande croce. Panorama su tutta la Maremma.",
+    "tappe": [
+      "Grosseto",
+      "Arcidosso",
+      "Seggiano",
+      "Castel del Piano",
+      "Monte Amiata 1738m",
+      "Abbadia San Salvatore",
+      "Piancastagnaio"
+    ],
+    "waypointsGmaps": [
+      "Grosseto, Italy",
+      "Arcidosso, Italy",
+      "Castel del Piano, Italy",
+      "Monte Amiata, Italy",
+      "Abbadia San Salvatore, Italy"
+    ],
+    "tags": [
+      "vulcano",
+      "Monte Amiata",
+      "Maremma",
+      "faggeta",
+      "panoramico"
+    ],
+    "fonte": "lemacinaie.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-5fdd64b4",
+    "nome": "Maremma Toscana - Dai Butteri all'Argentario",
+    "partenza": "Grosseto",
+    "arrivo": "Porto Ercole via Argentario",
+    "regione": "Toscana",
+    "km": 130,
+    "durataMin": 165,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "La Maremma con il Parco Naturale e i suoi butteri. Monte Argentario, promontorio gettato nel Tirreno, con le splendide città di Porto Ercole e Porto Santo Stefano.",
+    "tappe": [
+      "Grosseto",
+      "Alberese (Parco Maremma)",
+      "Talamone",
+      "Orbetello",
+      "Monte Argentario",
+      "Porto Santo Stefano",
+      "Porto Ercole"
+    ],
+    "waypointsGmaps": [
+      "Grosseto, Italy",
+      "Alberese, Italy",
+      "Talamone, Italy",
+      "Orbetello, Italy",
+      "Porto Ercole, Italy"
+    ],
+    "tags": [
+      "Maremma",
+      "Argentario",
+      "costa",
+      "Parco Naturale",
+      "laguna di Orbetello"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-e02df211",
+    "nome": "Mugello - Il cuore verde della Toscana",
+    "partenza": "Firenze",
+    "arrivo": "Borgo San Lorenzo - Scarperia",
+    "regione": "Toscana",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Mugello è la patria dei Medici (Scarperia) e del Beato Angelico (Vicchio). La valle verde dell'Appennino fiorentino con l'autodromo del Mugello, tappa del MotoGP.",
+    "tappe": [
+      "Firenze",
+      "Pratolino",
+      "Vaglia",
+      "San Piero a Sieve",
+      "Scarperia",
+      "Borgo San Lorenzo",
+      "Vicchio"
+    ],
+    "waypointsGmaps": [
+      "Firenze, Italy",
+      "Pratolino, Italy",
+      "Scarperia, Italy",
+      "Borgo San Lorenzo, Italy",
+      "Vicchio, Italy"
+    ],
+    "tags": [
+      "Mugello",
+      "Medici",
+      "MotoGP",
+      "autodromo",
+      "colline"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-fe14fce6",
+    "nome": "Casentino - La foresta di Dante",
+    "partenza": "Arezzo",
+    "arrivo": "La Verna - Camaldoli - Poppi",
+    "regione": "Toscana",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Il Casentino è una valle medievale incastonata nell'Appennino. La foresta di Camaldoli è una delle più antiche d'Europa. La Verna è il santuario dove San Francesco ricevette le stigmate.",
+    "tappe": [
+      "Arezzo",
+      "Bibbiena",
+      "La Verna (santuario)",
+      "Camaldoli (eremo)",
+      "Badia di Prataglia",
+      "Poppi"
+    ],
+    "waypointsGmaps": [
+      "Arezzo, Italy",
+      "Bibbiena, Italy",
+      "La Verna, Italy",
+      "Camaldoli, Italy",
+      "Poppi, Italy"
+    ],
+    "tags": [
+      "Casentino",
+      "foresta",
+      "santuario",
+      "medievale",
+      "Dante"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-9f67f063",
+    "nome": "Volterra e la Val di Cecina",
+    "partenza": "Pisa",
+    "arrivo": "Volterra - Massa Marittima",
+    "regione": "Toscana",
+    "km": 120,
+    "durataMin": 160,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Volterra etrusca su un pianoro roccioso, San Gimignano con le torri medievali, Larderello con i pennacchi geotermici. Paesaggio alieno e affascinante delle Colline Metallifere.",
+    "tappe": [
+      "Pisa",
+      "Pontedera",
+      "Volterra",
+      "San Gimignano",
+      "Massa Marittima",
+      "Larderello (geotermia)"
+    ],
+    "waypointsGmaps": [
+      "Pisa, Italy",
+      "Volterra, Italy",
+      "San Gimignano, Italy",
+      "Larderello, Italy",
+      "Massa Marittima, Italy"
+    ],
+    "tags": [
+      "Volterra",
+      "San Gimignano",
+      "etrusco",
+      "geotermia",
+      "Colline Metallifere"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-d32caffc",
+    "nome": "Versilia e Cinque Terre da terra",
+    "partenza": "Viareggio",
+    "arrivo": "La Spezia via Passo di Bracco",
+    "regione": "Toscana",
+    "km": 105,
+    "durataMin": 145,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "La Versilia con le Alpi Apuane a picco sul Tirreno. Carrara con le cave di marmo bianchissimo. Portovenere e la vista delle Cinque Terre dalla terraferma.",
+    "tappe": [
+      "Viareggio",
+      "Pietrasanta",
+      "Forte dei Marmi",
+      "Carrara (cave marmo)",
+      "La Spezia",
+      "Portovenere",
+      "Cinque Terre (vista)"
+    ],
+    "waypointsGmaps": [
+      "Viareggio, Italy",
+      "Forte dei Marmi, Italy",
+      "Carrara, Italy",
+      "La Spezia, Italy",
+      "Portovenere, Italy"
+    ],
+    "tags": [
+      "Versilia",
+      "marmo",
+      "costa",
+      "Cinque Terre",
+      "Portovenere"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "toscana-fedca09d",
+    "nome": "Valdarno Superiore e Pratomagno",
+    "partenza": "Arezzo",
+    "arrivo": "Firenze via Pratomagno e Valdarno",
+    "regione": "Toscana",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.2,
+    "descrizione": "Il Pratomagno è il crinale che separa il Casentino dal Valdarno. La strada panoramica della cresta offre viste su entrambi i versanti. Vallombrosa con la sua abbazia medievale.",
+    "tappe": [
+      "Arezzo",
+      "Loro Ciuffenna",
+      "Castelfranco di Sopra",
+      "Reggello",
+      "Vallombrosa",
+      "Pontassieve",
+      "Firenze"
+    ],
+    "waypointsGmaps": [
+      "Arezzo, Italy",
+      "Loro Ciuffenna, Italy",
+      "Reggello, Italy",
+      "Vallombrosa, Italy",
+      "Pontassieve, Italy",
+      "Firenze, Italy"
+    ],
+    "tags": [
+      "Pratomagno",
+      "Valdarno",
+      "abbazia",
+      "crinale",
+      "panoramico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "umbria-9a3fc356",
+    "nome": "Monti Sibillini - Il tetto dell'Umbria",
+    "partenza": "Perugia",
+    "arrivo": "Castelluccio di Norcia via Piano Grande",
+    "regione": "Umbria",
+    "km": 130,
+    "durataMin": 175,
+    "difficolta": "media",
+    "stelle": 4.9,
+    "descrizione": "Castelluccio di Norcia e il suo Piano Grande (1270m) sono tra i paesaggi più spettacolari d'Italia. La fioritura di giugno è un evento straordinario. I Sibillini, UNESCO.",
+    "tappe": [
+      "Perugia",
+      "Foligno",
+      "Spoleto",
+      "Cascia",
+      "Norcia",
+      "Forca Canapine 1541m",
+      "Castelluccio di Norcia"
+    ],
+    "waypointsGmaps": [
+      "Perugia, Italy",
+      "Foligno, Italy",
+      "Norcia, Italy",
+      "Forca Canapine, Italy",
+      "Castelluccio di Norcia, Italy"
+    ],
+    "tags": [
+      "Monti Sibillini",
+      "Piano Grande",
+      "fioritura",
+      "UNESCO",
+      "Castelluccio"
+    ],
+    "fonte": "giri-in-moto.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "umbria-3fcfb90f",
+    "nome": "Assisi, Spello e Valle Umbra",
+    "partenza": "Perugia",
+    "arrivo": "Spoleto via Valle Umbra",
+    "regione": "Umbria",
+    "km": 95,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "La Valle Umbra è il cuore spirituale dell'Italia. Assisi con la Basilica di San Francesco UNESCO, Spello con i vicoletti fioriti, Montefalco e il Sagrantino, Spoleto.",
+    "tappe": [
+      "Perugia",
+      "Assisi",
+      "Spello",
+      "Bevagna",
+      "Montefalco",
+      "Trevi",
+      "Spoleto"
+    ],
+    "waypointsGmaps": [
+      "Perugia, Italy",
+      "Assisi, Italy",
+      "Spello, Italy",
+      "Montefalco, Italy",
+      "Spoleto, Italy"
+    ],
+    "tags": [
+      "Assisi",
+      "UNESCO",
+      "spirituale",
+      "borghi",
+      "Sagrantino"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-e360e371",
+    "nome": "Lago Trasimeno - L'anello del lago",
+    "partenza": "Perugia",
+    "arrivo": "Perugia (anello Trasimeno)",
+    "regione": "Umbria",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Il Lago Trasimeno è il lago più grande dell'Italia peninsulare. L'anello attorno al lago attraversa borghi medievali e uliveti. Castiglione del Lago con il palazzo ducale.",
+    "tappe": [
+      "Perugia",
+      "Magione",
+      "Passignano sul Trasimeno",
+      "Castiglione del Lago",
+      "Tuoro sul Trasimeno",
+      "Perugia"
+    ],
+    "waypointsGmaps": [
+      "Perugia, Italy",
+      "Passignano sul Trasimeno, Italy",
+      "Castiglione del Lago, Italy",
+      "Tuoro sul Trasimeno, Italy",
+      "Perugia, Italy"
+    ],
+    "tags": [
+      "lago",
+      "Trasimeno",
+      "anello",
+      "borghi",
+      "uliveti"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-b95fb478",
+    "nome": "Valnerina - La Cascata delle Marmore",
+    "partenza": "Terni",
+    "arrivo": "Norcia via Valnerina",
+    "regione": "Umbria",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "La Valnerina è la valle del Nera, uno dei fiumi più puliti d'Italia. La Cascata delle Marmore, la più alta d'Europa (165m), è un'opera romana. Norcia, capitale della norcineria.",
+    "tappe": [
+      "Terni",
+      "Cascata delle Marmore",
+      "Arrone",
+      "Ferentillo",
+      "Sant'Anatolia di Narco",
+      "Scheggino",
+      "Norcia"
+    ],
+    "waypointsGmaps": [
+      "Terni, Italy",
+      "Cascata delle Marmore, Italy",
+      "Ferentillo, Italy",
+      "Scheggino, Italy",
+      "Norcia, Italy"
+    ],
+    "tags": [
+      "Valnerina",
+      "cascata",
+      "Norcia",
+      "norcineria",
+      "fiume"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-7d4081b3",
+    "nome": "Orvieto e la Todi medievale",
+    "partenza": "Roma",
+    "arrivo": "Todi via Orvieto",
+    "regione": "Umbria",
+    "km": 110,
+    "durataMin": 145,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Orvieto su una rupe tufacea è uno dei borghi medievali più belli d'Italia. Il Duomo, il Pozzo di San Patrizio e la città sotterranea etrusca. Todi, 'città più vivibile del mondo'.",
+    "tappe": [
+      "Roma Nord",
+      "Orvieto",
+      "Lago di Corbara",
+      "Baschi",
+      "Todi"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Orvieto, Italy",
+      "Lago di Corbara, Italy",
+      "Todi, Italy"
+    ],
+    "tags": [
+      "Orvieto",
+      "Todi",
+      "medievale",
+      "rupe tufacea",
+      "etrusco"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-566b4cb3",
+    "nome": "Gubbio e l'Appennino umbro-marchigiano",
+    "partenza": "Perugia",
+    "arrivo": "Gubbio - Scheggia - Passo del Furlo",
+    "regione": "Umbria",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Gubbio è una delle città medievali meglio conservate d'Italia. La strada verso le Marche attraversa il Passo del Furlo con la famosa Gola scavata dal fiume Candigliano.",
+    "tappe": [
+      "Perugia",
+      "Gubbio",
+      "Scheggia e Pascelupo",
+      "Cagli",
+      "Passo del Furlo"
+    ],
+    "waypointsGmaps": [
+      "Perugia, Italy",
+      "Gubbio, Italy",
+      "Scheggia, Italy",
+      "Cagli, Italy",
+      "Gola del Furlo, Italy"
+    ],
+    "tags": [
+      "Gubbio",
+      "Furlo",
+      "medievale",
+      "gola",
+      "confine Marche"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-3b2b4317",
+    "nome": "Montefalco e Torgiano - La via del vino umbro",
+    "partenza": "Perugia",
+    "arrivo": "Montefalco via Torgiano",
+    "regione": "Umbria",
+    "km": 65,
+    "durataMin": 90,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Il cuore enogastronomico dell'Umbria: Torgiano con il museo del vino, Deruta con le maioliche, Montefalco e il Sagrantino DOCG. Breve ma ricchissimo di contenuti.",
+    "tappe": [
+      "Perugia",
+      "Torgiano",
+      "Deruta (ceramiche)",
+      "Bevagna",
+      "Montefalco"
+    ],
+    "waypointsGmaps": [
+      "Perugia, Italy",
+      "Torgiano, Italy",
+      "Deruta, Italy",
+      "Bevagna, Italy",
+      "Montefalco, Italy"
+    ],
+    "tags": [
+      "vino",
+      "ceramiche",
+      "Sagrantino",
+      "gastronomia",
+      "breve"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "umbria-31756884",
+    "nome": "Amerino e i Borghi della Valnerina meridionale",
+    "partenza": "Terni",
+    "arrivo": "Amelia - Narni",
+    "regione": "Umbria",
+    "km": 75,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "L'Umbria meridionale, meno visitata, con Narni (la vera Narnia di C.S. Lewis) e Amelia, città etrusca con mura megalitiche antichissime.",
+    "tappe": [
+      "Terni",
+      "Narni",
+      "Otricoli",
+      "Amelia",
+      "Lugnano in Teverina"
+    ],
+    "waypointsGmaps": [
+      "Terni, Italy",
+      "Narni, Italy",
+      "Amelia, Italy",
+      "Lugnano in Teverina, Italy"
+    ],
+    "tags": [
+      "Narni",
+      "Amelia",
+      "etrusco",
+      "mura megalitiche",
+      "Umbria meridionale"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-7ad9dd8d",
+    "nome": "Monti Sibillini versante marchigiano",
+    "partenza": "Ascoli Piceno",
+    "arrivo": "Sarnano via Monte Sibilla",
+    "regione": "Marche",
+    "km": 110,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "I Sibillini dal versante marchigiano sono ancora più selvatici. La Gola dell'Infernaccio, il Monte Sibilla con la sua grotta leggendaria. Strade strette tra valli remote.",
+    "tappe": [
+      "Ascoli Piceno",
+      "Force",
+      "Montefortino",
+      "Amandola",
+      "Pieve Torina",
+      "Bolognola",
+      "Sarnano"
+    ],
+    "waypointsGmaps": [
+      "Ascoli Piceno, Italy",
+      "Montefortino, Italy",
+      "Amandola, Italy",
+      "Bolognola, Italy",
+      "Sarnano, Italy"
+    ],
+    "tags": [
+      "Monti Sibillini",
+      "Gola dell'Infernaccio",
+      "selvaggio",
+      "leggenda",
+      "montagna"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "marche-3e1c28f1",
+    "nome": "Urbino - Il Rinascimento in moto",
+    "partenza": "Pesaro",
+    "arrivo": "Urbino - San Leo - Pennabilli",
+    "regione": "Marche",
+    "km": 95,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "Urbino, la città ideale del Rinascimento e patria di Raffaello. Il Palazzo Ducale UNESCO. San Leo con la sua rocca inaccessibile dove fu imprigionato Cagliostro.",
+    "tappe": [
+      "Pesaro",
+      "Fano",
+      "Fermignano",
+      "Urbino",
+      "San Leo",
+      "Pennabilli"
+    ],
+    "waypointsGmaps": [
+      "Pesaro, Italy",
+      "Urbino, Italy",
+      "San Leo, Italy",
+      "Pennabilli, Italy"
+    ],
+    "tags": [
+      "Urbino",
+      "Rinascimento",
+      "UNESCO",
+      "San Leo",
+      "Raffaello"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-3ac9bc26",
+    "nome": "Gola della Rossa e di Frasassi",
+    "partenza": "Ancona",
+    "arrivo": "Grotte di Frasassi - Serra San Quirico",
+    "regione": "Marche",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "La Gola della Rossa è una forra calcarea mozzafiato. Le Grotte di Frasassi sono tra le più grandi d'Europa. La strada nella Gola è uno dei tratti più emozionanti delle Marche.",
+    "tappe": [
+      "Ancona",
+      "Jesi",
+      "Cupramontana",
+      "Staffolo",
+      "Serra San Quirico",
+      "Grotte di Frasassi",
+      "Genga"
+    ],
+    "waypointsGmaps": [
+      "Ancona, Italy",
+      "Jesi, Italy",
+      "Serra San Quirico, Italy",
+      "Grotte di Frasassi, Italy",
+      "Genga, Italy"
+    ],
+    "tags": [
+      "gola",
+      "grotte",
+      "forra",
+      "natura",
+      "spettacolare"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-abf7089a",
+    "nome": "Costa del Conero e Riviera del Piceno",
+    "partenza": "Ancona",
+    "arrivo": "San Benedetto del Tronto via Conero",
+    "regione": "Marche",
+    "km": 120,
+    "durataMin": 155,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Il Monte Conero è l'unica vera scogliera dell'alto Adriatico. Sirolo e Numana, due piccoli gioielli. La costa adriatica marchigiana verso sud fino al Piceno.",
+    "tappe": [
+      "Ancona",
+      "Portonovo",
+      "Sirolo",
+      "Numana",
+      "Porto Recanati",
+      "Civitanova Marche",
+      "Porto San Giorgio",
+      "San Benedetto del Tronto"
+    ],
+    "waypointsGmaps": [
+      "Ancona, Italy",
+      "Sirolo, Italy",
+      "Numana, Italy",
+      "Porto Recanati, Italy",
+      "San Benedetto del Tronto, Italy"
+    ],
+    "tags": [
+      "costa",
+      "Monte Conero",
+      "Adriatico",
+      "scogliera",
+      "borghi marinari"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-6611fded",
+    "nome": "Macerata e i Monti dell'Appennino maceratese",
+    "partenza": "Macerata",
+    "arrivo": "Camerino - Sarnano",
+    "regione": "Marche",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.2,
+    "descrizione": "L'entroterra maceratese con Camerino, storica sede universitaria medievale, e Sarnano, una delle più belle piazze medievali d'Italia ai piedi dei Sibillini.",
+    "tappe": [
+      "Macerata",
+      "Tolentino",
+      "San Severino Marche",
+      "Camerino",
+      "Castelraimondo",
+      "Sarnano"
+    ],
+    "waypointsGmaps": [
+      "Macerata, Italy",
+      "Tolentino, Italy",
+      "Camerino, Italy",
+      "Sarnano, Italy"
+    ],
+    "tags": [
+      "entroterra",
+      "medievale",
+      "Camerino",
+      "Sarnano",
+      "Sibillini"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-bb5dd5f5",
+    "nome": "Ascoli Piceno e i Monti della Laga",
+    "partenza": "Ascoli Piceno",
+    "arrivo": "Lago di Campotosto (AQ) via Monti della Laga",
+    "regione": "Marche",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "I Monti della Laga e il confine tra Marche, Lazio e Abruzzo. Il Lago di Campotosto, artificiale ma di bellezza autentica. Amatrice, ricostruita dopo il terremoto del 2016.",
+    "tappe": [
+      "Ascoli Piceno",
+      "Arquata del Tronto",
+      "Accumoli",
+      "Lago di Campotosto",
+      "Amatrice"
+    ],
+    "waypointsGmaps": [
+      "Ascoli Piceno, Italy",
+      "Arquata del Tronto, Italy",
+      "Accumoli, Italy",
+      "Lago di Campotosto, Italy",
+      "Amatrice, Italy"
+    ],
+    "tags": [
+      "Monti della Laga",
+      "lago",
+      "confine",
+      "terremoto",
+      "montagna"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "marche-e464f565",
+    "nome": "Pesaro e l'entroterra pesarese",
+    "partenza": "Pesaro",
+    "arrivo": "Cantiano via Passo della Scheggia",
+    "regione": "Marche",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "L'entroterra pesarese con Gradara, Fossombrone e Acqualagna, capitale mondiale del tartufo bianco. Il Passo della Scheggia porta verso l'Umbria.",
+    "tappe": [
+      "Pesaro",
+      "Gradara",
+      "Fossombrone",
+      "Acqualagna (tartufo)",
+      "Passo della Scheggia 531m",
+      "Cantiano"
+    ],
+    "waypointsGmaps": [
+      "Pesaro, Italy",
+      "Gradara, Italy",
+      "Fossombrone, Italy",
+      "Acqualagna, Italy",
+      "Cantiano, Italy"
+    ],
+    "tags": [
+      "tartufo",
+      "Gradara",
+      "entroterra",
+      "passo",
+      "gastronomia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-c56c718b",
+    "nome": "Macerata - Recanati e l'infinito di Leopardi",
+    "partenza": "Ancona",
+    "arrivo": "Recanati - Loreto - Porto Recanati",
+    "regione": "Marche",
+    "km": 70,
+    "durataMin": 95,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "Recanati è la città di Giacomo Leopardi e del suo Colle dell'Infinito. Loreto con il più importante santuario mariano d'Italia. Un percorso tra poesia e spiritualità.",
+    "tappe": [
+      "Ancona",
+      "Osimo",
+      "Loreto (Santuario)",
+      "Recanati (Leopardi)",
+      "Porto Recanati"
+    ],
+    "waypointsGmaps": [
+      "Ancona, Italy",
+      "Osimo, Italy",
+      "Loreto, Italy",
+      "Recanati, Italy",
+      "Porto Recanati, Italy"
+    ],
+    "tags": [
+      "Leopardi",
+      "Loreto",
+      "santuario",
+      "poesia",
+      "cultura"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-6feb4735",
+    "nome": "Monti della Tolfa - La Maremma laziale",
+    "partenza": "Roma",
+    "arrivo": "Civitavecchia via Monti della Tolfa",
+    "regione": "Lazio",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "I Monti della Tolfa e il Lago di Bracciano sono a due passi da Roma. La Maremma laziale con i suoi pascoli di allevamento bovino brado è poco conosciuta dai romani stessi.",
+    "tappe": [
+      "Roma (uscita Cassia)",
+      "Bracciano",
+      "Manziana",
+      "Allumiere",
+      "Tolfa",
+      "Civitavecchia"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Bracciano, Italy",
+      "Allumiere, Italy",
+      "Tolfa, Italy",
+      "Civitavecchia, Italy"
+    ],
+    "tags": [
+      "Lago di Bracciano",
+      "Maremma laziale",
+      "volcànica",
+      "vicino Roma"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-adf18765",
+    "nome": "Castelli Romani - L'anello dei Colli Albani",
+    "partenza": "Roma",
+    "arrivo": "Castel Gandolfo - Rocca di Papa - Frascati",
+    "regione": "Lazio",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "I Castelli Romani sono l'evasione classica dei romani. Il Monte Cavo, cima dei Colli Albani, con vista su Roma. Frascati e il suo vino bianco.",
+    "tappe": [
+      "Roma EUR",
+      "Castel Gandolfo",
+      "Albano Laziale",
+      "Ariccia",
+      "Genzano",
+      "Rocca di Papa",
+      "Monte Cavo 949m",
+      "Frascati"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Castel Gandolfo, Italy",
+      "Albano Laziale, Italy",
+      "Rocca di Papa, Italy",
+      "Frascati, Italy"
+    ],
+    "tags": [
+      "Castelli Romani",
+      "Colli Albani",
+      "vicino Roma",
+      "vino",
+      "gita"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-02987d51",
+    "nome": "Parco Nazionale del Circeo e Pontine",
+    "partenza": "Roma",
+    "arrivo": "Terracina via Agro Pontino",
+    "regione": "Lazio",
+    "km": 115,
+    "durataMin": 145,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Il Parco del Circeo con le dune di Sabaudia e il promontorio del Circeo. Le città di fondazione fasciste (Latina, Sabaudia). Sperlonga con le grotte di Tiberio.",
+    "tappe": [
+      "Roma EUR",
+      "Latina",
+      "Sabaudia",
+      "Monte Circeo",
+      "San Felice Circeo",
+      "Sperlonga",
+      "Terracina"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Sabaudia, Italy",
+      "San Felice Circeo, Italy",
+      "Sperlonga, Italy",
+      "Terracina, Italy"
+    ],
+    "tags": [
+      "Circeo",
+      "costa",
+      "Sabaudia",
+      "storia",
+      "Pontine"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-32a6372b",
+    "nome": "Monti Ernici e la Ciociaria",
+    "partenza": "Frosinone",
+    "arrivo": "Alatri - Ferentino - Anagni",
+    "regione": "Lazio",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "La Ciociaria con i suoi borghi medievali sulle alture. Anagni, 'città dei Papi'. Alatri con le mura megalitiche preistoriche. Fiuggi, terme storiche.",
+    "tappe": [
+      "Frosinone",
+      "Ferentino",
+      "Anagni",
+      "Alatri",
+      "Fiuggi",
+      "Vico nel Lazio"
+    ],
+    "waypointsGmaps": [
+      "Frosinone, Italy",
+      "Ferentino, Italy",
+      "Anagni, Italy",
+      "Alatri, Italy",
+      "Fiuggi, Italy"
+    ],
+    "tags": [
+      "Ciociaria",
+      "medievale",
+      "Papi",
+      "terme",
+      "mura megalitiche"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-3da757c5",
+    "nome": "Lago di Bolsena e Viterbo",
+    "partenza": "Roma",
+    "arrivo": "Bolsena - Bagnoregio - Civita",
+    "regione": "Lazio",
+    "km": 120,
+    "durataMin": 165,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Il Lago di Bolsena è il più grande lago vulcanico d'Europa. Viterbo, città medievale dei Papi. Civita di Bagnoregio, la 'città che muore' su una rupe di tufo.",
+    "tappe": [
+      "Roma Nord (Cassia)",
+      "Viterbo",
+      "Montefiascone",
+      "Lago di Bolsena",
+      "Bolsena",
+      "Bagnoregio",
+      "Civita di Bagnoregio"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Viterbo, Italy",
+      "Montefiascone, Italy",
+      "Bolsena, Italy",
+      "Civita di Bagnoregio, Italy"
+    ],
+    "tags": [
+      "lago vulcanico",
+      "Bolsena",
+      "Viterbo",
+      "Civita",
+      "tufo"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-ccc20047",
+    "nome": "Monti Simbruini e Valle dell'Aniene",
+    "partenza": "Roma",
+    "arrivo": "Subiaco - Filettino",
+    "regione": "Lazio",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "La Valle dell'Aniene e i Monti Simbruini. Tivoli con Villa Adriana e Villa d'Este UNESCO. Subiaco con i monasteri benedettini. Passo della Portella tra i monti dell'Abruzzo.",
+    "tappe": [
+      "Roma Tiburtina",
+      "Tivoli",
+      "Subiaco",
+      "Vallepietra",
+      "Filettino",
+      "Passo della Portella 1828m"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Tivoli, Italy",
+      "Subiaco, Italy",
+      "Vallepietra, Italy",
+      "Filettino, Italy"
+    ],
+    "tags": [
+      "Tivoli",
+      "UNESCO",
+      "Subiaco",
+      "monasteri",
+      "Aniene"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-50321354",
+    "nome": "Rieti e il Terminillo",
+    "partenza": "Roma",
+    "arrivo": "Terminillo 1675m - Rieti",
+    "regione": "Lazio",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.2,
+    "descrizione": "Il Terminillo è la montagna di Roma. La strada da Rieti sale rapidamente tra faggete fino alla stazione sciistica. Rieti, l'ombelico d'Italia geografico.",
+    "tappe": [
+      "Roma",
+      "Passo Corese",
+      "Rieti",
+      "Terminillo 1675m",
+      "Leonessa",
+      "Borgo Velino"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Rieti, Italy",
+      "Terminillo, Italy",
+      "Leonessa, Italy"
+    ],
+    "tags": [
+      "Terminillo",
+      "montagna di Roma",
+      "faggeta",
+      "Rieti"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-novembre"
+  },
+  {
+    "id": "lazio-f9a93ffe",
+    "nome": "Costa Tirrenica - Da Anzio a Gaeta",
+    "partenza": "Anzio",
+    "arrivo": "Gaeta via costa laziale",
+    "regione": "Lazio",
+    "km": 130,
+    "durataMin": 165,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "La costa laziale dal basso Tirreno fino a Gaeta. Anzio e Nettuno con i cimiteri militari della Seconda Guerra Mondiale. Gaeta su un promontorio tra due golfi.",
+    "tappe": [
+      "Anzio",
+      "Nettuno",
+      "San Felice Circeo",
+      "Terracina",
+      "Fondi",
+      "Sperlonga",
+      "Formia",
+      "Gaeta"
+    ],
+    "waypointsGmaps": [
+      "Anzio, Italy",
+      "Nettuno, Italy",
+      "Terracina, Italy",
+      "Sperlonga, Italy",
+      "Gaeta, Italy"
+    ],
+    "tags": [
+      "costa",
+      "Seconda Guerra Mondiale",
+      "Gaeta",
+      "Tirreno",
+      "storia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-801b3ce1",
+    "nome": "Gran Sasso - Campo Imperatore e il Tetto d'Abruzzo",
+    "partenza": "L'Aquila",
+    "arrivo": "Campo Imperatore 2130m - Assergi",
+    "regione": "Abruzzo",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 5.0,
+    "descrizione": "Campo Imperatore è il 'Piccolo Tibet d'Italia'. Un pianoro a 2000m circondato dai monti più alti degli Appennini. Il Gran Sasso (2912m) incombe maestoso. Paesaggi senza uguali.",
+    "tappe": [
+      "L'Aquila",
+      "Assergi",
+      "Passo di Portella",
+      "Campo Imperatore 2130m",
+      "Castel del Monte",
+      "Santo Stefano di Sessanio"
+    ],
+    "waypointsGmaps": [
+      "L'Aquila, Italy",
+      "Assergi, Italy",
+      "Campo Imperatore, Italy",
+      "Castel del Monte, Italy",
+      "Santo Stefano di Sessanio, Italy"
+    ],
+    "tags": [
+      "Gran Sasso",
+      "Campo Imperatore",
+      "alta quota",
+      "prateria alpina",
+      "iconico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "abruzzo-1be92504",
+    "nome": "Maiella - Il Monte Padre",
+    "partenza": "Chieti",
+    "arrivo": "Caramanico Terme - Passo San Leonardo",
+    "regione": "Abruzzo",
+    "km": 110,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "La Maiella è il secondo massiccio appenninico d'Abruzzo. Il Parco Nazionale della Maiella conserva la natura più selvaggia. Pescocostanzo, borgo barocco a 1395m.",
+    "tappe": [
+      "Chieti",
+      "Guardiagrele",
+      "Pretoro",
+      "Caramanico Terme",
+      "Passo San Leonardo 1279m",
+      "Pescocostanzo"
+    ],
+    "waypointsGmaps": [
+      "Chieti, Italy",
+      "Guardiagrele, Italy",
+      "Caramanico Terme, Italy",
+      "Passo San Leonardo, Italy",
+      "Pescocostanzo, Italy"
+    ],
+    "tags": [
+      "Maiella",
+      "Parco Nazionale",
+      "selvaggio",
+      "Pescocostanzo",
+      "barocco"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "abruzzo-109b0b51",
+    "nome": "Parco Nazionale d'Abruzzo - Orsi e Lupi",
+    "partenza": "Avezzano",
+    "arrivo": "Pescasseroli - Villetta Barrea",
+    "regione": "Abruzzo",
+    "km": 95,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.8,
+    "descrizione": "Il Parco Nazionale d'Abruzzo è il parco più antico d'Italia. Orsi marsicani, lupi appenninici e camosci d'Abruzzo vivono liberi. Il Lago di Barrea, specchio d'acqua tra i monti.",
+    "tappe": [
+      "Avezzano",
+      "Collelongo",
+      "Pescasseroli",
+      "Opi",
+      "Villetta Barrea",
+      "Lago di Barrea"
+    ],
+    "waypointsGmaps": [
+      "Avezzano, Italy",
+      "Pescasseroli, Italy",
+      "Opi, Italy",
+      "Villetta Barrea, Italy",
+      "Lago di Barrea, Italy"
+    ],
+    "tags": [
+      "Parco Nazionale",
+      "orso marsicano",
+      "lupo",
+      "fauna",
+      "natura"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "abruzzo-895eaa3a",
+    "nome": "Costa dei Trabocchi - Lanciano e la Costa dei Trabocchi",
+    "partenza": "Pescara",
+    "arrivo": "Vasto via SS16 Adriatica e costa",
+    "regione": "Abruzzo",
+    "km": 120,
+    "durataMin": 155,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "La Costa dei Trabocchi è unica al mondo: le antiche macchine da pesca in legno sull'Adriatico abruzzese. La strada costiera su scogliera è di straordinaria bellezza.",
+    "tappe": [
+      "Pescara",
+      "Francavilla al Mare",
+      "Ortona",
+      "Rocca San Giovanni",
+      "San Vito Chietino",
+      "Fossacesia",
+      "Vasto"
+    ],
+    "waypointsGmaps": [
+      "Pescara, Italy",
+      "Ortona, Italy",
+      "San Vito Chietino, Italy",
+      "Fossacesia, Italy",
+      "Vasto, Italy"
+    ],
+    "tags": [
+      "trabocchi",
+      "costa",
+      "Adriatico",
+      "unico",
+      "pesca"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-2f6e485a",
+    "nome": "Marsica e Fucino - La piana prosciugata",
+    "partenza": "L'Aquila",
+    "arrivo": "Avezzano - Tagliacozzo",
+    "regione": "Abruzzo",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "La Marsica con il Fucino, il più grande lago prosciugato artificialmente d'Europa (1875). Celano con il Castello Piccolomini. Tagliacozzo, borgo medievale abruzzese.",
+    "tappe": [
+      "L'Aquila",
+      "Celano",
+      "Avezzano",
+      "Fucino (ex lago)",
+      "Magliano de' Marsi",
+      "Tagliacozzo"
+    ],
+    "waypointsGmaps": [
+      "L'Aquila, Italy",
+      "Celano, Italy",
+      "Avezzano, Italy",
+      "Tagliacozzo, Italy"
+    ],
+    "tags": [
+      "Fucino",
+      "lago prosciugato",
+      "storia",
+      "castello",
+      "Marsica"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-cdd9cac7",
+    "nome": "Monti della Laga - Teramo e l'Abruzzo settentrionale",
+    "partenza": "Teramo",
+    "arrivo": "Campotosto - Prati di Tivo",
+    "regione": "Abruzzo",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "I Monti della Laga con Pietracamela, borgo medievale ai piedi del Gran Sasso. Prati di Tivo, rifugio della funivia. Il grande Lago di Campotosto con la sua riserva naturalistica.",
+    "tappe": [
+      "Teramo",
+      "Montorio al Vomano",
+      "Pietracamela",
+      "Prati di Tivo",
+      "Campotosto",
+      "Lago di Campotosto"
+    ],
+    "waypointsGmaps": [
+      "Teramo, Italy",
+      "Montorio al Vomano, Italy",
+      "Pietracamela, Italy",
+      "Campotosto, Italy",
+      "Lago di Campotosto, Italy"
+    ],
+    "tags": [
+      "Gran Sasso",
+      "Lago di Campotosto",
+      "borghi",
+      "selvaggio"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "abruzzo-126de901",
+    "nome": "Lanciano e i borghi della Frentania",
+    "partenza": "Chieti",
+    "arrivo": "Guardiagrele - Lanciano",
+    "regione": "Abruzzo",
+    "km": 70,
+    "durataMin": 95,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Guardiagrele, famosa per la lavorazione del metallo e la pasticceria artigianale. Lanciano con il suo centro storico medievale e il miracolo eucaristico.",
+    "tappe": [
+      "Chieti",
+      "Bucchianico",
+      "Guardiagrele",
+      "Lanciano",
+      "Ortona"
+    ],
+    "waypointsGmaps": [
+      "Chieti, Italy",
+      "Guardiagrele, Italy",
+      "Lanciano, Italy",
+      "Ortona, Italy"
+    ],
+    "tags": [
+      "Frentania",
+      "artigianato",
+      "medievale",
+      "borghi",
+      "Lanciano"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-d9b5b222",
+    "nome": "Passo Lanciano e Majelletta",
+    "partenza": "Chieti",
+    "arrivo": "Guardiagrele - Passo Lanciano 1306m - Majelletta",
+    "regione": "Abruzzo",
+    "km": 65,
+    "durataMin": 100,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "La strada verso Passo Lanciano sale rapidamente dalla pianura costiera abruzzese a oltre 1300m con vista sull'Adriatico. La Majelletta è la stazione sciistica più panoramica d'Abruzzo.",
+    "tappe": [
+      "Chieti",
+      "Guardiagrele",
+      "Passo Lanciano 1306m",
+      "Majelletta",
+      "Palena"
+    ],
+    "waypointsGmaps": [
+      "Chieti, Italy",
+      "Guardiagrele, Italy",
+      "Passo Lanciano, Italy",
+      "Majelletta, Italy"
+    ],
+    "tags": [
+      "Maiella",
+      "panoramico",
+      "vista mare",
+      "Adriatico",
+      "sci"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "molise-ac6496fc",
+    "nome": "Monti del Molise - Il Parco Nazionale del Matese",
+    "partenza": "Campobasso",
+    "arrivo": "Boiano - Monte Miletto 2050m",
+    "regione": "Molise",
+    "km": 80,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Il Matese è il massiccio principale del Molise. Guardiaregia con il suo canyon è uno dei posti più selvaggi del centro-sud Italia. Monte Miletto è la cima più alta del Molise.",
+    "tappe": [
+      "Campobasso",
+      "Guardiaregia",
+      "Boiano",
+      "Campochiaro",
+      "Monte Miletto 2050m"
+    ],
+    "waypointsGmaps": [
+      "Campobasso, Italy",
+      "Guardiaregia, Italy",
+      "Boiano, Italy",
+      "Monte Miletto, Italy"
+    ],
+    "tags": [
+      "Matese",
+      "Parco Nazionale",
+      "selvaggio",
+      "canyon",
+      "alta quota"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "molise-7994a98c",
+    "nome": "Bojano e la Piana di Boiano",
+    "partenza": "Isernia",
+    "arrivo": "Bojano - Campobasso",
+    "regione": "Molise",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Sepino (Saepinum) conserva uno dei teatri romani più intatti d'Italia. Boiano è la capitale storica dei Sanniti. Il Molise profondo tra storia antica e paesaggi immutati.",
+    "tappe": [
+      "Isernia",
+      "Longano",
+      "Boiano",
+      "Sepino (Saepinum)",
+      "Campobasso"
+    ],
+    "waypointsGmaps": [
+      "Isernia, Italy",
+      "Boiano, Italy",
+      "Sepino, Italy",
+      "Campobasso, Italy"
+    ],
+    "tags": [
+      "Sanniti",
+      "romano",
+      "Saepinum",
+      "storia",
+      "imutato"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "molise-6538e5f5",
+    "nome": "Costa Molisana - Termoli e le Isole Tremiti",
+    "partenza": "Termoli",
+    "arrivo": "Petacciato - Montenero di Bisaccia",
+    "regione": "Molise",
+    "km": 55,
+    "durataMin": 80,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "Il Molise ha solo 35km di costa ma sono tra i più belli dell'Adriatico. Termoli con il suo borgo antico su uno sperone di roccia. Da qui partono i traghetti per le Tremiti.",
+    "tappe": [
+      "Termoli",
+      "Petacciato",
+      "Montenero di Bisaccia",
+      "Campomarino"
+    ],
+    "waypointsGmaps": [
+      "Termoli, Italy",
+      "Petacciato, Italy",
+      "Montenero di Bisaccia, Italy",
+      "Campomarino, Italy"
+    ],
+    "tags": [
+      "costa",
+      "Termoli",
+      "Adriatico",
+      "borgo marino",
+      "Tremiti"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "molise-951ef00c",
+    "nome": "Isernia e l'Alto Molise",
+    "partenza": "Isernia",
+    "arrivo": "Agnone - Capracotta",
+    "regione": "Molise",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "media",
+    "stelle": 4.2,
+    "descrizione": "L'Alto Molise è tra le zone meno conosciute d'Italia. Agnone, famosa per le campane (fonderia Marinelli, la più antica del mondo). Capracotta, il paese con più neve d'Italia.",
+    "tappe": [
+      "Isernia",
+      "Cerro al Volturno",
+      "Castel San Vincenzo",
+      "Lago di Castel San Vincenzo",
+      "Agnone",
+      "Capracotta 1421m"
+    ],
+    "waypointsGmaps": [
+      "Isernia, Italy",
+      "Castel San Vincenzo, Italy",
+      "Agnone, Italy",
+      "Capracotta, Italy"
+    ],
+    "tags": [
+      "Alto Molise",
+      "campane",
+      "neve",
+      "Agnone",
+      "tradizioni"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "molise-ece9b50c",
+    "nome": "Venafro e il Parco del Matese meridionale",
+    "partenza": "Isernia",
+    "arrivo": "Venafro - San Pietro Infine",
+    "regione": "Molise",
+    "km": 65,
+    "durataMin": 90,
+    "difficolta": "facile",
+    "stelle": 3.9,
+    "descrizione": "Venafro, città romana con anfiteatro. San Pietro Infine, borgo abbandonato dopo la battaglia di Monte Cassino (1944). Paesaggio storico unico nel suo genere.",
+    "tappe": [
+      "Isernia",
+      "Venafro",
+      "Monteroduni",
+      "San Pietro Infine",
+      "Colli al Volturno"
+    ],
+    "waypointsGmaps": [
+      "Isernia, Italy",
+      "Venafro, Italy",
+      "Monteroduni, Italy",
+      "San Pietro Infine, Italy"
+    ],
+    "tags": [
+      "romano",
+      "Seconda Guerra Mondiale",
+      "Monte Cassino",
+      "borgo abbandonato"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "molise-e142ec02",
+    "nome": "Il Tratturo Magno - La Via dei pastori",
+    "partenza": "L'Aquila (AQ)",
+    "arrivo": "Foggia (FG) via Tratturo Magno",
+    "regione": "Molise",
+    "km": 250,
+    "durataMin": 330,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Il Tratturo Magno è l'antica via della transumanza dal Gran Sasso alla Puglia. Un percorso di 250km tra Abruzzo, Molise e Puglia attraverso paesaggi rimasti immutati per secoli.",
+    "tappe": [
+      "L'Aquila",
+      "Celano",
+      "Isernia",
+      "Bojano",
+      "Campobasso",
+      "Lucera",
+      "Foggia"
+    ],
+    "waypointsGmaps": [
+      "L'Aquila, Italy",
+      "Isernia, Italy",
+      "Campobasso, Italy",
+      "Lucera, Italy",
+      "Foggia, Italy"
+    ],
+    "tags": [
+      "transumanza",
+      "Tratturo",
+      "storico",
+      "lunga distanza",
+      "pastori"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "campania-c3b1788a",
+    "nome": "Costiera Amalfitana - La strada più bella del mondo",
+    "partenza": "Salerno",
+    "arrivo": "Positano - Sorrento via SS163",
+    "regione": "Campania",
+    "km": 75,
+    "durataMin": 150,
+    "difficolta": "difficile",
+    "stelle": 5.0,
+    "descrizione": "La Costiera Amalfitana è patrimonio UNESCO e una delle strade più famose del mondo. Strapiombi sul mare, gallerie, tornanti strettissimi, borghi aggrappati alle rocce. Richiede molta attenzione per il traffico.",
+    "tappe": [
+      "Salerno",
+      "Vietri sul Mare",
+      "Cetara",
+      "Maiori",
+      "Minori",
+      "Ravello",
+      "Amalfi",
+      "Positano",
+      "Sorrento"
+    ],
+    "waypointsGmaps": [
+      "Salerno, Italy",
+      "Vietri sul Mare, Italy",
+      "Amalfi, Italy",
+      "Positano, Italy",
+      "Sorrento, Italy"
+    ],
+    "tags": [
+      "UNESCO",
+      "costa",
+      "Amalfitana",
+      "iconico",
+      "difficile"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-fce24466",
+    "nome": "Vesuvio e Campi Flegrei",
+    "partenza": "Napoli",
+    "arrivo": "Cima Vesuvio 1281m - Ercolano",
+    "regione": "Campania",
+    "km": 80,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Il Vesuvio domina il Golfo di Napoli. La strada sale fino al parcheggio a 1000m, poi a piedi al cratere. Ercolano sepolta dalla lava nel 79 d.C. è più intatta di Pompei.",
+    "tappe": [
+      "Napoli",
+      "Portici",
+      "Ercolano (scavi)",
+      "Vesuvio strada a pedaggio",
+      "Torre del Greco",
+      "Napoli"
+    ],
+    "waypointsGmaps": [
+      "Napoli, Italy",
+      "Ercolano, Italy",
+      "Vesuvio, Italy",
+      "Torre del Greco, Italy"
+    ],
+    "tags": [
+      "Vesuvio",
+      "vulcano",
+      "Ercolano",
+      "Pompei",
+      "Napoli"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-f64827c0",
+    "nome": "Penisola Sorrentina e Punta della Campanella",
+    "partenza": "Napoli",
+    "arrivo": "Sorrento - Massa Lubrense - Punta Campanella",
+    "regione": "Campania",
+    "km": 80,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "La Penisola Sorrentina tra il Golfo di Napoli e quello di Salerno. Sant'Agata sui Due Golfi, dalla quale si vedono entrambi i golfi. Vista su Capri dalla punta estrema.",
+    "tappe": [
+      "Napoli",
+      "Torre Annunziata",
+      "Castellammare di Stabia",
+      "Sorrento",
+      "Sant'Agata sui Due Golfi",
+      "Massa Lubrense",
+      "Punta della Campanella"
+    ],
+    "waypointsGmaps": [
+      "Napoli, Italy",
+      "Castellammare di Stabia, Italy",
+      "Sorrento, Italy",
+      "Sant'Agata sui Due Golfi, Italy",
+      "Massa Lubrense, Italy"
+    ],
+    "tags": [
+      "Sorrento",
+      "Capri",
+      "golfo",
+      "panoramico",
+      "penisola"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-9e8284b3",
+    "nome": "Cilento - Il mare incontaminato del sud",
+    "partenza": "Salerno",
+    "arrivo": "Palinuro - Camerota",
+    "regione": "Campania",
+    "km": 140,
+    "durataMin": 190,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "Il Cilento e Vallo di Diano è il Parco Nazionale più grande d'Italia. La costa del Cilento con grotte marine e spiagge selvagge. Palinuro con il suo Capo spettacolare.",
+    "tappe": [
+      "Salerno",
+      "Agropoli",
+      "Santa Maria di Castellabate",
+      "Acciaroli",
+      "Pioppi",
+      "Palinuro",
+      "Marina di Camerota"
+    ],
+    "waypointsGmaps": [
+      "Salerno, Italy",
+      "Agropoli, Italy",
+      "Acciaroli, Italy",
+      "Palinuro, Italy",
+      "Marina di Camerota, Italy"
+    ],
+    "tags": [
+      "Cilento",
+      "Parco Nazionale",
+      "costa",
+      "incontaminato",
+      "Palinuro"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "campania-db351a1e",
+    "nome": "Appennino Campano - Parco del Partenio e Irpinia",
+    "partenza": "Avellino",
+    "arrivo": "Montevergine - Laceno",
+    "regione": "Campania",
+    "km": 95,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Il Partenio e l'Irpinia, l'entroterra campano meno conosciuto. Montevergine, il santuario mariano più importante del Sud Italia, su una cima a 1270m. Il lago di Laceno tra i faggi.",
+    "tappe": [
+      "Avellino",
+      "Mercogliano",
+      "Santuario di Montevergine 1270m",
+      "Nusco",
+      "Laceno (lago)"
+    ],
+    "waypointsGmaps": [
+      "Avellino, Italy",
+      "Mercogliano, Italy",
+      "Montevergine, Italy",
+      "Nusco, Italy",
+      "Laceno, Italy"
+    ],
+    "tags": [
+      "Partenio",
+      "Irpinia",
+      "santuario",
+      "Montevergine",
+      "lago"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-novembre"
+  },
+  {
+    "id": "campania-a038b7f3",
+    "nome": "Caserta Reale e la Terra di Lavoro",
+    "partenza": "Napoli",
+    "arrivo": "Caserta - Caserta Vecchia - San Leucio",
+    "regione": "Campania",
+    "km": 75,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "La Reggia di Caserta, il Versailles italiano, è patrimonio UNESCO. Caserta Vecchia, il borgo medievale sulla collina. San Leucio, la colonia borbonica della seta.",
+    "tappe": [
+      "Napoli",
+      "Caserta (Reggia)",
+      "San Leucio",
+      "Caserta Vecchia",
+      "Maddaloni"
+    ],
+    "waypointsGmaps": [
+      "Napoli, Italy",
+      "Caserta, Italy",
+      "San Leucio, Italy",
+      "Caserta Vecchia, Italy"
+    ],
+    "tags": [
+      "UNESCO",
+      "Reggia",
+      "borbonico",
+      "medievale",
+      "seta"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-710e2488",
+    "nome": "Costiera Cilentana interna - Vallo e Teggiano",
+    "partenza": "Salerno",
+    "arrivo": "Teggiano - Padula",
+    "regione": "Campania",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Vallo di Diano con Teggiano, uno dei borghi più belli d'Italia. La Certosa di Padula, la più grande certosa d'Italia e del mondo (UNESCO), con il chiostro di 12.000 mq.",
+    "tappe": [
+      "Salerno",
+      "Eboli",
+      "Battipaglia",
+      "Buccino",
+      "Teggiano",
+      "Padula (Certosa)"
+    ],
+    "waypointsGmaps": [
+      "Salerno, Italy",
+      "Eboli, Italy",
+      "Teggiano, Italy",
+      "Padula, Italy"
+    ],
+    "tags": [
+      "Vallo di Diano",
+      "Certosa di Padula",
+      "UNESCO",
+      "borghi",
+      "medievale"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-0330341b",
+    "nome": "Isola di Ischia - Il giro dell'isola vulcanica",
+    "partenza": "Napoli (traghetto)",
+    "arrivo": "Ischia - giro completo dell'isola",
+    "regione": "Campania",
+    "km": 45,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Ischia è l'isola vulcanica del Golfo di Napoli. Il giro dell'isola su strade strette tra terme, vigneti, borghi marinari e il Castello Aragonese. Un'esperienza unica.",
+    "tappe": [
+      "Ischia Porto",
+      "Lacco Ameno",
+      "Forio",
+      "Serrara Fontana",
+      "Barano d'Ischia",
+      "Ischia Porto"
+    ],
+    "waypointsGmaps": [
+      "Ischia Porto, Italy",
+      "Lacco Ameno, Italy",
+      "Forio, Italy",
+      "Barano d'Ischia, Italy"
+    ],
+    "tags": [
+      "isola",
+      "vulcanica",
+      "terme",
+      "Castello Aragonese",
+      "Golfo di Napoli"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "campania-e4adffc2",
+    "nome": "Benevento e il Sannio - L'arco di Traiano",
+    "partenza": "Napoli",
+    "arrivo": "Benevento - Pietrelcina",
+    "regione": "Campania",
+    "km": 95,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Benevento conserva l'Arco di Traiano, il più bello dell'Impero Romano. Pietrelcina, paese natale di Padre Pio. Il Sannio con le sue tradizioni millenarie.",
+    "tappe": [
+      "Napoli",
+      "Maddaloni",
+      "Valle di Maddaloni",
+      "Benevento",
+      "Pietrelcina (Padre Pio)",
+      "Morcone"
+    ],
+    "waypointsGmaps": [
+      "Napoli, Italy",
+      "Maddaloni, Italy",
+      "Benevento, Italy",
+      "Pietrelcina, Italy"
+    ],
+    "tags": [
+      "romano",
+      "Arco di Traiano",
+      "Padre Pio",
+      "Sannio",
+      "storia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "campania-17f3d9e0",
+    "nome": "Pompei e il Vesuvio - Il viaggio nel tempo",
+    "partenza": "Napoli",
+    "arrivo": "Pompei - Torre Annunziata",
+    "regione": "Campania",
+    "km": 60,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Il percorso lungo la costa vesuviana verso Pompei. Ercolano e Oplontis completano il quadro delle città romane seppellite dal Vesuvio nel 79 d.C. Patrimonio UNESCO.",
+    "tappe": [
+      "Napoli",
+      "Portici",
+      "Ercolano",
+      "Torre del Greco",
+      "Pompei (scavi)",
+      "Torre Annunziata (Oplontis)"
+    ],
+    "waypointsGmaps": [
+      "Napoli, Italy",
+      "Ercolano, Italy",
+      "Pompei, Italy",
+      "Torre Annunziata, Italy"
+    ],
+    "tags": [
+      "Pompei",
+      "UNESCO",
+      "romano",
+      "vesuviano",
+      "storia"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-55d4062d",
+    "nome": "Gargano - Il Promontorio degli Dei",
+    "partenza": "Foggia",
+    "arrivo": "Vieste - Peschici via Gargano",
+    "regione": "Puglia",
+    "km": 150,
+    "durataMin": 200,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "Il Gargano è 'lo sperone dello stivale', un promontorio che si tuffa nell'Adriatico. Monte Sant'Angelo con la grotta dell'Arcangelo Michele (UNESCO). La Foresta Umbra. Le scogliere bianche di Vieste.",
+    "tappe": [
+      "Foggia",
+      "Manfredonia",
+      "Monte Sant'Angelo",
+      "Foresta Umbra",
+      "Vieste",
+      "Peschici",
+      "Rodi Garganico"
+    ],
+    "waypointsGmaps": [
+      "Foggia, Italy",
+      "Monte Sant'Angelo, Italy",
+      "Foresta Umbra, Italy",
+      "Vieste, Italy",
+      "Peschici, Italy"
+    ],
+    "tags": [
+      "Gargano",
+      "UNESCO",
+      "costa",
+      "foresta",
+      "scogliere"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "puglia-1dd1c74d",
+    "nome": "Valle d'Itria - I Trulli e la via dei Borghi",
+    "partenza": "Bari",
+    "arrivo": "Alberobello - Locorotondo - Martina Franca",
+    "regione": "Puglia",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "facile",
+    "stelle": 4.8,
+    "descrizione": "La Valle d'Itria con i trulli di Alberobello (UNESCO). Il paesaggio dei muretti a secco, delle masserie, dei vigneti Primitivo. Ostuni, la città bianca.",
+    "tappe": [
+      "Bari",
+      "Conversano",
+      "Alberobello (trulli)",
+      "Locorotondo",
+      "Cisternino",
+      "Ostuni",
+      "Martina Franca"
+    ],
+    "waypointsGmaps": [
+      "Bari, Italy",
+      "Conversano, Italy",
+      "Alberobello, Italy",
+      "Locorotondo, Italy",
+      "Ostuni, Italy",
+      "Martina Franca, Italy"
+    ],
+    "tags": [
+      "trulli",
+      "UNESCO",
+      "Valle d'Itria",
+      "Ostuni",
+      "masserie"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-aed1ea44",
+    "nome": "Salento - Finibus Terrae",
+    "partenza": "Lecce",
+    "arrivo": "Santa Maria di Leuca via Otranto",
+    "regione": "Puglia",
+    "km": 160,
+    "durataMin": 210,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "Il Salento, la punta dello stivale tra Adriatico e Ionio. Otranto, porta d'Oriente. Santa Maria di Leuca, capo estremo d'Italia. Il mare cristallino, gli ulivi, il barocco leccese.",
+    "tappe": [
+      "Lecce",
+      "Otranto",
+      "Porto Badisco",
+      "Santa Cesarea Terme",
+      "Castro",
+      "Santa Maria di Leuca",
+      "Gallipoli"
+    ],
+    "waypointsGmaps": [
+      "Lecce, Italy",
+      "Otranto, Italy",
+      "Santa Cesarea Terme, Italy",
+      "Santa Maria di Leuca, Italy",
+      "Gallipoli, Italy"
+    ],
+    "tags": [
+      "Salento",
+      "Otranto",
+      "Leuca",
+      "Adriatico",
+      "Ionio",
+      "ulivi"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-f88806ef",
+    "nome": "Alta Murgia - Castel del Monte e i Sassi",
+    "partenza": "Bari",
+    "arrivo": "Castel del Monte - Spinazzola",
+    "regione": "Puglia",
+    "km": 110,
+    "durataMin": 145,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "L'Alta Murgia è il grande tavolato calcareo pugliese. Castel del Monte, enigmatico castello federiciano ottagonale (UNESCO). Gravina con il suo canyon e la chiesa rupestre.",
+    "tappe": [
+      "Bari",
+      "Altamura",
+      "Gravina in Puglia",
+      "Castel del Monte (UNESCO)",
+      "Andria",
+      "Corato"
+    ],
+    "waypointsGmaps": [
+      "Bari, Italy",
+      "Altamura, Italy",
+      "Gravina in Puglia, Italy",
+      "Castel del Monte, Italy",
+      "Andria, Italy"
+    ],
+    "tags": [
+      "Castel del Monte",
+      "UNESCO",
+      "federiciano",
+      "Murgia",
+      "canyon"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-de6b2341",
+    "nome": "Capitanata - Da Foggia ai Laghi di Lesina e Varano",
+    "partenza": "Foggia",
+    "arrivo": "Lesina - Varano - Rodi Garganico",
+    "regione": "Puglia",
+    "km": 100,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "I Laghi di Lesina e Varano sono lagune costiere separate dall'Adriatico da sottili strisce di terra. Ambiente lagunare unico con anguille famose. Preludio al Gargano.",
+    "tappe": [
+      "Foggia",
+      "San Severo",
+      "Lago di Lesina",
+      "Lago di Varano",
+      "Ischitella",
+      "Rodi Garganico"
+    ],
+    "waypointsGmaps": [
+      "Foggia, Italy",
+      "San Severo, Italy",
+      "Lago di Lesina, Italy",
+      "Lago di Varano, Italy",
+      "Rodi Garganico, Italy"
+    ],
+    "tags": [
+      "lagune",
+      "Lesina",
+      "Varano",
+      "anguille",
+      "costiero"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-a2e0a754",
+    "nome": "Brindisi e la Via Appia Traiana",
+    "partenza": "Taranto",
+    "arrivo": "Brindisi via Egnazia",
+    "regione": "Puglia",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "La Via Appia Traiana, strada romana che collegava Benevento a Brindisi. Egnazia, città messapica e romana sugli scogli. Manduria, capitale del Primitivo di Manduria.",
+    "tappe": [
+      "Taranto",
+      "Manduria",
+      "Mesagne",
+      "Egnazia (scavi)",
+      "Fasano",
+      "Brindisi"
+    ],
+    "waypointsGmaps": [
+      "Taranto, Italy",
+      "Manduria, Italy",
+      "Egnazia, Italy",
+      "Fasano, Italy",
+      "Brindisi, Italy"
+    ],
+    "tags": [
+      "Via Appia Traiana",
+      "romano",
+      "Egnazia",
+      "Primitivo",
+      "storia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-2858c478",
+    "nome": "Taranto e la Magna Grecia",
+    "partenza": "Taranto",
+    "arrivo": "Metaponto (MT) via costa ionica",
+    "regione": "Puglia",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Taranto, la città dei due mari, fu la più grande città della Magna Grecia. La costa ionica verso Metaponto con i resti delle Tavole Palatine, tempio greco di Hera.",
+    "tappe": [
+      "Taranto",
+      "Faggiano",
+      "Castellaneta Marina",
+      "Ginosa Marina",
+      "Metaponto (scavi)"
+    ],
+    "waypointsGmaps": [
+      "Taranto, Italy",
+      "Castellaneta Marina, Italy",
+      "Ginosa Marina, Italy",
+      "Metaponto, Italy"
+    ],
+    "tags": [
+      "Magna Grecia",
+      "Taranto",
+      "greco",
+      "Metaponto",
+      "ionica"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-728f7cee",
+    "nome": "Daunia - Foggia e i Monti della Daunia",
+    "partenza": "Foggia",
+    "arrivo": "Bovino - Troia via Monti Daunia",
+    "regione": "Puglia",
+    "km": 85,
+    "durataMin": 115,
+    "difficolta": "media",
+    "stelle": 4.0,
+    "descrizione": "I Monti Dauni sono le montagne dimenticate della Puglia. Lucera con l'anfiteatro romano e il castello federiciano. Troia con il suo straordinario duomo romanico.",
+    "tappe": [
+      "Foggia",
+      "Lucera (anfiteatro romano)",
+      "Troia (duomo)",
+      "Orsara di Puglia",
+      "Bovino"
+    ],
+    "waypointsGmaps": [
+      "Foggia, Italy",
+      "Lucera, Italy",
+      "Troia, Italy",
+      "Orsara di Puglia, Italy",
+      "Bovino, Italy"
+    ],
+    "tags": [
+      "Dauni",
+      "Lucera",
+      "Troia",
+      "romanico",
+      "anfiteatro"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-cd2be36f",
+    "nome": "Polignano a Mare e la Costa dei Trulli",
+    "partenza": "Bari",
+    "arrivo": "Monopoli - Polignano - Fasano",
+    "regione": "Puglia",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Polignano a Mare con la sua scogliera e il centro storico a picco sul mare è uno dei borghi più fotogenici d'Italia. La costa adriatica barese verso Fasano.",
+    "tappe": [
+      "Bari",
+      "Mola di Bari",
+      "Polignano a Mare",
+      "Monopoli",
+      "Fasano",
+      "Egnazia"
+    ],
+    "waypointsGmaps": [
+      "Bari, Italy",
+      "Polignano a Mare, Italy",
+      "Monopoli, Italy",
+      "Fasano, Italy"
+    ],
+    "tags": [
+      "Polignano",
+      "scogliera",
+      "costa",
+      "fotogenico",
+      "Adriatico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "puglia-cef1738b",
+    "nome": "Lecce Barocca - La Firenze del Sud",
+    "partenza": "Brindisi",
+    "arrivo": "Lecce - Nardò - Gallipoli",
+    "regione": "Puglia",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "Lecce è la capitale del barocco leccese, costruita interamente in pietra dorata. I palazzi e le chiese del Settecento sono di straordinaria bellezza. Gallipoli sull'Ionio, gioiello della costa.",
+    "tappe": [
+      "Brindisi",
+      "San Vito dei Normanni",
+      "Lecce",
+      "Nardò",
+      "Gallipoli",
+      "Santa Maria di Leuca"
+    ],
+    "waypointsGmaps": [
+      "Brindisi, Italy",
+      "Lecce, Italy",
+      "Nardò, Italy",
+      "Gallipoli, Italy"
+    ],
+    "tags": [
+      "Lecce",
+      "barocco",
+      "pietra leccese",
+      "Gallipoli",
+      "arte"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-6dcb6683",
+    "nome": "Matera - I Sassi della preistoria",
+    "partenza": "Matera",
+    "arrivo": "Montescaglioso - Pisticci via Matera",
+    "regione": "Basilicata",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.9,
+    "descrizione": "Matera e i suoi Sassi sono patrimonio UNESCO e Capitale Europea della Cultura 2019. Le abitazioni scavate nel tufo, il canyon della Gravina, le chiese rupestri. Una delle città più antiche del mondo.",
+    "tappe": [
+      "Matera",
+      "Montescaglioso",
+      "Miglionico",
+      "Pisticci",
+      "Bernalda"
+    ],
+    "waypointsGmaps": [
+      "Matera, Italy",
+      "Montescaglioso, Italy",
+      "Miglionico, Italy",
+      "Pisticci, Italy",
+      "Bernalda, Italy"
+    ],
+    "tags": [
+      "Matera",
+      "Sassi",
+      "UNESCO",
+      "rupestre",
+      "preistorico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-3088229c",
+    "nome": "Parco del Pollino - Tra Basilicata e Calabria",
+    "partenza": "Potenza",
+    "arrivo": "Castelluccio Inferiore - Serra delle Ciavole",
+    "regione": "Basilicata",
+    "km": 130,
+    "durataMin": 175,
+    "difficolta": "difficile",
+    "stelle": 4.8,
+    "descrizione": "Il Pollino è il parco nazionale più grande d'Italia. I pini loricati, alberi millenari simbolo del parco. Strade strette tra foreste primordiali e cime oltre i 2200m.",
+    "tappe": [
+      "Potenza",
+      "Lagonegro",
+      "Lauria",
+      "Castelluccio Inferiore",
+      "San Severino Lucano",
+      "Serra delle Ciavole 2127m"
+    ],
+    "waypointsGmaps": [
+      "Potenza, Italy",
+      "Lagonegro, Italy",
+      "Lauria, Italy",
+      "Castelluccio Inferiore, Italy",
+      "San Severino Lucano, Italy"
+    ],
+    "tags": [
+      "Pollino",
+      "Parco Nazionale",
+      "pino loricato",
+      "selvaggio",
+      "alta quota"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "basilicata-031147d0",
+    "nome": "Melfi e il Vulture - Il vulcano dormiente",
+    "partenza": "Foggia",
+    "arrivo": "Melfi - Lago di Monticchio - Lagopesole",
+    "regione": "Basilicata",
+    "km": 95,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Il Monte Vulture è un vulcano spento con due crateri occupati dai laghi gemelli di Monticchio. Melfi, la capitale federiciana del Mezzogiorno. L'Aglianico del Vulture, vino eccellente.",
+    "tappe": [
+      "Foggia",
+      "Melfi (castello federiciano)",
+      "Monte Vulture",
+      "Lago di Monticchio",
+      "Lagopesole",
+      "Rapolla"
+    ],
+    "waypointsGmaps": [
+      "Foggia, Italy",
+      "Melfi, Italy",
+      "Monte Vulture, Italy",
+      "Lago di Monticchio, Italy",
+      "Lagopesole, Italy"
+    ],
+    "tags": [
+      "vulcano",
+      "laghi",
+      "Melfi",
+      "federiciano",
+      "Aglianico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-776ff75d",
+    "nome": "Costa Ionica Lucana - Metaponto e Policoro",
+    "partenza": "Matera",
+    "arrivo": "Policoro - Marina di Nova Siri",
+    "regione": "Basilicata",
+    "km": 85,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "La costa ionica lucana è tra le meno frequentate d'Italia. Metaponto con le Tavole Palatine, santuario greco di Hera. Policoro, la ricca Heraklea della Magna Grecia.",
+    "tappe": [
+      "Matera",
+      "Montalbano Jonico",
+      "Policoro",
+      "Metaponto",
+      "Marina di Nova Siri"
+    ],
+    "waypointsGmaps": [
+      "Matera, Italy",
+      "Montalbano Jonico, Italy",
+      "Policoro, Italy",
+      "Metaponto, Italy",
+      "Nova Siri, Italy"
+    ],
+    "tags": [
+      "Magna Grecia",
+      "costa ionica",
+      "Metaponto",
+      "greco",
+      "selvaggio"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-491317b6",
+    "nome": "Appennino Lucano - Da Potenza a Pietragalla",
+    "partenza": "Potenza",
+    "arrivo": "Pietragalla - Acerenza",
+    "regione": "Basilicata",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "media",
+    "stelle": 4.0,
+    "descrizione": "L'Appennino Lucano tra colline argillose (calanchi) e borghi arroccati. Acerenza, con la sua cattedrale normanna in cima a uno sperone, è uno dei borghi più belli del Sud.",
+    "tappe": [
+      "Potenza",
+      "Pietragalla",
+      "Acerenza (cattedrale)",
+      "Forenza",
+      "Palazzo San Gervasio"
+    ],
+    "waypointsGmaps": [
+      "Potenza, Italy",
+      "Pietragalla, Italy",
+      "Acerenza, Italy",
+      "Forenza, Italy"
+    ],
+    "tags": [
+      "Appennino Lucano",
+      "calanchi",
+      "Acerenza",
+      "normanna",
+      "borghi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-94ba26be",
+    "nome": "Maratea - La Perla del Tirreno",
+    "partenza": "Salerno",
+    "arrivo": "Maratea - Praia a Mare",
+    "regione": "Basilicata",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "media",
+    "stelle": 4.9,
+    "descrizione": "Maratea è l'unico sbocco al Tirreno della Basilicata. Le sue 32 chiese, il Cristo Redentore a 634m, le cale cristalline e la strada tortuosa tra le rocce la rendono unica.",
+    "tappe": [
+      "Salerno",
+      "Palinuro",
+      "Policastro Bussentino",
+      "Acquafredda di Maratea",
+      "Maratea",
+      "Praia a Mare"
+    ],
+    "waypointsGmaps": [
+      "Salerno, Italy",
+      "Policastro Bussentino, Switzerland",
+      "Maratea, Italy",
+      "Praia a Mare, Italy"
+    ],
+    "tags": [
+      "Maratea",
+      "Tirreno",
+      "Cristo Redentore",
+      "cale",
+      "iconico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "basilicata-3969fb53",
+    "nome": "Agri e Sinni - Le valli del petrolio lucano",
+    "partenza": "Potenza",
+    "arrivo": "Sant'Arcangelo - Senise",
+    "regione": "Basilicata",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "media",
+    "stelle": 4.0,
+    "descrizione": "La Val d'Agri è il cuore del petrolio lucano ma anche una valle di straordinaria bellezza. Grumento Nova, scavi romani di Grumentum. Il grande lago del Pertusillo.",
+    "tappe": [
+      "Potenza",
+      "Viggiano",
+      "Grumento Nova (scavi romani)",
+      "Sant'Arcangelo",
+      "Senise",
+      "Diga del Pertusillo"
+    ],
+    "waypointsGmaps": [
+      "Potenza, Italy",
+      "Viggiano, Italy",
+      "Grumento Nova, Italy",
+      "Senise, Italy",
+      "Diga del Pertusillo, Italy"
+    ],
+    "tags": [
+      "Val d'Agri",
+      "scavi romani",
+      "lago",
+      "petrolio",
+      "calanchi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "basilicata-6ee12925",
+    "nome": "Aliano - La terra di Carlo Levi",
+    "partenza": "Matera",
+    "arrivo": "Aliano - Craco (borgo fantasma)",
+    "regione": "Basilicata",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Il paesaggio lunare dei calanchi lucani. Aliano dove Carlo Levi scrisse 'Cristo si è fermato a Eboli'. Craco, il borgo fantasma abbandonato dopo le frane, set di numerosi film.",
+    "tappe": [
+      "Matera",
+      "Stigliano",
+      "Aliano (Carlo Levi)",
+      "Craco (borgo abbandonato)",
+      "Tursi"
+    ],
+    "waypointsGmaps": [
+      "Matera, Italy",
+      "Stigliano, Italy",
+      "Aliano, Italy",
+      "Craco, Italy",
+      "Tursi, Italy"
+    ],
+    "tags": [
+      "calanchi",
+      "Carlo Levi",
+      "Craco",
+      "borgo fantasma",
+      "luna"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "calabria-5b3bb99a",
+    "nome": "Aspromonte - La montagna dei briganti",
+    "partenza": "Reggio Calabria",
+    "arrivo": "Gambarie d'Aspromonte 1310m",
+    "regione": "Calabria",
+    "km": 80,
+    "durataMin": 125,
+    "difficolta": "difficile",
+    "stelle": 4.6,
+    "descrizione": "L'Aspromonte è il massiccio calabrese sulla punta dello stivale. Strada tortuosa e impegnativa tra boschi di faggio e abeti. Da Gambarie si scorge la Sicilia.",
+    "tappe": [
+      "Reggio Calabria",
+      "Santo Stefano in Aspromonte",
+      "Gambarie d'Aspromonte 1310m",
+      "Montalto 1956m (vista)"
+    ],
+    "waypointsGmaps": [
+      "Reggio Calabria, Italy",
+      "Santo Stefano in Aspromonte, Italy",
+      "Gambarie d'Aspromonte, Italy"
+    ],
+    "tags": [
+      "Aspromonte",
+      "Parco Nazionale",
+      "vista Sicilia",
+      "selvaggio",
+      "difficile"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "calabria-de792b7e",
+    "nome": "Sila - L'Altopiano di Calabria",
+    "partenza": "Cosenza",
+    "arrivo": "Camigliatello Silano - Lago Arvo",
+    "regione": "Calabria",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "La Sila è un grande altopiano a 1200m con foreste di pini larici e laghi artificiali. La Sila è il polmone verde della Calabria. Lorica sul Lago Arvo è la stazione principale.",
+    "tappe": [
+      "Cosenza",
+      "Rogliano",
+      "Camigliatello Silano",
+      "Lago Cecita",
+      "Lago Arvo",
+      "Lorica"
+    ],
+    "waypointsGmaps": [
+      "Cosenza, Italy",
+      "Camigliatello Silano, Italy",
+      "Lago Cecita, Italy",
+      "Lago Arvo, Italy",
+      "Lorica, Italy"
+    ],
+    "tags": [
+      "Sila",
+      "altopiano",
+      "laghi",
+      "foresta",
+      "Calabria"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "calabria-e10b9dd6",
+    "nome": "Costa degli Dei - Tropea e il Tirreno calabrese",
+    "partenza": "Lamezia Terme",
+    "arrivo": "Reggio Calabria via Costa degli Dei",
+    "regione": "Calabria",
+    "km": 150,
+    "durataMin": 200,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "La Costa degli Dei è la riviera più bella della Calabria. Tropea, costruita su una rupe a picco sul mare turchese, è uno dei borghi più belli d'Italia. Scilla con Cariddi nello Stretto.",
+    "tappe": [
+      "Lamezia Terme",
+      "Pizzo Calabro",
+      "Vibo Valentia",
+      "Tropea",
+      "Capo Vaticano",
+      "Palmi",
+      "Scilla",
+      "Reggio Calabria"
+    ],
+    "waypointsGmaps": [
+      "Lamezia Terme, Italy",
+      "Pizzo Calabro, Italy",
+      "Tropea, Italy",
+      "Capo Vaticano, Italy",
+      "Scilla, Italy",
+      "Reggio Calabria, Italy"
+    ],
+    "tags": [
+      "Costa degli Dei",
+      "Tropea",
+      "Scilla",
+      "turchese",
+      "iconico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "maggio-settembre"
+  },
+  {
+    "id": "calabria-ec5c770f",
+    "nome": "Pollino Calabrese - Il lato meridionale del parco",
+    "partenza": "Cosenza",
+    "arrivo": "Castrovillari - Civita",
+    "regione": "Calabria",
+    "km": 110,
+    "durataMin": 150,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "Il Pollino calabrese con Castrovillari e il borgo albanese di Civita. Morano Calabro, uno dei borghi più belli d'Italia arroccato sul Pollino. Gastronomia arbëreshë unica.",
+    "tappe": [
+      "Cosenza",
+      "Spezzano Albanese",
+      "Castrovillari",
+      "Civita (comunità arbëreshë)",
+      "Piano di Pollino",
+      "Morano Calabro"
+    ],
+    "waypointsGmaps": [
+      "Cosenza, Italy",
+      "Castrovillari, Italy",
+      "Civita, Italy",
+      "Morano Calabro, Italy"
+    ],
+    "tags": [
+      "Pollino",
+      "Arbëreshë",
+      "Morano Calabro",
+      "borghi",
+      "albanesi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "maggio-ottobre"
+  },
+  {
+    "id": "calabria-5d1d0967",
+    "nome": "Costa Ionica Calabrese - Da Sibari a Reggio",
+    "partenza": "Sibari",
+    "arrivo": "Reggio Calabria via SS106 ionica",
+    "regione": "Calabria",
+    "km": 250,
+    "durataMin": 310,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "La SS106 ionica traversa 250km di costa calabrese della Magna Grecia. Sibari, Crotone con il tempio di Hera Lacinia, Locri, Gerace con la cattedrale normanna. Storia stratificata.",
+    "tappe": [
+      "Sibari (scavi Magna Grecia)",
+      "Crotone",
+      "Capo Colonna (Hera Lacinia)",
+      "Gerace",
+      "Locri (scavi)",
+      "Bova",
+      "Reggio Calabria"
+    ],
+    "waypointsGmaps": [
+      "Sibari, Italy",
+      "Crotone, Italy",
+      "Capo Colonna, Italy",
+      "Locri, Italy",
+      "Gerace, Italy",
+      "Reggio Calabria, Italy"
+    ],
+    "tags": [
+      "Magna Grecia",
+      "ionica",
+      "Sibari",
+      "Crotone",
+      "lunga distanza"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "calabria-e9960161",
+    "nome": "Serre Calabresi - La Calabria sconosciuta",
+    "partenza": "Vibo Valentia",
+    "arrivo": "Serra San Bruno - Spadola",
+    "regione": "Calabria",
+    "km": 75,
+    "durataMin": 110,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Le Serre sono un altopiano a 1000m tra Tirreno e Ionio. Serra San Bruno con la sua Certosa medievale fondata da San Bruno è un luogo di rara spiritualità nel silenzio dei boschi.",
+    "tappe": [
+      "Vibo Valentia",
+      "Soriano Calabro",
+      "Serra San Bruno (certosa)",
+      "Nardodipace",
+      "Spadola"
+    ],
+    "waypointsGmaps": [
+      "Vibo Valentia, Italy",
+      "Soriano Calabro, Italy",
+      "Serra San Bruno, Italy",
+      "Nardodipace, Italy"
+    ],
+    "tags": [
+      "Serre",
+      "Serra San Bruno",
+      "Certosa",
+      "spiritualità",
+      "boschi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "calabria-a9bcfa43",
+    "nome": "Catanzaro e la Stretta di Catanzaro",
+    "partenza": "Catanzaro",
+    "arrivo": "Soverato - Tiriolo",
+    "regione": "Calabria",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "L'Istmo di Catanzaro è il punto più stretto della Calabria (30km tra Tirreno e Ionio). Da Tiriolo, in giornata limpida, si vedono entrambi i mari contemporaneamente.",
+    "tappe": [
+      "Catanzaro",
+      "Tiriolo (Istmo di Catanzaro)",
+      "Soverato",
+      "Copanello",
+      "Squillace"
+    ],
+    "waypointsGmaps": [
+      "Catanzaro, Italy",
+      "Tiriolo, Italy",
+      "Soverato, Italy",
+      "Squillace, Italy"
+    ],
+    "tags": [
+      "istmo",
+      "due mari",
+      "Tiriolo",
+      "Soverato",
+      "Ionio"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "calabria-3bb1966d",
+    "nome": "Stretto di Messina - Scilla e Cariddi",
+    "partenza": "Villa San Giovanni",
+    "arrivo": "Reggio Calabria - Scilla",
+    "regione": "Calabria",
+    "km": 60,
+    "durataMin": 90,
+    "difficolta": "facile",
+    "stelle": 4.5,
+    "descrizione": "Lo Stretto di Messina con Scilla (la montagna a picco sul mare) e Cariddi (i vortici). La vista sulla Sicilia distante appena 3km. Reggio Calabria con i Bronzi di Riace.",
+    "tappe": [
+      "Villa San Giovanni",
+      "Scilla",
+      "Bagnara Calabra",
+      "Palmi",
+      "Reggio Calabria",
+      "Museo Nazionale Calabria"
+    ],
+    "waypointsGmaps": [
+      "Villa San Giovanni, Italy",
+      "Scilla, Italy",
+      "Bagnara Calabra, Italy",
+      "Palmi, Italy",
+      "Reggio Calabria, Italy"
+    ],
+    "tags": [
+      "Stretto",
+      "Scilla",
+      "Cariddi",
+      "Bronzi di Riace",
+      "Sicilia"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "calabria-ce46929a",
+    "nome": "Crotone e Le Castella - La Calabria greca",
+    "partenza": "Crotone",
+    "arrivo": "Isola di Capo Rizzuto - Le Castella",
+    "regione": "Calabria",
+    "km": 60,
+    "durataMin": 85,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Le Castella è un'isoletta con un castello aragonese collegata alla costa ionica da un istmo. L'Area Marina Protetta di Capo Rizzuto è tra le più grandi d'Italia. Santa Severina, borgo rupe.",
+    "tappe": [
+      "Crotone",
+      "Cutro",
+      "Isola di Capo Rizzuto",
+      "Le Castella",
+      "Santa Severina"
+    ],
+    "waypointsGmaps": [
+      "Crotone, Italy",
+      "Isola di Capo Rizzuto, Italy",
+      "Le Castella, Italy",
+      "Santa Severina, Italy"
+    ],
+    "tags": [
+      "Le Castella",
+      "Area Marina Protetta",
+      "greco",
+      "aragonese",
+      "costa ionica"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "calabria-36b9e3a2",
+    "nome": "Nicastro e l'Appennino Calabro-Lucano",
+    "partenza": "Lamezia Terme",
+    "arrivo": "Tiriolo - Nicastro - San Mango d'Aquino",
+    "regione": "Calabria",
+    "km": 75,
+    "durataMin": 105,
+    "difficolta": "media",
+    "stelle": 4.0,
+    "descrizione": "L'entroterra lametino tra i Monti della Sila Piccola e le Serre. Strada panoramica con viste alternanti sulla costa tirrenica e ionica. Borghi di rara autenticità.",
+    "tappe": [
+      "Lamezia Terme",
+      "Nicastro",
+      "Platania",
+      "San Mango d'Aquino",
+      "Decollatura",
+      "Tiriolo"
+    ],
+    "waypointsGmaps": [
+      "Lamezia Terme, Italy",
+      "Lamezia Terme CZ (Nicastro), Italy",
+      "Platania, Italy",
+      "Tiriolo, Italy"
+    ],
+    "tags": [
+      "Sila Piccola",
+      "Serre",
+      "entroterra",
+      "borghi autentici"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-04bc812c",
+    "nome": "Etna - Il Vulcano Attivo",
+    "partenza": "Catania",
+    "arrivo": "Etna Nord - Rifugio Sapienza 1910m",
+    "regione": "Sicilia",
+    "km": 90,
+    "durataMin": 130,
+    "difficolta": "media",
+    "stelle": 5.0,
+    "descrizione": "L'Etna è il vulcano attivo più alto d'Europa (3350m) e patrimonio UNESCO. La strada circumetnea e la salita al Rifugio Sapienza sono esperienze indimenticabili. Lava nera, piante esotiche, crateri fumanti.",
+    "tappe": [
+      "Catania",
+      "Nicolosi",
+      "Rifugio Sapienza 1910m",
+      "Etna Nord",
+      "Randazzo",
+      "Zafferana Etnea"
+    ],
+    "waypointsGmaps": [
+      "Catania, Italy",
+      "Nicolosi, Italy",
+      "Rifugio Sapienza, Italy",
+      "Randazzo, Italy",
+      "Zafferana Etnea, Italy"
+    ],
+    "tags": [
+      "Etna",
+      "vulcano",
+      "UNESCO",
+      "Sicilia",
+      "iconico"
+    ],
+    "fonte": "rider-map.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-054e15d5",
+    "nome": "Madonie - La Targa Florio",
+    "partenza": "Palermo",
+    "arrivo": "Cefalù via Madonie SS120",
+    "regione": "Sicilia",
+    "km": 130,
+    "durataMin": 175,
+    "difficolta": "media",
+    "stelle": 4.8,
+    "descrizione": "La SS120 delle Madonie fu il tracciato della Targa Florio, la gara automobilistica più antica del mondo (1906-1977). Paesaggi montani spettacolari, borghi arabi-normanni, Cefalù e la sua cattedrale.",
+    "tappe": [
+      "Palermo",
+      "Monreale",
+      "Corleone",
+      "Prizzi",
+      "Bivona",
+      "Gangi",
+      "Castelbuono",
+      "Cefalù"
+    ],
+    "waypointsGmaps": [
+      "Palermo, Italy",
+      "Monreale, Italy",
+      "Corleone, Italy",
+      "Gangi, Italy",
+      "Castelbuono, Italy",
+      "Cefalù, Italy"
+    ],
+    "tags": [
+      "Targa Florio",
+      "Madonie",
+      "storico",
+      "motorismo",
+      "borghi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-289910f1",
+    "nome": "Trapani e le Egadi - Il sale e il vento",
+    "partenza": "Palermo",
+    "arrivo": "Trapani - Marsala - Saline",
+    "regione": "Sicilia",
+    "km": 130,
+    "durataMin": 170,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "La Sicilia occidentale con il tempio dorico di Segesta, le saline di Trapani con i mulini a vento, Marsala con i vini e il Museo della Battaglia del Lilibeo.",
+    "tappe": [
+      "Palermo",
+      "Alcamo",
+      "Segesta (tempio greco)",
+      "Trapani",
+      "Saline di Trapani",
+      "Marsala",
+      "Mazara del Vallo"
+    ],
+    "waypointsGmaps": [
+      "Palermo, Italy",
+      "Segesta, Italy",
+      "Trapani, Italy",
+      "Saline di Trapani, Italy",
+      "Marsala, Italy",
+      "Mazara del Vallo, Italy"
+    ],
+    "tags": [
+      "Segesta",
+      "Saline",
+      "Marsala",
+      "vino",
+      "greco"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-77dd5658",
+    "nome": "Valle dei Templi - Agrigento e la Magna Grecia",
+    "partenza": "Palermo",
+    "arrivo": "Agrigento via SS121",
+    "regione": "Sicilia",
+    "km": 130,
+    "durataMin": 170,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "La Valle dei Templi di Agrigento è patrimonio UNESCO: i templi dorici meglio conservati del mondo. La Scala dei Turchi, scogliera di marna bianca a picco sul Mediterraneo.",
+    "tappe": [
+      "Palermo",
+      "Lercara Friddi",
+      "Casteltermini",
+      "Agrigento (Valle dei Templi)",
+      "Porto Empedocle",
+      "Scala dei Turchi"
+    ],
+    "waypointsGmaps": [
+      "Palermo, Italy",
+      "Agrigento, Italy",
+      "Valle dei Templi, Italy",
+      "Scala dei Turchi, Italy"
+    ],
+    "tags": [
+      "Agrigento",
+      "Valle dei Templi",
+      "UNESCO",
+      "greco",
+      "Scala dei Turchi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-f11772bf",
+    "nome": "Ragusa Ibla e il Val di Noto Barocco",
+    "partenza": "Catania",
+    "arrivo": "Ragusa - Noto - Modica",
+    "regione": "Sicilia",
+    "km": 130,
+    "durataMin": 170,
+    "difficolta": "facile",
+    "stelle": 4.8,
+    "descrizione": "Il Val di Noto, patrimonio UNESCO per l'architettura barocca ricostruita dopo il terremoto del 1693. Noto è la città barocca per eccellenza. Modica con il cioccolato all'azteca. Ragusa Ibla.",
+    "tappe": [
+      "Catania",
+      "Lentini",
+      "Noto (barocco UNESCO)",
+      "Modica (cioccolato)",
+      "Ragusa Ibla",
+      "Scicli"
+    ],
+    "waypointsGmaps": [
+      "Catania, Italy",
+      "Noto, Italy",
+      "Modica, Italy",
+      "Ragusa, Italy",
+      "Scicli, Italy"
+    ],
+    "tags": [
+      "barocco",
+      "UNESCO",
+      "Noto",
+      "Ragusa Ibla",
+      "Modica",
+      "cioccolato"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-53a2e587",
+    "nome": "Nebrodi - La Sicilia verde",
+    "partenza": "Messina",
+    "arrivo": "Santo Stefano di Camastra via Nebrodi",
+    "regione": "Sicilia",
+    "km": 120,
+    "durataMin": 165,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "I Nebrodi sono i monti più selvaggi della Sicilia. Boschi di querce e faggi, laghi montani, maiali neri dei Nebrodi allo stato brado. Un volto della Sicilia inaspettato.",
+    "tappe": [
+      "Messina",
+      "Milazzo",
+      "Capo d'Orlando",
+      "Torrenova",
+      "Caronia",
+      "Parco dei Nebrodi",
+      "Santo Stefano di Camastra"
+    ],
+    "waypointsGmaps": [
+      "Messina, Italy",
+      "Capo d'Orlando, Italy",
+      "Parco dei Nebrodi, Italy",
+      "Santo Stefano di Camastra, Italy"
+    ],
+    "tags": [
+      "Nebrodi",
+      "Parco Nazionale",
+      "maiale nero",
+      "selvaggio",
+      "boschi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "sicilia-aa4653f3",
+    "nome": "Palermo-Monreale-Bagheria - Il barocco arabo-normanno",
+    "partenza": "Palermo",
+    "arrivo": "Bagheria - Monreale - Palazzo Adriano",
+    "regione": "Sicilia",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "Monreale con i mosaici bizantini (UNESCO). Piana degli Albanesi, comunità arbëreshë. Palazzo Adriano, set di Cinema Paradiso. Bagheria con le ville barocche.",
+    "tappe": [
+      "Palermo",
+      "Monreale (duomo UNESCO)",
+      "Piana degli Albanesi",
+      "Palazzo Adriano",
+      "Bagheria (ville barocche)"
+    ],
+    "waypointsGmaps": [
+      "Palermo, Italy",
+      "Monreale, Italy",
+      "Piana degli Albanesi, Italy",
+      "Palazzo Adriano, Italy",
+      "Bagheria, Italy"
+    ],
+    "tags": [
+      "Monreale",
+      "UNESCO",
+      "mosaici",
+      "arbëreshë",
+      "Cinema Paradiso"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-95c91391",
+    "nome": "Siracusa e la Sicilia orientale antica",
+    "partenza": "Catania",
+    "arrivo": "Siracusa - Ortigia - Noto",
+    "regione": "Sicilia",
+    "km": 100,
+    "durataMin": 130,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "Siracusa fu la più potente città dell'antichità dopo Roma. Il Teatro Greco, il Duomo su un tempio di Atena (entrambi UNESCO), Ortigia. Una delle più dense concentrazioni di storia al mondo.",
+    "tappe": [
+      "Catania",
+      "Augusta",
+      "Siracusa",
+      "Ortigia (isola storica)",
+      "Neapolis (teatro greco)",
+      "Noto"
+    ],
+    "waypointsGmaps": [
+      "Catania, Italy",
+      "Augusta, Italy",
+      "Siracusa, Italy",
+      "Ortigia, Italy",
+      "Noto, Italy"
+    ],
+    "tags": [
+      "Siracusa",
+      "greco",
+      "UNESCO",
+      "Ortigia",
+      "teatro greco"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-480f2e3c",
+    "nome": "Costa Peloritana - Lo stretto e le Eolie in vista",
+    "partenza": "Messina",
+    "arrivo": "Taormina via costa peloritana",
+    "regione": "Sicilia",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "La costa ionica messinese verso Taormina, tra le mete turistiche più celebri del Mediterraneo. Il Teatro Greco di Taormina con l'Etna sullo sfondo è una delle immagini più iconiche della Sicilia.",
+    "tappe": [
+      "Messina",
+      "Ali Terme",
+      "Taormina",
+      "Giardini Naxos",
+      "Acireale"
+    ],
+    "waypointsGmaps": [
+      "Messina, Italy",
+      "Taormina, Italy",
+      "Giardini Naxos, Italy",
+      "Acireale, Italy"
+    ],
+    "tags": [
+      "Taormina",
+      "Teatro Greco",
+      "Etna",
+      "costa",
+      "iconico"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sicilia-a06db3da",
+    "nome": "Le Erei Siciliane - Enna e il centro dell'isola",
+    "partenza": "Catania",
+    "arrivo": "Enna - Piazza Armerina - Villa Romana",
+    "regione": "Sicilia",
+    "km": 100,
+    "durataMin": 135,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Il centro della Sicilia con Enna, la città più alta dell'isola (931m). La Villa Romana del Casale di Piazza Armerina con i famosi mosaici (UNESCO). Caltagirone, la città della ceramica.",
+    "tappe": [
+      "Catania",
+      "Caltagirone (ceramiche)",
+      "Piazza Armerina",
+      "Villa Romana del Casale (UNESCO)",
+      "Enna (ombelico della Sicilia)"
+    ],
+    "waypointsGmaps": [
+      "Catania, Italy",
+      "Caltagirone, Italy",
+      "Piazza Armerina, Italy",
+      "Villa Romana del Casale, Italy",
+      "Enna, Italy"
+    ],
+    "tags": [
+      "Enna",
+      "Villa Romana",
+      "UNESCO",
+      "ceramiche",
+      "centro Sicilia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-63cb06ae",
+    "nome": "Gennargentu - Il cuore selvaggio della Sardegna",
+    "partenza": "Nuoro",
+    "arrivo": "Fonni - Desulo - Bruncu Spina 1829m",
+    "regione": "Sardegna",
+    "km": 90,
+    "durataMin": 135,
+    "difficolta": "difficile",
+    "stelle": 4.9,
+    "descrizione": "Il Gennargentu è il massiccio più alto della Sardegna. Orgosolo con i murales politici. Fonni, il paese più alto dell'isola. La strada verso Bruncu Spina tra paesaggi lunari.",
+    "tappe": [
+      "Nuoro",
+      "Oliena",
+      "Orgosolo",
+      "Fonni",
+      "Desulo",
+      "Bruncu Spina 1829m"
+    ],
+    "waypointsGmaps": [
+      "Nuoro, Italy",
+      "Oliena, Italy",
+      "Orgosolo, Italy",
+      "Fonni, Italy",
+      "Desulo, Italy"
+    ],
+    "tags": [
+      "Gennargentu",
+      "Barbagia",
+      "Orgosolo",
+      "murales",
+      "alta quota"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "sardegna-6e5b3d3e",
+    "nome": "Costa Smeralda e Gallura",
+    "partenza": "Olbia",
+    "arrivo": "Palau - Santa Teresa Gallura via Costa Smeralda",
+    "regione": "Sardegna",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "La Costa Smeralda è tra le coste più esclusive del Mediterraneo. Porto Cervo e i suoi porti turistici. Capo Testa con le rocce granitiche scolpite dal vento. La Bocche di Bonifacio verso la Corsica.",
+    "tappe": [
+      "Olbia",
+      "Porto Cervo",
+      "Baja Sardinia",
+      "Arzachena",
+      "Palau",
+      "Capo Testa",
+      "Santa Teresa Gallura"
+    ],
+    "waypointsGmaps": [
+      "Olbia, Italy",
+      "Porto Cervo, Italy",
+      "Arzachena, Italy",
+      "Palau, Italy",
+      "Santa Teresa Gallura, Italy"
+    ],
+    "tags": [
+      "Costa Smeralda",
+      "Gallura",
+      "lusso",
+      "granito",
+      "Corsica"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "maggio-settembre"
+  },
+  {
+    "id": "sardegna-8d3065c1",
+    "nome": "Barbagia di Ollolai - I villaggi del vino",
+    "partenza": "Nuoro",
+    "arrivo": "Mamoiada - Gavoi - Lago Gusana",
+    "regione": "Sardegna",
+    "km": 80,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "La Barbagia di Ollolai è il cuore della Sardegna più autentica. Mamoiada e i Mamuthones, maschere sarde antichissime. Il Lago di Gusana tra i monti del Gennargentu.",
+    "tappe": [
+      "Nuoro",
+      "Mamoiada (Mamuthones)",
+      "Orotelli",
+      "Ottana",
+      "Gavoi",
+      "Lago di Gusana"
+    ],
+    "waypointsGmaps": [
+      "Nuoro, Italy",
+      "Mamoiada, Italy",
+      "Orotelli, Italy",
+      "Gavoi, Italy",
+      "Lago di Gusana, Italy"
+    ],
+    "tags": [
+      "Barbagia",
+      "Mamuthones",
+      "maschere",
+      "lago",
+      "tradizioni"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "sardegna-18d72cb0",
+    "nome": "Sulcis Iglesiente - Le miniere e il mare",
+    "partenza": "Cagliari",
+    "arrivo": "Iglesias - Nebida - Porto Flavia",
+    "regione": "Sardegna",
+    "km": 110,
+    "durataMin": 155,
+    "difficolta": "media",
+    "stelle": 4.7,
+    "descrizione": "Il Sulcis Iglesiente è la terra delle miniere di piombo e zinco. La strada costiera tra Nebida e Masua è una delle più spettacolari della Sardegna: scogliere a picco, il Pan di Zucchero.",
+    "tappe": [
+      "Cagliari",
+      "Iglesias",
+      "Nebida",
+      "Porto Flavia (miniera)",
+      "Masua",
+      "Gonnesa"
+    ],
+    "waypointsGmaps": [
+      "Cagliari, Italy",
+      "Iglesias, Italy",
+      "Nebida, Italy",
+      "Masua, Italy",
+      "Porto Flavia, Italy"
+    ],
+    "tags": [
+      "miniere",
+      "Pan di Zucchero",
+      "scogliere",
+      "industriale",
+      "spettacolare"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-669e7548",
+    "nome": "Ogliastra - La Sardegna verticale",
+    "partenza": "Tortolì",
+    "arrivo": "Urzulei - Gorroppu - Orgosolo",
+    "regione": "Sardegna",
+    "km": 100,
+    "durataMin": 155,
+    "difficolta": "difficile",
+    "stelle": 4.8,
+    "descrizione": "L'Ogliastra è la provincia più selvaggia della Sardegna. La strada sopra Baunei (Supramonte) è a picco sul mare. Su Gorroppu è il canyon più profondo d'Europa. Strade impegnative.",
+    "tappe": [
+      "Tortolì",
+      "Baunei",
+      "Urzulei",
+      "Su Gorroppu (gola)",
+      "Dorgali",
+      "Cala Gonone"
+    ],
+    "waypointsGmaps": [
+      "Tortolì, Italy",
+      "Baunei, Italy",
+      "Urzulei, Italy",
+      "Dorgali, Italy",
+      "Cala Gonone, Italy"
+    ],
+    "tags": [
+      "Ogliastra",
+      "Supramonte",
+      "Su Gorroppu",
+      "canyon",
+      "difficile"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "giugno-ottobre"
+  },
+  {
+    "id": "sardegna-1888c074",
+    "nome": "Gallura Interna - Tempio Pausania e Valle della Luna",
+    "partenza": "Olbia",
+    "arrivo": "Tempio Pausania - Aggius - Valle della Luna",
+    "regione": "Sardegna",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "media",
+    "stelle": 4.5,
+    "descrizione": "La Gallura interna con le sue forme granitiche bizzarre. La Valle della Luna ad Aggius è un paesaggio surreale tra massi rotondi. Tempio Pausania, la capitale del sughero.",
+    "tappe": [
+      "Olbia",
+      "Arzachena",
+      "Tempio Pausania",
+      "Aggius",
+      "Valle della Luna",
+      "Bortigiadas"
+    ],
+    "waypointsGmaps": [
+      "Olbia, Italy",
+      "Tempio Pausania, Italy",
+      "Aggius, Italy",
+      "Valle della Luna, Italy"
+    ],
+    "tags": [
+      "Gallura",
+      "granito",
+      "Valle della Luna",
+      "sughero",
+      "surreale"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-7272e06f",
+    "nome": "Penisola del Sinis e Tharros",
+    "partenza": "Oristano",
+    "arrivo": "San Giovanni di Sinis - Tharros",
+    "regione": "Sardegna",
+    "km": 65,
+    "durataMin": 90,
+    "difficolta": "facile",
+    "stelle": 4.4,
+    "descrizione": "Il Sinis è una penisola piatta tra stagni e mare. Tharros, città fenicia poi romana su un promontorio tra due baie. Lo stagno di Cabras con i fenicotteri rosa.",
+    "tappe": [
+      "Oristano",
+      "Cabras",
+      "Penisola del Sinis",
+      "Stagno di Cabras",
+      "San Giovanni di Sinis",
+      "Tharros (scavi fenici)"
+    ],
+    "waypointsGmaps": [
+      "Oristano, Italy",
+      "Cabras, Italy",
+      "San Giovanni di Sinis, Italy",
+      "Tharros, Italy"
+    ],
+    "tags": [
+      "Sinis",
+      "Tharros",
+      "fenicio",
+      "fenicotteri",
+      "stagni"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-96432ec1",
+    "nome": "Sassari e il Logudoro - I nuraghi del nord",
+    "partenza": "Sassari",
+    "arrivo": "Nuraghe Santu Antine - Torralba",
+    "regione": "Sardegna",
+    "km": 75,
+    "durataMin": 105,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "Il Logudoro è la regione delle basiliche romaniche e dei nuraghi. Nuraghe Santu Antine è il nuraghe più grande della Sardegna (3 piani, 17m di altezza). Porto Torres con la basilica di San Gavino.",
+    "tappe": [
+      "Sassari",
+      "Porto Torres (Basilica San Gavino)",
+      "Bonorva",
+      "Nuraghe Santu Antine",
+      "Torralba",
+      "Ozieri"
+    ],
+    "waypointsGmaps": [
+      "Sassari, Italy",
+      "Porto Torres, Italy",
+      "Bonorva, Italy",
+      "Nuraghe Santu Antine, Italy",
+      "Torralba, Italy"
+    ],
+    "tags": [
+      "nuraghe",
+      "romanico",
+      "Logudoro",
+      "Santu Antine",
+      "preistorico"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-bd299bb1",
+    "nome": "Cagliari e il Sarrabus - La Sardegna meridionale",
+    "partenza": "Cagliari",
+    "arrivo": "Villasimius - Costa Rei",
+    "regione": "Sardegna",
+    "km": 90,
+    "durataMin": 125,
+    "difficolta": "facile",
+    "stelle": 4.6,
+    "descrizione": "La costa meridionale sarda con Villasimius, una delle spiagge più belle del Mediterraneo. Il Sarrabus, territorio selvaggio tra granito e macchia mediterranea.",
+    "tappe": [
+      "Cagliari",
+      "Quartu Sant'Elena",
+      "Villasimius",
+      "Capo Carbonara",
+      "Costa Rei",
+      "Muravera"
+    ],
+    "waypointsGmaps": [
+      "Cagliari, Italy",
+      "Villasimius, Italy",
+      "Capo Carbonara, Italy",
+      "Costa Rei, Italy",
+      "Muravera, Italy"
+    ],
+    "tags": [
+      "Villasimius",
+      "Costa Rei",
+      "Sarrabus",
+      "spiagge",
+      "Mediterraneo"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "sardegna-d48317f3",
+    "nome": "Alghero e Capo Caccia - La Sardegna catalana",
+    "partenza": "Sassari",
+    "arrivo": "Alghero - Capo Caccia - Grotte di Nettuno",
+    "regione": "Sardegna",
+    "km": 80,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.7,
+    "descrizione": "Alghero è l'unica città sarda dove si parla ancora il catalano, lingua eredità della dominazione aragonese. Capo Caccia con le Grotte di Nettuno, accessibili solo in barca o 654 scalini.",
+    "tappe": [
+      "Sassari",
+      "Porto Torres",
+      "Alghero",
+      "Capo Caccia",
+      "Grotte di Nettuno",
+      "Porto Conte"
+    ],
+    "waypointsGmaps": [
+      "Sassari, Italy",
+      "Alghero, Italy",
+      "Capo Caccia, Italy",
+      "Grotte di Nettuno, Italy"
+    ],
+    "tags": [
+      "Alghero",
+      "catalano",
+      "Grotte di Nettuno",
+      "Capo Caccia",
+      "aragonese"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "molise-411cae75",
+    "nome": "Pietrabbondante - Il santuario sannitico",
+    "partenza": "Isernia",
+    "arrivo": "Pietrabbondante - Vastogirardi",
+    "regione": "Molise",
+    "km": 75,
+    "durataMin": 105,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Pietrabbondante conserva il più importante santuario sannitico d'Italia: teatro e tempio del II sec. a.C. ancora integri. Frosolone, capitale italiana dei coltelli artigianali.",
+    "tappe": [
+      "Isernia",
+      "Frosolone",
+      "Pietrabbondante (teatro sannitico)",
+      "Vastogirardi",
+      "Capracotta"
+    ],
+    "waypointsGmaps": [
+      "Isernia, Italy",
+      "Frosolone, Italy",
+      "Pietrabbondante, Italy",
+      "Vastogirardi, Italy"
+    ],
+    "tags": [
+      "Sanniti",
+      "teatro antico",
+      "Frosolone",
+      "coltelli",
+      "storia"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "molise-6198daac",
+    "nome": "Campobasso e i Borghi dell'entroterra molisano",
+    "partenza": "Campobasso",
+    "arrivo": "Oratino - Ferrazzano - Campobasso",
+    "regione": "Molise",
+    "km": 55,
+    "durataMin": 80,
+    "difficolta": "facile",
+    "stelle": 3.9,
+    "descrizione": "L'intorno di Campobasso nasconde borghi medievali arroccati su speroni rocciosi. Ferrazzano con il castello Carafa, Oratino con il suo centro storico intatto.",
+    "tappe": [
+      "Campobasso",
+      "Oratino",
+      "Ferrazzano",
+      "Ripalimosani",
+      "Campobasso"
+    ],
+    "waypointsGmaps": [
+      "Campobasso, Italy",
+      "Oratino, Italy",
+      "Ferrazzano, Italy",
+      "Ripalimosani, Italy"
+    ],
+    "tags": [
+      "borghi medievali",
+      "Campobasso",
+      "castello",
+      "Molise"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "friuli-venezia-giulia-69cf687a",
+    "nome": "Valli del Natisone - La Slovenia a un passo",
+    "partenza": "Cividale del Friuli",
+    "arrivo": "San Pietro al Natisone - Pulfero",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 70,
+    "durataMin": 100,
+    "difficolta": "media",
+    "stelle": 4.3,
+    "descrizione": "Le Valli del Natisone sono un territorio sloveno-italiano di confine con una cultura slava autoctona (Slavia Friulana). Strade tortuose tra boschi, borghi di pietra, vicino alla Slovenia.",
+    "tappe": [
+      "Cividale del Friuli",
+      "San Pietro al Natisone",
+      "Pulfero",
+      "Stregna",
+      "Grimacco"
+    ],
+    "waypointsGmaps": [
+      "Cividale del Friuli, Italy",
+      "San Pietro al Natisone, Italy",
+      "Pulfero, Italy",
+      "Stregna, Italy"
+    ],
+    "tags": [
+      "Slavia Friulana",
+      "Slovenia",
+      "borghi di pietra",
+      "cultura slava",
+      "selvatico"
+    ],
+    "fonte": "motoexcape.com",
+    "stagione": "aprile-ottobre"
+  },
+  {
+    "id": "friuli-venezia-giulia-17304e92",
+    "nome": "Pordenone e le Dolomiti Friulane Pedemontane",
+    "partenza": "Pordenone",
+    "arrivo": "Maniago - Spilimbergo - Pinzano",
+    "regione": "Friuli-Venezia Giulia",
+    "km": 80,
+    "durataMin": 110,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "La Pedemontana friulana tra la pianura e le Prealpi. Spilimbergo con la scuola del mosaico, San Daniele del Friuli con il prosciutto DOP, Maniago con i coltelli artigianali.",
+    "tappe": [
+      "Pordenone",
+      "Spilimbergo (mosaici)",
+      "Pinzano al Tagliamento",
+      "San Daniele del Friuli (prosciutto)",
+      "Maniago (coltelli)"
+    ],
+    "waypointsGmaps": [
+      "Pordenone, Italy",
+      "Spilimbergo, Italy",
+      "Pinzano al Tagliamento, Italy",
+      "San Daniele del Friuli, Italy",
+      "Maniago, Italy"
+    ],
+    "tags": [
+      "mosaico",
+      "prosciutto",
+      "coltelli",
+      "Pedemontana",
+      "artigianato"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-e05342ca",
+    "nome": "Fermo e il Piceno costiero",
+    "partenza": "Ancona",
+    "arrivo": "Fermo - Porto San Giorgio - San Benedetto",
+    "regione": "Marche",
+    "km": 90,
+    "durataMin": 120,
+    "difficolta": "facile",
+    "stelle": 4.0,
+    "descrizione": "Il Piceno costiero da Civitanova a San Benedetto. Fermo su una collina con il suo duomo romanico e le cisterne romane sotterranee. Costa adriatica bassa e sabbiosa.",
+    "tappe": [
+      "Ancona",
+      "Civitanova Marche",
+      "Porto San Giorgio",
+      "Fermo",
+      "Pedaso",
+      "San Benedetto del Tronto"
+    ],
+    "waypointsGmaps": [
+      "Ancona, Italy",
+      "Civitanova Marche, Italy",
+      "Porto San Giorgio, Italy",
+      "Fermo, Italy",
+      "San Benedetto del Tronto, Italy"
+    ],
+    "tags": [
+      "Piceno",
+      "Fermo",
+      "cisterne romane",
+      "costa adriatica",
+      "collinare"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "marche-9f2213a9",
+    "nome": "Montefeltro - I castelli del Rinascimento",
+    "partenza": "Pesaro",
+    "arrivo": "Sant'Agata Feltria - Pennabilli - Maiolo",
+    "regione": "Marche",
+    "km": 85,
+    "durataMin": 120,
+    "difficolta": "media",
+    "stelle": 4.4,
+    "descrizione": "Il Montefeltro è il territorio dei Montefeltro, signori del Rinascimento. Castelli medievali e borghi arroccati su speroni di roccia. Sant'Agata Feltria con il suo teatro settecentesco.",
+    "tappe": [
+      "Pesaro",
+      "Urbino",
+      "Sassocorvaro",
+      "Sant'Agata Feltria",
+      "Pennabilli",
+      "Maiolo"
+    ],
+    "waypointsGmaps": [
+      "Pesaro, Italy",
+      "Urbino, Italy",
+      "Sant'Agata Feltria, Italy",
+      "Pennabilli, Italy",
+      "Maiolo, Italy"
+    ],
+    "tags": [
+      "Montefeltro",
+      "Rinascimento",
+      "castelli",
+      "borghi",
+      "medievale"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-2fdfc989",
+    "nome": "Sabina - Olio e borghi rupestri",
+    "partenza": "Roma",
+    "arrivo": "Farfa - Poggio Mirteto - Magliano Sabina",
+    "regione": "Lazio",
+    "km": 85,
+    "durataMin": 115,
+    "difficolta": "facile",
+    "stelle": 4.1,
+    "descrizione": "La Sabina è la terra dell'olio DOP laziale. L'Abbazia di Farfa, potente centro benedettino medievale. Borghi rupestri tra calanchi e uliveti argentati.",
+    "tappe": [
+      "Roma Salaria",
+      "Monterotondo",
+      "Fara in Sabina",
+      "Abbazia di Farfa",
+      "Poggio Mirteto",
+      "Magliano Sabina"
+    ],
+    "waypointsGmaps": [
+      "Roma, Italy",
+      "Fara in Sabina, Italy",
+      "Abbazia di Farfa, Italy",
+      "Poggio Mirteto, Italy",
+      "Magliano Sabina, Italy"
+    ],
+    "tags": [
+      "Sabina",
+      "olio DOP",
+      "Abbazia di Farfa",
+      "benedettino",
+      "borghi"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "lazio-68441ae2",
+    "nome": "Tuscia Viterbese - Etruschi e termalismo",
+    "partenza": "Viterbo",
+    "arrivo": "Tarquinia - Cerveteri via Etruschi",
+    "regione": "Lazio",
+    "km": 110,
+    "durataMin": 145,
+    "difficolta": "facile",
+    "stelle": 4.3,
+    "descrizione": "La Tuscia viterbese è il cuore dell'antica Etruria. Tarquinia e Cerveteri, le due grandi necropoli etrusche patrimonio UNESCO. Tuscania con le sue basiliche romaniche tra il verde.",
+    "tappe": [
+      "Viterbo",
+      "Tuscania",
+      "Tarquinia (necropoli etrusca UNESCO)",
+      "Civitavecchia",
+      "Cerveteri (necropoli UNESCO)"
+    ],
+    "waypointsGmaps": [
+      "Viterbo, Italy",
+      "Tuscania, Italy",
+      "Tarquinia, Italy",
+      "Civitavecchia, Italy",
+      "Cerveteri, Italy"
+    ],
+    "tags": [
+      "Etruschi",
+      "UNESCO",
+      "Tarquinia",
+      "Cerveteri",
+      "Tuscania"
+    ],
+    "fonte": "mototurismodoc.com",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-3ce2fe6f",
+    "nome": "Vasto e la Bassa Valle del Sangro",
+    "partenza": "Lanciano",
+    "arrivo": "Vasto - Punta Aderci",
+    "regione": "Abruzzo",
+    "km": 70,
+    "durataMin": 95,
+    "difficolta": "facile",
+    "stelle": 4.2,
+    "descrizione": "La bassa Valle del Sangro verso Vasto. L'Abbazia di San Giovanni in Venere sul promontorio di Fossacesia. Vasto con il suo centro storico a picco sul mare. Punta Aderci, riserva naturale.",
+    "tappe": [
+      "Lanciano",
+      "Torino di Sangro Marina",
+      "Fossacesia (Abbazia San Giovanni in Venere)",
+      "Vasto",
+      "Punta Aderci (riserva)"
+    ],
+    "waypointsGmaps": [
+      "Lanciano, Italy",
+      "Fossacesia, Italy",
+      "Vasto, Italy",
+      "Punta Aderci, Italy"
+    ],
+    "tags": [
+      "Vasto",
+      "Abbazia",
+      "Costa dei Trabocchi",
+      "riserva naturale",
+      "mare"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  },
+  {
+    "id": "abruzzo-168bc5a6",
+    "nome": "Sulmona e la Valle Peligna",
+    "partenza": "L'Aquila",
+    "arrivo": "Sulmona - Scanno - Lago di Scanno",
+    "regione": "Abruzzo",
+    "km": 100,
+    "durataMin": 140,
+    "difficolta": "media",
+    "stelle": 4.6,
+    "descrizione": "Sulmona, patria di Ovidio e dei confetti. Il borgo di Scanno e il suo lago a forma di cuore sono tra i soggetti fotografici più famosi d'Abruzzo. Costumi tradizionali ancora vivi.",
+    "tappe": [
+      "L'Aquila",
+      "Pratola Peligna",
+      "Sulmona (confetti)",
+      "Scanno",
+      "Lago di Scanno 1017m"
+    ],
+    "waypointsGmaps": [
+      "L'Aquila, Italy",
+      "Sulmona, Italy",
+      "Scanno, Italy",
+      "Lago di Scanno, Italy"
+    ],
+    "tags": [
+      "Sulmona",
+      "confetti",
+      "Scanno",
+      "lago cuore",
+      "tradizioni"
+    ],
+    "fonte": "trueriders.it",
+    "stagione": "tutto l'anno"
+  }
+]
