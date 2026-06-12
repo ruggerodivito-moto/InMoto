@@ -612,6 +612,7 @@ struct RoadbookImportView: View {
     @State private var rawText = ""
     @State private var isParsing = false
     @State private var parsedPlan: TripPlan?
+    @State private var customName = ""
     @State private var errorMsg: String?
 
     var body: some View {
@@ -658,8 +659,18 @@ struct RoadbookImportView: View {
 
                 if let plan = parsedPlan {
                     Section {
+                        TextField("Nome del viaggio", text: $customName)
+                            .autocorrectionDisabled()
+                            .font(.headline)
+                    } header: {
+                        Text("Nome del viaggio")
+                    } footer: {
+                        Text("Puoi modificare il nome proposto prima di salvare.")
+                    }
+
+                    Section {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(plan.nome).font(.headline)
+                            Text(customName.isEmpty ? plan.nome : customName).font(.headline)
                             if !plan.sottotitolo.isEmpty {
                                 Text(plan.sottotitolo).font(.subheadline).foregroundStyle(.secondary)
                             }
@@ -677,7 +688,10 @@ struct RoadbookImportView: View {
                         }
 
                         Button {
-                            store.saveTripPlan(plan)
+                            var toSave = plan
+                            let trimmed = customName.trimmingCharacters(in: .whitespacesAndNewlines)
+                            if !trimmed.isEmpty { toSave.nome = trimmed }
+                            store.saveTripPlan(toSave)
                             dismiss()
                         } label: {
                             HStack {
@@ -714,6 +728,9 @@ struct RoadbookImportView: View {
                 isParsing = false
                 if let plan {
                     parsedPlan = plan
+                    if customName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        customName = plan.nome
+                    }
                     let broken = plan.tappe.filter { $0.waypointsGmaps.count < 2 }
                     if !broken.isEmpty {
                         errorMsg = "Attenzione: \(broken.map { $0.titolo }.joined(separator: ", ")) senza percorso riconosciuto (link mancante o non leggibile)."

@@ -114,6 +114,14 @@ class RouteStore: ObservableObject {
         persistTripPlans()
     }
 
+    func renameTripPlan(_ plan: TripPlan, to newName: String) {
+        let trimmed = newName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty,
+              let idx = tripPlans.firstIndex(where: { $0.id == plan.id }) else { return }
+        tripPlans[idx].nome = trimmed
+        persistTripPlans()
+    }
+
     func deleteTripPlan(_ plan: TripPlan) {
         tripPlans.removeAll { $0.id == plan.id }
         // ripulisci i percorsi di navigazione cacheati delle tappe

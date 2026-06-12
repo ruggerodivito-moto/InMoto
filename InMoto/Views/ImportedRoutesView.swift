@@ -7,6 +7,8 @@ struct ImportedRoutesView: View {
     @State private var showImport   = false
     @State private var showCompose  = false
     @State private var showRoadbook = false
+    @State private var renamingPlan: TripPlan?
+    @State private var renameText   = ""
 
     var body: some View {
         NavigationStack {
@@ -98,6 +100,23 @@ struct ImportedRoutesView: View {
                             }
                             .padding(.vertical, 4)
                         }
+                        .swipeActions(edge: .leading) {
+                            Button {
+                                renamingPlan = plan
+                                renameText = plan.nome
+                            } label: {
+                                Label("Rinomina", systemImage: "pencil")
+                            }
+                            .tint(.indigo)
+                        }
+                        .contextMenu {
+                            Button {
+                                renamingPlan = plan
+                                renameText = plan.nome
+                            } label: {
+                                Label("Rinomina", systemImage: "pencil")
+                            }
+                        }
                     }
                     .onDelete { offsets in
                         offsets.forEach { store.deleteTripPlan(store.tripPlans[$0]) }
@@ -126,6 +145,18 @@ struct ImportedRoutesView: View {
         .listStyle(.insetGrouped)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) { EditButton() }
+        }
+        .alert("Rinomina viaggio",
+               isPresented: Binding(get: { renamingPlan != nil },
+                                    set: { if !$0 { renamingPlan = nil } })) {
+            TextField("Nome del viaggio", text: $renameText)
+            Button("Salva") {
+                if let p = renamingPlan { store.renameTripPlan(p, to: renameText) }
+                renamingPlan = nil
+            }
+            Button("Annulla", role: .cancel) { renamingPlan = nil }
+        } message: {
+            Text("Inserisci il nuovo nome del viaggio.")
         }
     }
 }
