@@ -1,206 +1,175 @@
 # InMoto — Istruzioni per Claude Code
 
-## Contesto del progetto
+App **iOS SwiftUI** per itinerari e viaggi moto. Questo repository contiene il
+codice sorgente Swift, la pipeline di build cloud e gli script di installazione.
+Si sviluppa **senza Mac e senza Xcode locale**: la compilazione avviene su GitHub
+Actions, la firma e l'installazione sull'iPhone con Sideloadly su Windows.
 
-Sei sul **client esterno** di installazione per l'app **InMoto** — un'app iOS SwiftUI
-per itinerari moto italiani. Il tuo compito è guidare l'installazione dell'app
-su un iPhone 15 Pro (iOS 26) connesso via cavo USB a questa macchina Linux.
-
-## Vincoli fondamentali
-
-- ✅ Puoi accedere a **internet pubblico** (github.com, codemagic.io, api.codemagic.io)
-- ✅ Puoi interagire con l'**iPhone via USB** (pymobiledevice3, ideviceinstaller)
-- ❌ NON tentare mai di raggiungere `asr-busmanager.simongenova.local`
-- ❌ NON tentare di raggiungere IP interni `172.18.x.x` o `10.90.x.x`
-- ❌ NON hai bisogno di un Mac né di Xcode su questa macchina
-
-## Struttura del progetto
-
-```
-InMoto/
-├── CLAUDE.md                        ← questo file
-├── project.yml                      ← configurazione XcodeGen (build su Codemagic)
-├── codemagic.yaml                   ← pipeline build/firma cloud (gratuita)
-├── apps.json                        ← sorgente SideStore per aggiornamenti futuri
-├── setup_github.sh                  ← pubblica su GitHub (opzionale)
-│
-├── InMoto/                          ← codice sorgente Swift
-│   ├── InMotoApp.swift
-│   ├── Models/MotoRoute.swift
-│   ├── Services/RouteStore.swift    ← gestione dati offline + sync
-│   ├── Services/APIService.swift    ← chiamate API + AppSettings
-│   ├── Views/ContentView.swift      ← tab bar principale
-│   ├── Views/HomeView.swift         ← browse per regione
-│   ├── Views/SearchView.swift       ← ricerca + percorso su misura
-│   ├── Views/RouteDetailView.swift  ← dettaglio + Apple Maps/Google Maps
-│   ├── Views/RouteCardView.swift    ← card componente
-│   ├── Views/SettingsView.swift     ← URL server + API key + sync
-│   └── Resources/routes.json       ← 196 itinerari offline (non serve server)
-│
-└── vm_install/                      ← script installazione (inizia da qui)
-    ├── README_STANDALONE.md         ← requisiti e overview
-    ├── README_CODEMAGIC.md          ← setup Codemagic passo passo
-    ├── 1_setup_vm.sh                ← installa strumenti Linux
-    ├── 2_configura.sh               ← salva credenziali Codemagic
-    ├── 3_pair_e_installa.sh         ← pairing + build + installa (script principale)
-    ├── 4_installa_ipa.sh            ← reinstalla/aggiorna (rinnovo 7 giorni)
-    └── install_from_github.sh       ← alternativa: scarica da GitHub
-```
-
-## Workflow installazione — stato attuale
-
-Chiedi sempre all'utente a che punto si trova. Gli step sono:
-
-### Step 1 — Strumenti Linux
-```bash
-bash vm_install/1_setup_vm.sh
-```
-Installa: `python3`, `pymobiledevice3`, `ideviceinstaller`, `usbmuxd`, `libimobiledevice-utils`.
-Non richiede internet verso server interni. **Richiede sudo.**
-
-### Step 2 — Credenziali Codemagic
-```bash
-bash vm_install/2_configura.sh
-```
-Chiede interattivamente:
-- Username GitHub
-- Token API Codemagic (da `codemagic.io/teams → API token`)
-- App ID Codemagic (dall'URL della app su codemagic.io)
-
-Salva tutto in `~/.inmoto_config` (chmod 600).
-
-**Prerequisiti Codemagic** (da fare una volta nel browser, leggi `README_CODEMAGIC.md`):
-- Account gratuito su `codemagic.io`
-- Apple ID collegato (con app-specific password se hai 2FA)
-- UDID iPhone registrato come variabile `REGISTERED_DEVICES`
-
-**Trovare l'UDID iPhone:**
-```bash
-ideviceinfo -k UniqueDeviceID
-# oppure:
-python3 -m pymobiledevice3 usbmux list
-```
-
-### Step 3 — Pairing + Build + Installazione
-```bash
-bash vm_install/3_pair_e_installa.sh
-```
-Questo script fa tutto in sequenza:
-1. Verifica iPhone connesso via USB
-2. Esegue pairing (`pymobiledevice3 usbmux pair`)
-3. Avvia build su Codemagic via API
-4. Attende il completamento (~15 min)
-5. Scarica l'IPA firmato
-6. Installa con `ideviceinstaller -i InMoto.ipa`
-
-**Developer Mode** deve essere attivo sull'iPhone:
-`Impostazioni → Privacy e sicurezza → Modalità sviluppatore → ON`
-
-### Step 4 — Rinnovo (ogni 7 giorni)
-```bash
-bash vm_install/4_installa_ipa.sh
-```
-Ricompila e reinstalla. iPhone deve essere connesso.
+> ⚠️ La storica documentazione "client Linux + Codemagic + pymobiledevice3 install"
+> è **obsoleta**. La pipeline reale è quella descritta qui sotto.
 
 ---
 
-## Diagnosi problemi comuni
+## Ambiente reale
 
-### "iPhone non trovato"
-```bash
-sudo systemctl start usbmuxd
-ideviceinfo -k ProductVersion     # verifica device riconosciuto
-python3 -m pymobiledevice3 usbmux list
-```
-Controllare: cavo USB funzionante, iPhone sbloccato, "Fidati" toccato.
+- **Host**: Windows 11, shell PowerShell (più Bash/Git-Bash per script POSIX).
+- **Build**: GitHub Actions (`.github/workflows/release.yml`) compila l'IPA **non
+  firmato** su `macos-15`. È l'unico check di compilazione Swift — niente
+  `swiftc`/Xcode in locale, quindi un errore Swift si scopre solo qui.
+- **Firma + installazione**: **Sideloadly** (GUI) firma con l'Apple ID e installa
+  via USB. Non si può passare l'IPA da riga di comando.
+- **iPhone**: iPhone 15 Pro, iOS 26.x, collegato via USB, pairing già fatto.
+- **Python per gli strumenti device**: usare sempre **`py -3.12`** (il 3.14 di
+  default non compila pymobiledevice3).
 
-### Pairing non funziona
-```bash
-idevicepair unpair
-idevicepair pair
-# Toccare "Fidati" sull'iPhone quando appare il popup
-```
+### Fatti fissi del progetto
 
-### "Installazione fallita" dopo il build
-Cause più comuni:
-1. Developer Mode non attivo sull'iPhone
-2. UDID non registrato in Codemagic (`REGISTERED_DEVICES`)
-3. IPA non firmato (build fallito — controlla su codemagic.io)
-
-Verifica stato installazione:
-```bash
-ideviceinstaller -l | grep InMoto
-```
-
-### Build Codemagic fallisce
-- Controlla il log su `codemagic.io/build/<BUILD_ID>`
-- Apple ID con 2FA: usa **app-specific password** (non la password normale)
-  Genera su: `appleid.apple.com → Sicurezza → Password per le app`
-- Se UDID mancante: aggiungi variabile `REGISTERED_DEVICES` in Codemagic
-
-### pymobiledevice3 non supporta iOS 26
-```bash
-pip3 install --upgrade pymobiledevice3
-```
-La libreria si aggiorna frequentemente per supportare le nuove versioni iOS.
+- Repo GitHub: `ruggerodivito-moto/InMoto`, branch `main`.
+- Bundle id installato (suffisso team Sideloadly): `com.divito.InMoto.3S34FCRGM2`.
+  (Il bundle id "base" nel `project.yml` è `com.divito.InMoto`.)
+- UDID iPhone: `00008130-00022C8E0A51001C`.
+- Cartella download IPA: `C:\Users\divito_adm\Downloads\`.
+- Versione: `CFBundleShortVersionString` = `1.0.<data>` (es. `1.0.20260612`),
+  `CFBundleVersion` = numero di build incrementale (il `<run>` del tag). Entrambi
+  sono scritti dalla pipeline in `project.yml` durante il build.
 
 ---
 
-## Comandi utili rapidi
+## Rilascio di una nuova versione — usa la skill `fine_creazione_ipa`
 
+Ogni volta che modifichi il codice Swift e vuoi portarlo sul telefono, esegui la
+skill **`/fine_creazione_ipa`** (in `.claude/skills/fine_creazione_ipa`). In sintesi:
+
+1. **Commit** dei soli file modificati.
+2. **`git pull --rebase origin main`** poi **`git push`** (il bot di rilascio
+   committa `chore: release … [skip ci]` dopo ogni build, quindi senza rebase il
+   push viene rifiutato). Prendi lo **SHA reale** con `git rev-parse HEAD`, mai inventarlo.
+3. **Attendi** il workflow "Build & Release IPA" finché `completed|success`,
+   pollando le run per quello SHA. Se `failure`, leggi il log su GitHub Actions.
+4. **Scarica** entrambi gli asset della release in `Downloads/`:
+   `InMoto-<tag>.ipa` (versionato, per l'utente) e `InMoto.ipa` (nome stabile).
+   Verifica che la dimensione coincida con l'asset.
+5. **Installazione manuale** con Sideloadly: chiedi all'utente di **riselezionare**
+   l'IPA versionato nella GUI, Apple ID + iPhone collegato e sbloccato, **Start**,
+   password/2FA. Se si blocca su "Preparing Anisette 50%": killare `sideloadly` +
+   `sideloadlydaemon`, riaprire e ripetere. Aspetta che confermi "fatto".
+6. **Verifica** la `CFBundleVersion` installata = numero di build atteso:
+   ```bash
+   py -3.12 -m pymobiledevice3 apps query com.divito.InMoto.3S34FCRGM2 2>&1 \
+     | python -c "import sys,json; d=json.load(sys.stdin); v=list(d.values())[0]; print(v.get('CFBundleVersion','?'))"
+   ```
+
+⚠️ Caveat PowerShell: messaggi di commit con `" / "` (spazio-slash-spazio) possono
+far scattare un blocco di sicurezza fasullo. Riformula senza ` / `.
+
+---
+
+## Architettura dell'app
+
+Entry point `InMotoApp.swift`: inietta tre `@EnvironmentObject` →
+`RouteStore` (dati), `AppSettings.shared` (config server), `AppState`
+(`selectedTab`). `store.loadInitial()` carica i 196 itinerari offline al primo avvio.
+
+### Modelli (`InMoto/Models/`)
+- `MotoRoute.swift` — itinerario/tragitto (anche personale, `isCustom`).
+- `TripPlan.swift` — **viaggio a tappe (roadbook)**: `items: [TripPlanItem]`
+  (`.tappa` / `.pausa` / `.arrivo`), orari, km/durata, nota finale.
+  `motoRoute(for:)` produce una `MotoRoute` navigabile per ogni tappa.
+- `NavigationModels.swift` — `GeocodedWaypoint`, `RouteLeg`, `RouteStep`,
+  `NavigationRoute`, `TurnDirection`, `FavoritePlace`.
+
+### Servizi (`InMoto/Services/`)
+- `RouteStore.swift` — persistenza offline: `routes`, `personalRoutes`,
+  `tripPlans`, `favoritePlaces`; salva/elimina/**rinomina** viaggi; sync dal server.
+- `RouterService.swift` — geocoding (anche coord "lat,lon"), `computeLegs` via
+  `MKDirections`, `connectorLeg` (posizione attuale → tappa), cache percorsi/tratte.
+- `NavigationSession.swift` — sessione di navigazione attiva: map-matching su
+  `RouteGeometry`, avanzamento automatico tra le tappe, annunci vocali (con
+  `isMuted` persistito), ricalcolo fuori percorso.
+- `RouteGeometry.swift` — geometria/progressione in metri lungo il percorso.
+- `LocationManager.swift` — GPS singleton; `start/stop`, `requestOneShot` (un solo
+  fix senza navigazione continua).
+- `RoadbookParser.swift` — interpreta il testo di un roadbook in un `TripPlan`
+  (sezioni `TAPPA n` / `PAUSA n` / `ARRIVO`, orari, km/durata, note tra parentesi,
+  link Google Maps). Il formato è documentato nel commento in cima al file.
+- `AddressCompleter.swift` — suggerimenti indirizzi (Apple Maps).
+- `APIService.swift` — `AppSettings` + chiamate API mobile.
+
+### Viste (`InMoto/Views/`)
+- `ContentView.swift` — **TabView a 2 tab**:
+  - **tab 0 "Bikers Liguria Roadtrip"** → `ImportedRoutesView` (viaggi/tragitti
+    personali; il `+` importa link, roadbook o compone viaggi).
+  - **tab 1 "Altro"** → `MoreView`.
+- `MoreView.swift` — lista che raccoglie: **"Viaggi Personali"** (`HomeView`,
+  browser dei 196 itinerari per regione), **"Luoghi preferiti"**
+  (`FavoritePlacesView`), **Guida "Come aggiungere un viaggio"** (`GuideView`),
+  **"Impostazioni"** (`SettingsView`). Queste viste **non** hanno un proprio
+  `NavigationStack` (lo fornisce `MoreView`); `ImportedRoutesView` e `HomeView`
+  invece lo hanno quando sono il tab principale.
+- `TripPlanViews.swift` — dettaglio viaggio e import roadbook:
+  - `TripPlanDetailView` — timeline; ogni riga è navigabile (tappa → percorso su
+    mappa + navigazione; pausa/arrivo → posizione su mappa).
+  - `TripStageDetailView` — anteprima percorso tappa (`StageMapPreview`), punti di
+    passaggio, avvio navigazione. **Se sei lontano (>300 m) dal primo punto, chiede
+    se anteporre la posizione attuale** come partenza.
+  - `TripPlaceView` — posizione di una pausa/arrivo con apertura in Apple/Google Maps.
+  - `RoadbookImportView` — incolla testo → "Analizza" → anteprima con **campo
+    "Nome del viaggio" modificabile** → "Salva viaggio".
+- `NavigatorView.swift` — navigazione a tutto schermo: barra riepilogo
+  (tappa/ETA/rimanente) **in alto** sopra le indicazioni, pulsante **muta voce**
+  in toolbar, avvio GPS, ricentra.
+- `MapKitView.swift` — mappa di navigazione: percorso fatto/futuro, pin tappe/
+  svolte, **icona moto**, camera **course-up** (direzione di marcia sempre verso
+  l'alto), lookahead in marcia.
+- `DownloadPreparationView.swift` — `DownloadPreparationViewModel` (geocoding +
+  routing + cache) usato per preparare i percorsi.
+- Altre: `HomeView` (browser regioni), `RouteDetailView`, `RouteCardView`,
+  `SearchView`, `CreateRouteView`, `ComposeTripView`, `FavoritePlacesView`,
+  `SettingsView` (la **Versione** è letta da `CFBundleShortVersionString` +
+  `CFBundleVersion`, non hardcoded).
+
+> Nota: `SearchView` e `CreateRouteView` esistono ancora ma **non** sono nei tab
+> (rimossi "al momento" dalla barra). Si possono riattaccare se servono.
+
+---
+
+## Build config
+
+`project.yml` (XcodeGen, eseguito in CI): sorgenti = tutta la cartella `InMoto/`
+(esclusi i `.md`), quindi **i nuovi file Swift vengono inclusi automaticamente**.
+Target iOS 17.0. La pipeline scrive versione/build dentro `project.yml` prima di
+generare il progetto e builda l'`Info.plist` da lì.
+
+---
+
+## Diagnosi rapida
+
+| Problema | Causa / fix |
+|---|---|
+| push rifiutato (`rejected`) | manca il rebase → `git pull --rebase origin main` |
+| build `failure` | leggi il log del run su GitHub Actions (unico check Swift) |
+| `apps query` dà JSON vuoto/errore | iPhone scollegato o bloccato; riconnetti e sblocca |
+| versione installata non cambia | Sideloadly non ha completato; riseleziona IPA e Start |
+| pymobiledevice3 non parte | usa `py -3.12`, non `py`/`python` |
+| Sideloadly fermo a "Preparing Anisette 50%" | killa `sideloadly`+`sideloadlydaemon`, riapri |
+
+### Comandi utili
 ```bash
-# Stato iPhone
-ideviceinfo -k ProductVersion
-ideviceinfo -k UniqueDeviceID
+# Stato Sideloadly (PowerShell)
+Get-Process sideloadly,sideloadlydaemon
 
-# App installate sull'iPhone
-ideviceinstaller -l
+# Versione installata sull'iPhone
+py -3.12 -m pymobiledevice3 apps query com.divito.InMoto.3S34FCRGM2
 
-# Installa IPA manualmente
-ideviceinstaller -i percorso/app.ipa
-
-# Disinstalla
-ideviceinstaller -U com.divito.InMoto
-
-# Log device in tempo reale (debug)
-idevicesyslog | grep InMoto
-
-# Verifica pymobiledevice3
-python3 -m pymobiledevice3 usbmux list
+# Strumenti device
+py -3.12 -m pymobiledevice3 usbmux list
 ```
 
 ---
 
-## Configurazione app dopo l'installazione
+## Configurazione app (opzionale)
 
-Una volta installata, apri InMoto → tab **Impostazioni** e configura:
-
-- **URL Server**: URL del server AMT Scanner
-  (l'app funziona OFFLINE con 196 itinerari anche senza configurarlo)
-- **API Key**: valore di `MOTO_APP_API_KEY` dal file `.env` del server
-
----
-
-## Note sul codice Swift
-
-- **Target iOS**: 17.0 minimo
-- **Offline-first**: 196 itinerari in `Resources/routes.json`, caricati al primo avvio
-- **Sync**: `RouteStore.syncFromServer()` chiama `/api/mobile/moto/routes` con header `X-Moto-Key`
-- **Maps**: `RouteDetailView` apre Apple Maps (`MKMapItem`) o Google Maps (URL scheme)
-- **Compose**: `SearchView` chiama `/api/mobile/moto/compose` per percorsi su misura
-
-Se devi modificare il codice Swift, modifica i file in `InMoto/` e poi esegui
-un nuovo build (`4_installa_ipa.sh` o riavvia il workflow Codemagic).
-
----
-
-## Rinnovo automatico senza computer (SideStore)
-
-Per evitare di rifare il rinnovo manuale ogni 7 giorni:
-1. Apri **Safari** sull'iPhone → `https://sidestore.io`
-2. Installa SideStore con lo stesso Apple ID
-3. In SideStore → **Browse → Sources → +** → aggiungi:
-   `https://raw.githubusercontent.com/TUO_USERNAME/InMoto/main/apps.json`
-4. **SideStore → Impostazioni → Enable WireGuard → ON**
-
-Da questo momento SideStore rinnova il certificato ogni 7 giorni in automatico.
+L'app funziona **offline** con 196 itinerari. Per la sync dal server: tab
+**Altro → Impostazioni** → URL server AMT Scanner + API Key (`MOTO_APP_API_KEY`
+dal `.env` del server). `RouteStore.syncFromServer()` chiama
+`/api/mobile/moto/routes` con header `X-Moto-Key`.
