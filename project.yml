@@ -28,8 +28,8 @@ targets:
       path: InMoto/Info.plist
       properties:
         CFBundleDisplayName: In Moto
-        CFBundleShortVersionString: "1.0.20260611"
-        CFBundleVersion: "26"
+        CFBundleShortVersionString: "1.0.20260612"
+        CFBundleVersion: "27"
         UILaunchScreen:
           UIColorName: ""
         NSLocationWhenInUseUsageDescription: >
