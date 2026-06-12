@@ -3,6 +3,10 @@ name: iOS Build
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'android/**'
+      - '**.md'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 jobs:
