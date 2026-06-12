@@ -210,18 +210,21 @@ repo. **Decisioni prese** (sessione 2026-06-12):
   `android/**`, `**.md`, `.github/workflows/**` (così le modifiche Android non
   rebuildano l'IPA).
 
-**⚠️ DA FARE SUBITO alla ripresa** (fix locale NON ancora committato):
-- In `android/.../data/RouterService.kt` (`computeLegs`) è già stato corretto un
-  errore di compilazione (`continue` dentro lambda inline → spostato in un `if`).
-  La modifica è nel working tree ma **NON committata/pushata**. Primo passo:
-  committare e pushare questo fix, poi verificare che la build Android passi
-  (la build `9fcb564` era fallita **solo** per quell'errore).
+**Fatto dalla ripresa (sessione 2026-06-12, build Android verde)**:
+- ✅ Fix `computeLegs` (`continue` dentro lambda → `if`), commit `29a5182`.
+- ✅ `build.yml` ("iOS Build") ora ha lo stesso `paths-ignore` di `release.yml`
+  (commit `657fa68`): i commit solo-Android/md non rebuildano più l'iOS.
+- ✅ **Mappe MapLibre** (task 7, commit `7f5ad77`): dipendenza
+  `org.maplibre.gl:android-sdk:11.8.5` (Maven Central, no API key). Nuovo
+  `ui/components/RouteMap.kt` = `MapView` MapLibre con lifecycle, stile **raster
+  OSM inline** (tile `tile.openstreetmap.org`), polyline (`LineLayer`) + pin
+  waypoint (`CircleLayer`), camera fit-to-bounds. `RoutePreviewMap` ora prende
+  una `MotoRoute` + `vm`, costruisce la `NavigationRoute` (cache) e disegna la
+  mappa (placeholder durante il caricamento). `NavigatorScreen` usa `RouteMap`
+  diretto. ⏳ Da verificare a vista sul dispositivo (tile/pin/polyline).
+  Package MapLibre 11.x: `org.maplibre.android.*`, geojson `org.maplibre.geojson.*`.
 
-**Ancora da fare** (task 7 e 8):
-- **Mappe MapLibre** (task 7): riagganciare la dipendenza MapLibre (commentata in
-  `app/build.gradle.kts` — verificare la versione esatta dell'artifact
-  `org.maplibre.gl:android-sdk`), e sostituire il placeholder
-  `ui/components/RoutePreviewMap.kt` con mappa reale (stile OSM, pin tappe, polyline).
+**Ancora da fare** (task 8):
 - **Navigazione live** (task 8): oggi `NavigatorScreen` è una versione base (calcola
   il percorso e mostra la lista delle manovre). Portare `NavigationSession` +
   `RouteGeometry` iOS: map-matching su polyline, avanzamento tappe, ricalcolo fuori
