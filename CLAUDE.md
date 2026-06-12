@@ -173,3 +173,54 @@ L'app funziona **offline** con 196 itinerari. Per la sync dal server: tab
 **Altro → Impostazioni** → URL server AMT Scanner + API Key (`MOTO_APP_API_KEY`
 dal `.env` del server). `RouteStore.syncFromServer()` chiama
 `/api/mobile/moto/routes` con header `X-Moto-Key`.
+
+---
+
+## 🟡 PROGETTO APERTO — Versione Android (da riprendere)
+
+L'utente ha chiesto di creare **una versione Android dell'app**. Lavoro **non
+ancora iniziato**: prima di generare codice servono 4 decisioni (l'utente ha
+interrotto le domande chiedendo di annotare tutto qui). Quando si riprende,
+ riproporre queste scelte (con le raccomandazioni) e poi partire.
+
+### Decisioni da prendere (con raccomandazione)
+1. **Tecnologia** → *consiglio: Kotlin + Jetpack Compose* (nativa, rispecchia
+   SwiftUI, l'app iOS resta invariata). Alternative: Flutter (codice unico ma
+   riscrittura futura di iOS), Kotlin Multiplatform (condivide logica, UI separate).
+2. **Scope v1** → *consiglio: base prima, navigazione dopo* — v1 = sfoglia
+   itinerari offline + import roadbook/viaggi + mappe statiche + apertura in Google
+   Maps; fase 2 = navigatore live (map-matching, avanzamento automatico, voce,
+   course-up). La parità completa subito è molto più lunga.
+3. **Provider mappe** → *consiglio per partire: MapLibre/OSM (nessuna API key né
+   costi; routing via OSRM pubblico)*. Alternativa: Google Maps SDK (resa migliore
+   ma richiede API key Google Cloud, possibili costi oltre soglia gratuita).
+4. **Build/installazione** → *consiglio: GitHub Actions → APK debug* (come iOS ma
+   più semplice: l'APK si installa diretto, niente firma per sideload; serve un
+   device Android per provarlo). Alternative: Android Studio locale; oppure solo
+   progetto+codice se non c'è ancora un device. **Verificare se l'utente ha un
+   telefono Android / emulatore.**
+
+### Riusabile dall'app iOS (non riscrivere la logica da zero)
+- `InMoto/Resources/routes.json` — i 196 itinerari: copiabile tale e quale negli
+  asset Android.
+- **Formato roadbook** e logica del parser (`RoadbookParser.swift`): le regole
+  (sezioni `TAPPA/PAUSA/ARRIVO`, orari, km/durata, note tra parentesi, link Google
+  Maps) si riportano 1:1 in Kotlin.
+- Modelli `MotoRoute`, `TripPlan`/`TripPlanItem`, `GeocodedWaypoint` → data class Kotlin.
+- Logica `RouteStore` (persistenza offline JSON, personalRoutes/tripPlans/preferiti,
+  rinomina) → repository Kotlin con file/DataStore.
+- Struttura UI di riferimento: 2 tab (**Bikers Liguria Roadtrip** = viaggi/roadbook
+  personali; **Altro** = Viaggi Personali/Preferiti/Guida/Impostazioni).
+
+### Punti difficili / attenzioni
+- **Mappe + routing**: l'equivalente di `MKDirections`/`MapKit`. Con OSM → MapLibre
+  per il rendering + OSRM per le tratte; con Google → Maps SDK + Directions API (key).
+- **Navigazione live** (fase 2): replicare `NavigationSession` (map-matching su
+  geometria, progressione in metri, avanzamento tappe, TTS in italiano, camera
+  course-up). È un sotto-progetto a sé.
+- **GPS**: `FusedLocationProviderClient` (equivalente di `LocationManager`/
+  `CoreLocation`), incluso il fix one-shot e i permessi background per la navigazione.
+- **Geocoding/autocomplete indirizzi**: equivalente di `CLGeocoder`/
+  `AddressCompleter` (Android `Geocoder` o servizio esterno).
+- Decidere se Android va in **questo stesso repo** (es. cartella `android/`) o in un
+  repo separato; e impostare il relativo workflow CI.
