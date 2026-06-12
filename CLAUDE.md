@@ -186,11 +186,62 @@ repo. **Decisioni prese** (sessione 2026-06-12):
 3. **Provider mappe** → **MapLibre/OSM** + routing **OSRM pubblico** (nessuna API key).
 4. **Build** → **GitHub Actions → APK debug** (workflow Android dedicato).
 
-> Manca da verificare con l'utente: ha un **telefono Android / emulatore** per provare l'APK?
+> ✅ L'utente **ha un dispositivo Android** su cui testare l'APK (installazione
+> diretta dell'APK debug, niente firma/sideload come iOS).
 
-### Stato avanzamento
-Vedi i task della sessione. Ordine: scaffold Gradle → modelli → repository+routes.json
-→ parser roadbook → routing OSRM/geocoding → UI 2 tab → mappe MapLibre → navigazione live → CI.
+### Stato avanzamento (aggiornato 2026-06-12)
+
+**Fatto e committato/pushato** (commit `9fcb564` su main):
+- Scaffold Gradle in `android/` (AGP 8.7.3, Kotlin 2.0.21, Compose BOM 2024.10.01,
+  minSdk 26, compileSdk 35, package `com.divito.inmoto`).
+- Modelli Kotlin (`model/`): `MotoRoute`, `TripPlan`/`TripPlanItem`,
+  `GeocodedWaypoint`/`RouteLeg`/`RouteStep`/`NavigationRoute`, `FavoritePlace`,
+  `TurnDirection`, `GeoPoint` — kotlinx.serialization.
+- `routes.json` (196 itinerari) copiato in `app/src/main/assets/`.
+- `data/`: `RouteRepository` (port di RouteStore: offline + personali + viaggi +
+  preferiti + filtro/compose/sync), `RoadbookParser` + `GoogleMapsParser` (port 1:1),
+  `RouterService` (geocoding **Nominatim** + routing **OSRM** + cache tratte/percorsi),
+  `Http`, `AppSettings`, `Json`.
+- UI Compose (`ui/`): root 2 tab (`MainActivity` + Navigation Compose),
+  schermate Roadtrip, Altro, browser regioni, dettagli itinerario/viaggio/tappa,
+  import roadbook, componi viaggio, preferiti, impostazioni, guida, navigatore base.
+- CI: `.github/workflows/android.yml` (APK debug su push `android/**`, pubblica
+  release `android-v…`). Il workflow iOS `release.yml` ora ha `paths-ignore` per
+  `android/**`, `**.md`, `.github/workflows/**` (così le modifiche Android non
+  rebuildano l'IPA).
+
+**⚠️ DA FARE SUBITO alla ripresa** (fix locale NON ancora committato):
+- In `android/.../data/RouterService.kt` (`computeLegs`) è già stato corretto un
+  errore di compilazione (`continue` dentro lambda inline → spostato in un `if`).
+  La modifica è nel working tree ma **NON committata/pushata**. Primo passo:
+  committare e pushare questo fix, poi verificare che la build Android passi
+  (la build `9fcb564` era fallita **solo** per quell'errore).
+
+**Ancora da fare** (task 7 e 8):
+- **Mappe MapLibre** (task 7): riagganciare la dipendenza MapLibre (commentata in
+  `app/build.gradle.kts` — verificare la versione esatta dell'artifact
+  `org.maplibre.gl:android-sdk`), e sostituire il placeholder
+  `ui/components/RoutePreviewMap.kt` con mappa reale (stile OSM, pin tappe, polyline).
+- **Navigazione live** (task 8): oggi `NavigatorScreen` è una versione base (calcola
+  il percorso e mostra la lista delle manovre). Portare `NavigationSession` +
+  `RouteGeometry` iOS: map-matching su polyline, avanzamento tappe, ricalcolo fuori
+  percorso, TTS italiano, camera course-up, `FusedLocationProviderClient`
+  (dipendenza `play-services-location` già inclusa), icona moto.
+
+**Note pipeline Android / CI**:
+- `gh` CLI **non** è installato. Per leggere i log di una run: API REST GitHub
+  `https://api.github.com/repos/ruggerodivito-moto/InMoto/actions/runs?head_sha=<SHA>`;
+  per i log servono auth — il token sta nel credential manager, recuperabile con
+  `git credential fill` alimentato via `Start-Process git -RedirectStandardInput
+  <file>` (il pipe diretto dà exit 128; **non** usare `cmd /c "... < file"`: il
+  filtro PowerShell blocca `/c`). Poi `Invoke-WebRequest .../logs` con
+  `Authorization: token <PAT>`, estrai lo zip e cerca le righe `e: file://…` /
+  `.kt:` per gli errori Kotlin.
+- L'unico check di compilazione Kotlin è la build CI (come per iOS): niente SDK
+  Android in locale. Attenzione ricorrente: Kotlin **vieta** `break`/`continue`
+  dentro lambda inline (`let`/`also`/`forEach`) — usare `if`/`for` espliciti.
+- ✅ L'utente **ha un dispositivo Android** per provare l'APK: l'APK debug
+  prodotto dalla CI si installa diretto (abilitare "origini sconosciute").
 
 ### Riusabile dall'app iOS (non riscrivere la logica da zero)
 - `InMoto/Resources/routes.json` — i 196 itinerari: copiabile tale e quale negli

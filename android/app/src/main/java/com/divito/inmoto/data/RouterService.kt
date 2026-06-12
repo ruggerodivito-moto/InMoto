@@ -79,7 +79,8 @@ object RouterService {
         val legs = mutableListOf<RouteLeg>()
         for (i in 0 until waypoints.size - 1) {
             val from = waypoints[i]; val to = waypoints[i + 1]
-            cachedLeg(context, from, to)?.let { legs.add(it); continue }
+            val cached = cachedLeg(context, from, to)
+            if (cached != null) { legs.add(cached); continue }
             val leg = directionsLeg(from.name, from.point, to.name, to.point)
             storeLeg(context, leg, from, to)
             legs.add(leg)
