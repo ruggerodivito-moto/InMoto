@@ -10,9 +10,9 @@ struct MoreView: View {
             List {
                 Section {
                     NavigationLink {
-                        ImportedRoutesView()
+                        HomeView()
                     } label: {
-                        Label("Tragitti personali", systemImage: "bookmark.fill")
+                        Label("Viaggi Personali", systemImage: "map.fill")
                     }
                     NavigationLink {
                         FavoritePlacesView()
@@ -86,11 +86,11 @@ struct GuideView: View {
 
             // ── Passi ─────────────────────────────────────────────────────────
             Section {
-                guideStep(1, "Apri \u{201C}Altro\u{201D} \u{2192} \u{201C}Tragitti personali\u{201D}.")
+                guideStep(1, "Apri la prima pagina \u{201C}Bikers Liguria Roadtrip\u{201D}.")
                 guideStep(2, "Tocca il \u{201C}+\u{201D} in alto a destra e scegli \u{201C}Importa roadbook (viaggio)\u{201D}.")
                 guideStep(3, "Incolla il testo del viaggio nel riquadro.")
                 guideStep(4, "Tocca \u{201C}Analizza roadbook\u{201D}: vedrai l'anteprima delle tappe.")
-                guideStep(5, "Tocca \u{201C}Salva viaggio\u{201D}. Lo ritrovi in \u{201C}Tragitti personali\u{201D}.")
+                guideStep(5, "Tocca \u{201C}Salva viaggio\u{201D}. Lo ritrovi nella pagina \u{201C}Bikers Liguria Roadtrip\u{201D}.")
             } header: {
                 Text("Passo per passo")
             }

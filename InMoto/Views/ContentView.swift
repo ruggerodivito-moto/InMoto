@@ -5,7 +5,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $appState.selectedTab) {
-            HomeView()
+            ImportedRoutesView()
                 .tabItem { Label("Bikers Liguria Roadtrip", systemImage: "map.fill") }
                 .tag(0)
             MoreView()

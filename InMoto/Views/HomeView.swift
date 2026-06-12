@@ -12,10 +12,9 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                // Region picker bar
-                regionBar
+        VStack(spacing: 0) {
+            // Region picker bar
+            regionBar
 
                 if selectedRegion == nil {
                     emptyRegionPrompt
@@ -46,16 +45,15 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationTitle("In Moto")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    syncButton
-                }
+        .navigationTitle("Viaggi Personali")
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                syncButton
             }
-            .sheet(isPresented: $showRegionPicker) {
-                RegionPickerSheet(selected: $selectedRegion)
-            }
+        }
+        .sheet(isPresented: $showRegionPicker) {
+            RegionPickerSheet(selected: $selectedRegion)
         }
     }
 

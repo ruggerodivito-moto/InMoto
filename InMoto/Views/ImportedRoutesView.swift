@@ -9,14 +9,15 @@ struct ImportedRoutesView: View {
     @State private var showRoadbook = false
 
     var body: some View {
-        Group {
-            if store.personalRoutes.isEmpty && store.tripPlans.isEmpty {
-                emptyState
-            } else {
-                routeList
+        NavigationStack {
+            Group {
+                if store.personalRoutes.isEmpty && store.tripPlans.isEmpty {
+                    emptyState
+                } else {
+                    routeList
+                }
             }
-        }
-        .navigationTitle("Tragitti personali")
+            .navigationTitle("Bikers Liguria Roadtrip")
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -43,6 +44,7 @@ struct ImportedRoutesView: View {
         }
         .sheet(isPresented: $showRoadbook) {
             RoadbookImportView()
+        }
         }
     }
 
