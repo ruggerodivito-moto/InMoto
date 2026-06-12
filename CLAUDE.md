@@ -224,12 +224,49 @@ repo. **Decisioni prese** (sessione 2026-06-12):
   diretto. ⏳ Da verificare a vista sul dispositivo (tile/pin/polyline).
   Package MapLibre 11.x: `org.maplibre.android.*`, geojson `org.maplibre.geojson.*`.
 
-**Ancora da fare** (task 8):
-- **Navigazione live** (task 8): oggi `NavigatorScreen` è una versione base (calcola
-  il percorso e mostra la lista delle manovre). Portare `NavigationSession` +
-  `RouteGeometry` iOS: map-matching su polyline, avanzamento tappe, ricalcolo fuori
-  percorso, TTS italiano, camera course-up, `FusedLocationProviderClient`
-  (dipendenza `play-services-location` già inclusa), icona moto.
+- ✅ **Navigazione live — logica** (task 8a, commit `9bc5b82`, build Android
+  partita; **conferma esito CI alla ripresa**: era in corso quando ci siamo
+  fermati). Tre file nuovi in `data/`, ancora **NON agganciati alla UI**:
+  - `RouteGeometry.kt` — port 1:1 di `RouteGeometry.swift`: polyline appiattito
+    con distanze progressive, `match()` (map-matching con finestra attorno
+    all'ultimo aggancio + ricerca in avanti), `legIndex`, `upcomingStepIndex`,
+    `bearingAtProgress` (per camera course-up), `distance`/`bearing` (Haversine).
+  - `LocationProvider.kt` — `FusedLocationProviderClient` esposto come
+    `Flow<Location>` via `callbackFlow` (HIGH_ACCURACY ~1 s/5 m, scarta fix >100 m).
+    Il **permesso runtime** lo deve richiedere il chiamante prima di collezionare.
+  - `NavigationSession.kt` — port di `NavigationSession.swift`: avanzamento
+    tappe/manovre dalla progressione in metri, annunci **TTS italiano**
+    (`android.speech.tts.TextToSpeech`, `Locale.ITALIAN`) basati sul tempo alla
+    manovra, **ricalcolo fuori percorso** (>70 m × 3 fix → `connectorLeg`),
+    arrivo automatico, mute. Espone `StateFlow<NavState>` (snapshot immutabile
+    con tutti i valori per la UI: istruzione, ETA, rimanente, `matched`+`course`
+    per moto/camera, `upcomingTurns`, ecc.). Costruttore:
+    `NavigationSession(context, scope, initial: NavigationRoute, muted)`.
+
+**⚠️ DA FARE SUBITO alla ripresa (task 8b — UI live nav)**:
+1. Confermare che la build CI di `9bc5b82` sia `success` (eravamo a metà verifica).
+2. **Riscrivere `ui/screens/NavigatorScreen.kt`** da lista-manovre a navigazione
+   live a tutto schermo che usa `NavigationSession`:
+   - richiesta permesso `ACCESS_FINE_LOCATION` con
+     `rememberLauncherForActivityResult(RequestPermission())`;
+   - creare `NavigationSession` (con `rememberCoroutineScope()`), `remember` di
+     `LocationProvider`, `collectAsState()` su `session.state`, e
+     `LaunchedEffect` che fa `locationUpdates().collect { session.onLocation(it) }`;
+   - `DisposableEffect` → `session.shutdown()` all'uscita;
+   - barra riepilogo in alto (`progressText` / `etaCurrentLeg` /
+     `remainingFormatted` / `nextWaypointName`), banner manovra
+     (`currentInstruction` + `formattedDistance` al prossimo step + icona da
+     `nextDirection`), pulsanti **muta voce** (`session.setMuted`) e **ricentra**.
+3. **Nuova mappa di navigazione** (nuovo composable, NON riusare `RouteMap` che è
+   fit-to-bounds statico): MapLibre con polyline del percorso + **camera
+   course-up** (`CameraPosition.Builder().target(matched).bearing(course).tilt(45).zoom(16)`),
+   marker moto (icona da `SymbolLayer` con bitmap generata a runtime, oppure
+   `CircleLayer` se l'icona è complessa), follow automatico. Riferimenti iOS:
+   `Views/MapKitView.swift` (course-up, icona moto, lookahead) e
+   `Views/NavigatorView.swift` (layout barra/banner/toolbar muta).
+   `MapsLauncher.openRoute` resta il fallback "Apri in Google Maps".
+4. Opz.: foreground service di localizzazione per schermo spento (in moto). Per
+   v1 va bene foreground a schermo acceso.
 
 **Note pipeline Android / CI**:
 - `gh` CLI **non** è installato. Per leggere i log di una run: API REST GitHub
