@@ -60,7 +60,8 @@ fun StageDetailScreen(vm: AppViewModel, nav: NavController, tripId: String, item
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             RoutePreviewMap(
-                waypoints = item.tappeNomi.ifEmpty { item.waypointsGmaps },
+                route = route,
+                vm = vm,
                 modifier = Modifier.fillMaxWidth().height(200.dp),
             )
             Text(item.nome, style = MaterialTheme.typography.titleMedium)

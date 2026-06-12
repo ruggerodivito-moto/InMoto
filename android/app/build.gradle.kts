@@ -72,8 +72,8 @@ dependencies {
 
     // Posizione (FusedLocationProvider) — usata dalla navigazione live
     implementation("com.google.android.gms:play-services-location:21.3.0")
-    // Mappe OSM: MapLibre viene agganciato nel task "Mappe MapLibre"
-    // implementation("org.maplibre.gl:android-sdk:11.5.2")
+    // Mappe OSM (MapLibre Native) — rendering tile OSM, polyline e pin, no API key
+    implementation("org.maplibre.gl:android-sdk:11.8.5")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 }

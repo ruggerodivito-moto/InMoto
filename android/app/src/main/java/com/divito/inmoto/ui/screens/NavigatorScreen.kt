@@ -23,7 +23,7 @@ import androidx.navigation.NavController
 import com.divito.inmoto.AppViewModel
 import com.divito.inmoto.model.NavigationRoute
 import com.divito.inmoto.ui.MapsLauncher
-import com.divito.inmoto.ui.components.RoutePreviewMap
+import com.divito.inmoto.ui.components.RouteMap
 
 private sealed interface NavUiState {
     data object Loading : NavUiState
@@ -94,8 +94,9 @@ private fun ReadyContent(route: NavigationRoute, modifier: Modifier) {
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         item {
-            RoutePreviewMap(
-                waypoints = route.waypoints.map { it.name },
+            RouteMap(
+                polyline = route.legs.flatMap { it.polylineCoordinates },
+                waypoints = route.waypoints.map { it.point },
                 modifier = Modifier.fillMaxWidth().height(200.dp),
             )
         }

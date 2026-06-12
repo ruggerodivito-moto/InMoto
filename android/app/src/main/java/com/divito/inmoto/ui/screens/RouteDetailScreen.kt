@@ -61,7 +61,8 @@ fun RouteDetailScreen(vm: AppViewModel, nav: NavController, routeId: String) {
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             RoutePreviewMap(
-                waypoints = route.waypointsGmaps.ifEmpty { route.tappe },
+                route = route,
+                vm = vm,
                 modifier = Modifier.fillMaxWidth().height(200.dp),
             )
 
