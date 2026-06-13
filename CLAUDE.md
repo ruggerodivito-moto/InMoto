@@ -243,30 +243,39 @@ repo. **Decisioni prese** (sessione 2026-06-12):
     per moto/camera, `upcomingTurns`, ecc.). Costruttore:
     `NavigationSession(context, scope, initial: NavigationRoute, muted)`.
 
-**⚠️ DA FARE SUBITO alla ripresa (task 8b — UI live nav)**:
-1. Confermare che la build CI di `9bc5b82` sia `success` (eravamo a metà verifica).
-2. **Riscrivere `ui/screens/NavigatorScreen.kt`** da lista-manovre a navigazione
-   live a tutto schermo che usa `NavigationSession`:
-   - richiesta permesso `ACCESS_FINE_LOCATION` con
-     `rememberLauncherForActivityResult(RequestPermission())`;
-   - creare `NavigationSession` (con `rememberCoroutineScope()`), `remember` di
-     `LocationProvider`, `collectAsState()` su `session.state`, e
-     `LaunchedEffect` che fa `locationUpdates().collect { session.onLocation(it) }`;
-   - `DisposableEffect` → `session.shutdown()` all'uscita;
-   - barra riepilogo in alto (`progressText` / `etaCurrentLeg` /
-     `remainingFormatted` / `nextWaypointName`), banner manovra
-     (`currentInstruction` + `formattedDistance` al prossimo step + icona da
-     `nextDirection`), pulsanti **muta voce** (`session.setMuted`) e **ricentra**.
-3. **Nuova mappa di navigazione** (nuovo composable, NON riusare `RouteMap` che è
-   fit-to-bounds statico): MapLibre con polyline del percorso + **camera
-   course-up** (`CameraPosition.Builder().target(matched).bearing(course).tilt(45).zoom(16)`),
-   marker moto (icona da `SymbolLayer` con bitmap generata a runtime, oppure
-   `CircleLayer` se l'icona è complessa), follow automatico. Riferimenti iOS:
-   `Views/MapKitView.swift` (course-up, icona moto, lookahead) e
-   `Views/NavigatorView.swift` (layout barra/banner/toolbar muta).
-   `MapsLauncher.openRoute` resta il fallback "Apri in Google Maps".
-4. Opz.: foreground service di localizzazione per schermo spento (in moto). Per
-   v1 va bene foreground a schermo acceso.
+- ✅ Build CI di `9bc5b82` (task 8a) confermata `success`.
+
+- ✅ **Navigazione live — UI** (task 8b, commit `f631172`, build Android
+  `success`). Due file:
+  - `ui/screens/NavigatorScreen.kt` **riscritto** da lista-manovre a navigazione
+    live a tutto schermo. `LiveNavigation`: crea `NavigationSession`
+    (`rememberCoroutineScope`), `remember` di `LocationProvider`, `collectAsState`
+    su `session.state`; richiesta permesso `ACCESS_FINE_LOCATION` con
+    `rememberLauncherForActivityResult(RequestPermission())`; `LaunchedEffect`
+    che colleziona `locationUpdates()` → `session.onLocation`; `DisposableEffect`
+    → `session.shutdown()`. `ManeuverCard` in alto = back + icona direzione
+    (`maneuverIcon()` map `TurnDirection`→Material extended) + `currentInstruction`
+    + distanza al prossimo step, riga riepilogo (`progressText`/`etaCurrentLeg`/
+    `remainingFormatted`/`nextWaypointName`), avviso reroute/fuori-percorso.
+    FAB **ricentra** (solo se `follow=false`) + **muta voce** (`session.setMuted`).
+    `BottomStatus`: chip GPS in attesa / arrivo / permesso negato (→ Apri in Maps).
+  - `ui/components/NavigationMap.kt` **nuovo** (NON riusa `RouteMap`): MapLibre/OSM
+    con **camera course-up** (`CameraPosition` target=matched, bearing=course,
+    tilt 45, zoom 16.5, `animateCamera` 700 ms a ogni fix), follow disattivato sul
+    drag utente (`addOnCameraMoveStartedListener` REASON_API_GESTURE → `onUserPan`).
+    Icona moto = `SymbolLayer` con bitmap chevron generata a runtime,
+    `iconRotate(Expression.get("bearing"))` + `iconRotationAlignment=MAP` (resta
+    verso l'alto). Polyline ridisegnata su `routeVersion` (cambia al reroute).
+    `MapsLauncher.openRoute` resta il fallback "Apri in Google Maps".
+  - ⏳ **Da verificare a vista sul dispositivo**: tile/polyline/icona moto, camera
+    course-up in marcia, annunci TTS, ricalcolo fuori percorso. Gotcha risolto in
+    CI: `by rememberUpdatedState(...)` richiede `import androidx.compose.runtime.getValue`.
+
+**Possibili prossimi passi (Android)**:
+- Verifica sul dispositivo della navigazione live (vedi ⏳ sopra).
+- Opz.: foreground service di localizzazione per schermo spento (in moto). Per
+  v1 va bene foreground a schermo acceso.
+- Pass generale di parità UI con iOS / rifiniture.
 
 **Note pipeline Android / CI**:
 - `gh` CLI **non** è installato. Per leggere i log di una run: API REST GitHub
