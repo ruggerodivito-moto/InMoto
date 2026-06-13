@@ -7,6 +7,7 @@ on:
       - 'android/**'
       - '**.md'
       - '.github/workflows/**'
+      - '.gitignore'
   workflow_dispatch:
 
 jobs:
