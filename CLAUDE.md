@@ -292,6 +292,29 @@ repo. **Decisioni prese** (sessione 2026-06-12):
 - ✅ L'utente **ha un dispositivo Android** per provare l'APK: l'APK debug
   prodotto dalla CI si installa diretto (abilitare "origini sconosciute").
 
+**Naming e download dell'APK** (commit `be73c63`):
+- Il workflow `android.yml` pubblica nella release `android-v<versione>-<build>`
+  **due** asset: `InMotoAndroid_V<build>.apk` (versionato) e `InMoto-android.apk`
+  (nome stabile = ultimo). `<build>` = `github.run_number` = `versionCode`
+  incrementale: **più alto = più recente**. Sul device la versione mostrata è
+  `versionName` = `1.0.<data>.<build>` (es. `1.0.20260613.7`): per sapere se hai
+  l'ultima, confronta il numero finale con il `V<build>` del file.
+- **Download nella cartella del progetto** (`C:\Users\divito_adm\InMoto\`), nome
+  `InMotoAndroid_V<build>.apk`. Gli `.apk` sono in `.gitignore` (non si committano).
+  Per scaricarlo: prendi l'URL dell'asset dalla release tag corrispondente e
+  `Invoke-WebRequest -OutFile` (file ~62 MB), poi verifica che la dimensione
+  coincida con l'asset.
+- `.gitignore` ora esclude `*.apk` e `sideloadlydaemon.log`; `.gitignore` è stato
+  aggiunto al `paths-ignore` dei workflow iOS (`build.yml`, `release.yml`) così una
+  sua modifica non rebuilda l'IPA.
+- **Perché l'APK (~62 MB) è molto più grosso dell'IPA**: porta dentro il motore
+  mappe **MapLibre nativo** (librerie `.so` per tutte le ABI: arm64-v8a,
+  armeabi-v7a, x86, x86_64 → ~4 copie) mentre su iOS MapKit è di sistema; inoltre
+  è una build **debug** non minificata (niente R8/shrinking) e universale (nessuno
+  split per ABI/densità). Per ridurlo in futuro: build `release` con R8 +
+  resource shrinking e/o `.aab`/ABI split (solo `arm64-v8a`). Per un APK debug da
+  installare a mano va bene così.
+
 ### Riusabile dall'app iOS (non riscrivere la logica da zero)
 - `InMoto/Resources/routes.json` — i 196 itinerari: copiabile tale e quale negli
   asset Android.
