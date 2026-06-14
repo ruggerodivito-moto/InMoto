@@ -29,7 +29,20 @@ object GoogleMapsParser {
 
         // ── Percorso con tappe: /maps/dir/A/B/C/ ───────────────────────────
         if (path.contains("/dir/")) {
+            // Le coordinate esatte dei waypoint sono nel parametro data=
+            // (coppie !2m2!1d<lon>!2d<lat>). Hanno la PRIORITÀ sui nomi: così
+            // si segue esattamente il tracciato Google senza geocoding a
+            // indovinare (i nomi verbosi tipo "Autogrill, A6…" o le tappe in
+            // Francia non sempre si geocodificano). I nomi restano l'etichetta.
+            val coords = extractDirCoordinates(urlString)
             val stops = extractDirStops(path)
+            if (coords.isNotEmpty()) {
+                val wps = coords.mapIndexed { i, c ->
+                    val name = stops.getOrNull(i) ?: c
+                    ParsedWaypoint(name, c, "Google Maps percorso")
+                }
+                return wps to null
+            }
             if (stops.isNotEmpty()) {
                 val wps = stops.map {
                     ParsedWaypoint(it, "$it, Italy", "Google Maps percorso")
@@ -72,6 +85,17 @@ object GoogleMapsParser {
             ) null else clean
         }
     }
+
+    // Coppie coordinate dei waypoint in un link /dir/: !2m2!1d<lon>!2d<lat>.
+    // Restituisce stringhe "lat,lon" nell'ordine delle tappe.
+    private val dirCoordRegex = Regex("""!2m2!1d(-?[0-9.]+)!2d(-?[0-9.]+)""")
+    private fun extractDirCoordinates(urlString: String): List<String> =
+        dirCoordRegex.findAll(urlString).mapNotNull { m ->
+            val lon = m.groupValues[1].toDoubleOrNull()
+            val lat = m.groupValues[2].toDoubleOrNull()
+            if (lat != null && lon != null && lat in -90.0..90.0 && lon in -180.0..180.0)
+                "$lat,$lon" else null
+        }.toList()
 
     // Estrae nome luogo da /place/Nome+Luogo/
     private fun extractPlaceName(path: String): String? {
