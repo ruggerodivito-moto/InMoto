@@ -176,6 +176,47 @@ dal `.env` del server). `RouteStore.syncFromServer()` chiama
 
 ---
 
+## 🔐 TODO Sicurezza iOS — da affrontare (analisi 2026-06-13)
+
+Audit della versione iOS rilasciata `1.0.20260612` (build 32). Superficie ridotta
+(offline-first, niente login/WebView/deep-link/SQL); i rischi sono su **storage
+locale** e **gestione credenziali**. Da implementare (poi un giro di
+`/fine_creazione_ipa`):
+
+**🟠 Medi — priorità**
+1. **API key in chiaro in `UserDefaults` → spostare in Keychain.**
+   `APIService.swift:38-40,50`: `apiKey` (la `MOTO_APP_API_KEY`) è scritta in
+   `UserDefaults`, leggibile da backup iTunes/Finder non cifrato e su jailbreak.
+   Usare Keychain (`kSecAttrAccessibleWhenUnlockedThisDeviceOnly`). `serverURL`
+   può restare in UserDefaults.
+2. **Dati personali su disco senza file-protection esplicita.**
+   `RouteStore.swift` (personal_routes/trip_plans/**favorite_places**) e cache nav
+   in `RouterService.swift`: i `FavoritePlace` contengono indirizzi tipo "Casa"
+   (dato di posizione). Aggiungere `options: [.atomic, .completeFileProtection]`
+   alle `write(to:)` dei dati personali.
+
+**🟡 Minori**
+3. **Force-unwrap su URL da input utente → crash.** `APIService.swift:45`
+   `URL(string: serverURL + path)!`: un `serverURL` malformato crasha la sync.
+   Usare `guard let`/`URLComponents`.
+4. **`GoogleMapsParser.resolveShortURL` fa GET su URL arbitrario senza validare
+   il dominio** (`ImportedRoutesView.swift:709-720`): limitare a host
+   Google Maps prima e dopo il redirect.
+5. **Nessun certificate pinning sulla sync** (`RouteStore.swift:203`,
+   `URLSession.shared`): la `X-Moto-Key` è su HTTPS (ATS di default attivo, ok),
+   pinning solo se serve irrigidire il modello di minaccia.
+
+**✅ Già corretto (non toccare):** ATS non indebolito (niente
+`NSAppTransportSecurity` in `project.yml` → HTTPS obbligatorio); validazione
+range lat/lon in `geocodeMixed`; percent-encoding dei waypoint negli URL esterni;
+permessi location dichiarati/motivati; solo `JSONDecoder` su Codable (niente
+unarchiver insicuro).
+
+> ⚠️ La stessa logica (`AppSettings`/UserDefaults, parser link, storage JSON) è
+> portata 1:1 su **Android** (`android/`): #1, #2 e #4 si ripresentano lì.
+
+---
+
 ## 🟢 PROGETTO IN CORSO — Versione Android (`android/`)
 
 Versione Android dell'app, in sviluppo nella cartella **`android/`** dello stesso
@@ -271,8 +312,44 @@ repo. **Decisioni prese** (sessione 2026-06-12):
     course-up in marcia, annunci TTS, ricalcolo fuori percorso. Gotcha risolto in
     CI: `by rememberUpdatedState(...)` richiede `import androidx.compose.runtime.getValue`.
 
-**Possibili prossimi passi (Android)**:
-- Verifica sul dispositivo della navigazione live (vedi ⏳ sopra).
+**Sessione 2026-06-14 — test su device + fix geocoding (DOVE SIAMO)**:
+- ✅ **adb installato** in `C:\Users\divito_adm\AppData\Local\Android\Sdk\platform-tools\`
+  (platform-tools standalone, aggiunto al PATH utente). Device autorizzato:
+  **Samsung Galaxy Tab S9 FE+** (`SM-X716B`, Android 16, serial `R52X901XGWK`).
+  Pacchetto installato = `com.divito.inmoto.debug` (suffisso `.debug`!), versione
+  letta con `adb shell dumpsys package com.divito.inmoto.debug | grep version`.
+  Installazione: `adb install -r <apk>`. Dati app estraibili con
+  `adb exec-out run-as com.divito.inmoto.debug cat files/trip_plans.json`.
+- 🐞 **Bug trovato**: aprendo una tappa di un viaggio importato → errore
+  "Impossibile localizzare …". Causa: i waypoint erano salvati come **testo
+  verboso** (es. `Autogrill, Autostrada, A6 Torino - Savona, KM 18, 17043
+  Carcare SV`); il geocoder **Nominatim** su quelle stringhe (e sulle tappe in
+  Francia) restituisce `[]` → `RouterException`. Su iOS non si vede perché
+  CLGeocoder (Apple) è molto più tollerante. Il messaggio nasce in
+  `RouterService.kt:66-72`. **Non semplificare gli indirizzi**: rischio strada
+  sbagliata (richiesta esplicita dell'utente).
+- ✅ **Fix applicato** (commit `9f5f5f2`, build Android **#8 success**):
+  `GoogleMapsParser.kt` ora per i link `/dir/` estrae le **coordinate esatte**
+  dei waypoint dal parametro `data=` (coppie `!2m2!1d<lon>!2d<lat>`, regex
+  `dirCoordRegex`) e le usa come waypoint in formato `lat,lon` (priorità sui
+  nomi, che restano solo etichetta). Così si segue **esattamente** il tracciato
+  Google senza geocoding. Verificato sul link reale dell'utente
+  (`maps.app.goo.gl/YtqmXAupx7LXos2i9` → 3 coord giuste → OSRM 147.7 km ≈ i
+  148 km del roadbook). Lo short link si risolve con
+  `curl.exe -s -L -o NUL -w "%{url_effective}" <short>` (PowerShell 5.1
+  `Invoke-WebRequest -MaximumRedirection 0` dà errore di stato).
+- ⏳ **DA FARE alla ripresa** (in ordine):
+  1. Scaricare `InMotoAndroid_V8.apk` dalla release `android-v…-8` in
+     `C:\Users\divito_adm\inmoto\` e installarlo: `adb install -r InMotoAndroid_V8.apk`.
+  2. **L'utente deve RE-IMPORTARE il roadbook**: il viaggio già salvato ("Viaggio
+     test") ha ancora i vecchi waypoint testuali → eliminarlo e re-importare così
+     il parser corretto cattura le coordinate. (Solo il re-import rigenera i
+     waypoint; i dati vecchi non si auto-migrano.)
+  3. Riaprire la Tappa 1 → la mappa deve caricare percorso/punti senza errore.
+  4. Poi verifica navigazione live (tile/polyline/icona moto, camera course-up,
+     TTS italiano, ricalcolo fuori percorso) — vedi ⏳ più sopra.
+
+**Altri possibili prossimi passi (Android)**:
 - Opz.: foreground service di localizzazione per schermo spento (in moto). Per
   v1 va bene foreground a schermo acceso.
 - Pass generale di parità UI con iOS / rifiniture.
