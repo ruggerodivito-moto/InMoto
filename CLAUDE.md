@@ -338,16 +338,24 @@ repo. **Decisioni prese** (sessione 2026-06-12):
   148 km del roadbook). Lo short link si risolve con
   `curl.exe -s -L -o NUL -w "%{url_effective}" <short>` (PowerShell 5.1
   `Invoke-WebRequest -MaximumRedirection 0` dà errore di stato).
-- ⏳ **DA FARE alla ripresa** (in ordine):
-  1. Scaricare `InMotoAndroid_V8.apk` dalla release `android-v…-8` in
-     `C:\Users\divito_adm\inmoto\` e installarlo: `adb install -r InMotoAndroid_V8.apk`.
-  2. **L'utente deve RE-IMPORTARE il roadbook**: il viaggio già salvato ("Viaggio
-     test") ha ancora i vecchi waypoint testuali → eliminarlo e re-importare così
-     il parser corretto cattura le coordinate. (Solo il re-import rigenera i
-     waypoint; i dati vecchi non si auto-migrano.)
-  3. Riaprire la Tappa 1 → la mappa deve caricare percorso/punti senza errore.
-  4. Poi verifica navigazione live (tile/polyline/icona moto, camera course-up,
-     TTS italiano, ricalcolo fuori percorso) — vedi ⏳ più sopra.
+- ✅ **APK V8 già scaricato e installato sul tablet**
+  (`C:\Users\divito_adm\inmoto\InMotoAndroid_V8.apk`, versione installata
+  `1.0.20260614.8` / versionCode 8). ⚠️ La CI firma ogni build con una chiave
+  debug **diversa** → `INSTALL_FAILED_UPDATE_INCOMPATIBLE`: serve
+  `adb uninstall com.divito.inmoto.debug` prima di `adb install`. La disinstalla
+  ha **azzerato i dati** dell'app (il viaggio "Viaggio test" non c'è più).
+- ⏳ **DA FARE alla ripresa = SOLO I TEST** (in ordine):
+  1. Aprire l'app sul tablet.
+  2. **RE-IMPORTARE il roadbook**: tab *Bikers Liguria Roadtrip* → `+` →
+     "Importa roadbook (viaggio)" → incollare il testo → Analizza → Salva.
+     (Indispensabile: i dati erano azzerati e comunque solo il re-import
+     rigenera i waypoint con le coordinate dal fix.)
+  3. Aprire la Tappa 1 → la mappa deve caricare percorso/punti **senza** l'errore
+     "Impossibile localizzare".
+  4. Verifica navigazione live (tile/polyline/icona moto, camera course-up,
+     TTS italiano, ricalcolo fuori percorso) — vedi ⏳ più sopra. Per i log
+     durante il test: `adb logcat` (l'app NON logga gli errori di rete, sono solo
+     a UI; per ispezionare i dati salvati usare `adb exec-out run-as … cat …`).
 
 **Altri possibili prossimi passi (Android)**:
 - Opz.: foreground service di localizzazione per schermo spento (in moto). Per
