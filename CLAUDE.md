@@ -344,6 +344,8 @@ repo. **Decisioni prese** (sessione 2026-06-12):
   debug **diversa** → `INSTALL_FAILED_UPDATE_INCOMPATIBLE`: serve
   `adb uninstall com.divito.inmoto.debug` prima di `adb install`. La disinstalla
   ha **azzerato i dati** dell'app (il viaggio "Viaggio test" non c'è più).
+  **➡️ RISOLTO dalla sessione 2026-06-15 (keystore debug fissa): da V11 in poi
+  gli aggiornamenti si installano con `adb install -r` senza disinstallare.**
 - ⏳ **DA FARE alla ripresa = SOLO I TEST** (in ordine):
   1. Aprire l'app sul tablet.
   2. **RE-IMPORTARE il roadbook**: tab *Bikers Liguria Roadtrip* → `+` →
@@ -356,6 +358,29 @@ repo. **Decisioni prese** (sessione 2026-06-12):
      TTS italiano, ricalcolo fuori percorso) — vedi ⏳ più sopra. Per i log
      durante il test: `adb logcat` (l'app NON logga gli errori di rete, sono solo
      a UI; per ispezionare i dati salvati usare `adb exec-out run-as … cat …`).
+
+**Sessione 2026-06-15 — icona, fix GPS, keystore fissa (DOVE SIAMO)**:
+- ✅ **Icona app = stessa dell'iOS** (commit `86391b9`, build #9). Nuovo
+  `tools/genera_icona_android.py`: genera dallo stesso `tools/Logo_Bikers.jpeg`
+  le mipmap legacy quadrate + il foreground adaptive (logo nella safe zone,
+  sfondo `#202020`). Sostituito il segnaposto vettoriale; `mipmap-anydpi-v26`
+  punta a `@mipmap/ic_launcher_foreground`. Rimosso `HANDOFF_OPUS.md` (obsoleto).
+- ✅ **Fix "In attesa del GPS"** (commit `ff58ebc`, build #10). `LocationProvider.kt`:
+  con `PRIORITY_HIGH_ACCURACY` il FusedLocationProvider aspettava il lock GPS e
+  `setMinUpdateDistanceMeters(5f)` sopprimeva gli update **da fermo** → nessun fix
+  arrivava, `matched` restava null, chip bloccato (e niente reroute). Ora: **seed
+  immediato** (`lastLocation` + `getCurrentLocation`), niente filtro distanza,
+  soglia accuracy 150 m. Diagnosi fatta con `adb logcat` (GPS non aggancia al
+  chiuso, ma esiste un fix di rete a 14 m mai consegnato allo stream).
+- ✅ **Keystore debug fissa** (commit `c8cdb20`, build #11). `android/app/debug.keystore`
+  committata + `signingConfigs.debug` in `app/build.gradle.kts` (cred. standard
+  `android`/`androiddebugkey`/`android`). Fine del data-wipe a ogni update.
+  **APK V11 installato** (`1.0.20260615.11`, signature `fd3bc305`).
+- ⏳ **DA FARE = TEST live** (dati azzerati nell'ultima transizione di chiave):
+  re-importare il roadbook, aprire Tappa 1, avviare navigazione → il chip
+  "In attesa del GPS" deve sparire in pochi secondi. Da casa (lontano dal
+  percorso) parte il reroute verso la partenza: è corretto; il test vero della
+  navigazione si fa in strada.
 
 **Altri possibili prossimi passi (Android)**:
 - Opz.: foreground service di localizzazione per schermo spento (in moto). Per
