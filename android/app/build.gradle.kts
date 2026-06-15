@@ -18,10 +18,23 @@ android {
         vectorDrawables { useSupportLibrary = true }
     }
 
+    signingConfigs {
+        // Keystore debug fissa committata nel repo: ogni build CI firma con la
+        // stessa chiave, così gli aggiornamenti dell'APK si installano sopra
+        // senza disinstallare (niente più azzeramento dei dati dell'app).
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
             isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
         release {
             isMinifyEnabled = false
