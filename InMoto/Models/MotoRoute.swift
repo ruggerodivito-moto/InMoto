@@ -1,5 +1,16 @@
 import Foundation
 
+/// Mezzo con cui si percorre il tragitto: determina il tipo di routing e la
+/// taratura dei tempi di percorrenza.
+enum TransportMode: String, CaseIterable, Identifiable {
+    case moto, piedi
+    var id: String { rawValue }
+    var label: String { self == .piedi ? "A piedi" : "In moto" }
+    var icon: String { self == .piedi ? "figure.walk" : "location.north.fill" }
+    /// Velocità media stimata (km/h) per tracciati senza tempi (es. GPX)
+    var avgSpeedKmh: Double { self == .piedi ? 5 : 45 }
+}
+
 struct MotoRoute: Codable, Identifiable, Hashable {
     var id: String
     var nome: String
@@ -19,13 +30,17 @@ struct MotoRoute: Codable, Identifiable, Hashable {
     var isCustom: Bool?
     var legKm: [Int]?    // km per ogni tratta (disponibile solo per tragitti importati calcolati)
     var legMin: [Int]?   // minuti per ogni tratta
+    var mezzo: String? = nil   // "moto" | "piedi" (nil = moto, per compatibilità)
 
     enum CodingKeys: String, CodingKey {
         case id, nome, partenza, arrivo, regione, km
         case durataMin, difficolta, stelle, descrizione
         case tappe, waypointsGmaps, tags, fonte, stagione, isCustom
-        case legKm, legMin
+        case legKm, legMin, mezzo
     }
+
+    /// Mezzo del tragitto (default moto se non specificato)
+    var transportMode: TransportMode { TransportMode(rawValue: mezzo ?? "moto") ?? .moto }
 
     var durataFormattata: String {
         let h = durataMin / 60

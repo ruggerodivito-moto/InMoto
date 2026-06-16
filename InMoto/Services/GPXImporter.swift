@@ -48,7 +48,8 @@ struct GPXImporter {
     /// Crea il `MotoRoute` personale e la `NavigationRoute` "esatta" già pronta.
     /// Restituisce entrambi: salvare il primo in `RouteStore` e mettere in cache
     /// la seconda con `RouterService.cacheRoute` (routeId condiviso).
-    static func buildRoute(from track: ParsedTrack, displayName: String) -> (route: MotoRoute, navRoute: NavigationRoute) {
+    static func buildRoute(from track: ParsedTrack, displayName: String,
+                           transport: TransportMode) -> (route: MotoRoute, navRoute: NavigationRoute) {
         let pts = track.points
         let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = trimmed.isEmpty ? track.name : trimmed
@@ -93,7 +94,7 @@ struct GPXImporter {
 
         // Tratte: sotto-polyline tra confini consecutivi (estremo condiviso, che
         // RouteGeometry deduplica come fa per le tratte di MKDirections)
-        let avgSpeedKmh = 45.0   // stima su strade miste (la traccia non ha tempi)
+        let avgSpeedKmh = transport.avgSpeedKmh   // tempi tarati sul mezzo (la traccia non ha tempi)
         var legs: [RouteLeg] = []
         for i in 0..<(splitIdx.count - 1) {
             let a = splitIdx[i], b = splitIdx[i + 1]
@@ -110,7 +111,8 @@ struct GPXImporter {
 
         let routeId = UUID().uuidString
         let navRoute = NavigationRoute(routeId: routeId, routeName: name,
-                                       waypoints: waypoints, legs: legs)
+                                       waypoints: waypoints, legs: legs,
+                                       transport: transport.rawValue)
 
         let route = MotoRoute(
             id: routeId,
@@ -120,13 +122,14 @@ struct GPXImporter {
             km: max(1, Int(totalKm.rounded())),
             durataMin: max(1, Int(total / 1000 / avgSpeedKmh * 60)),
             difficolta: "Media", stelle: 0,
-            descrizione: "Traccia GPX importata · \(pts.count) punti · segue esattamente il tracciato registrato.",
+            descrizione: "Traccia GPX (\(transport.label.lowercased())) · \(pts.count) punti · segue esattamente il tracciato registrato.",
             tappe: waypoints.map { $0.name },
             waypointsGmaps: waypoints.map { "\($0.latitude),\($0.longitude)" },
             tags: ["gpx", "personale"],
             fonte: "GPX importato", stagione: "Tutto l'anno", isCustom: true,
             legKm: legs.map { max(1, Int($0.distanceMeters / 1000)) },
-            legMin: legs.map { max(1, Int($0.durationSeconds / 60)) }
+            legMin: legs.map { max(1, Int($0.durationSeconds / 60)) },
+            mezzo: transport.rawValue
         )
         return (route, navRoute)
     }

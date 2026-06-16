@@ -358,11 +358,13 @@ struct TripStageDetailView: View {
             let current = GeocodedWaypoint(name: "Posizione attuale",
                                            latitude: here.latitude, longitude: here.longitude)
             do {
-                let connector = try await RouterService.shared.connectorLeg(from: here, to: first)
+                let connector = try await RouterService.shared.connectorLeg(from: here, to: first,
+                                                                            transport: nav.transport)
                 let merged = NavigationRoute(routeId: nav.routeId,
                                              routeName: nav.routeName,
                                              waypoints: [current] + nav.waypoints,
-                                             legs: [connector] + nav.legs)
+                                             legs: [connector] + nav.legs,
+                                             transport: nav.transport)
                 navigating = PreparedNav(navRoute: merged, motoRoute: motoRoute)
             } catch {
                 // Collegamento non calcolabile: parti comunque dalla prima tappa

@@ -61,7 +61,7 @@ class DownloadPreparationViewModel: ObservableObject {
         routingStatus = .inProgress
         let legs: [RouteLeg]
         do {
-            legs = try await RouterService.shared.computeLegs(for: waypoints)
+            legs = try await RouterService.shared.computeLegs(for: waypoints, transport: route.mezzo)
             routingStatus = .done
         } catch {
             routingStatus = .failed
@@ -75,7 +75,8 @@ class DownloadPreparationViewModel: ObservableObject {
             routeId: route.id,
             routeName: route.nome,
             waypoints: waypoints,
-            legs: legs
+            legs: legs,
+            transport: route.mezzo
         )
         RouterService.shared.cacheRoute(navRoute)
         cachingStatus = .done
@@ -202,11 +203,13 @@ struct DownloadPreparationView: View {
             let current = GeocodedWaypoint(name: "Posizione attuale",
                                            latitude: here.latitude, longitude: here.longitude)
             do {
-                let connector = try await RouterService.shared.connectorLeg(from: here, to: first)
+                let connector = try await RouterService.shared.connectorLeg(from: here, to: first,
+                                                                            transport: nav.transport)
                 let merged = NavigationRoute(routeId: nav.routeId,
                                              routeName: nav.routeName,
                                              waypoints: [current] + nav.waypoints,
-                                             legs: [connector] + nav.legs)
+                                             legs: [connector] + nav.legs,
+                                             transport: nav.transport)
                 navigating = StartedNav(navRoute: merged, motoRoute: route)
             } catch {
                 // Collegamento non calcolabile: parti comunque dal percorso originale

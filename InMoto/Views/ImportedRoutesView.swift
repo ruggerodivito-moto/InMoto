@@ -183,6 +183,7 @@ struct ImportRouteView: View {
 
     // Campi comuni
     @State private var routeName = ""
+    @State private var transport: TransportMode = .moto
 
     // Modalità link
     @State private var rawInput  = ""
@@ -231,6 +232,21 @@ struct ImportRouteView: View {
                     }
                     .pickerStyle(.segmented)
                     .onChange(of: mode) { _ in resetResult() }
+                }
+
+                // ── Tipo di percorso (mezzo) ──────────────────────────────────
+                Section {
+                    Picker("Tipo di percorso", selection: $transport) {
+                        ForEach(TransportMode.allCases) { m in
+                            Label(m.label, systemImage: m.icon).tag(m)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .onChange(of: transport) { _ in resetResult() }
+                } header: {
+                    Text("Tipo di percorso")
+                } footer: {
+                    Text("I tempi di percorrenza vengono tarati sul mezzo scelto (moto o a piedi).")
                 }
 
                 // ── Input in base alla modalità ───────────────────────────────
@@ -545,7 +561,8 @@ struct ImportRouteView: View {
                     waypointsGmaps: gWps,
                     tags: ["personale"],
                     fonte: "Importato", stagione: "Tutto l'anno", isCustom: true,
-                    legKm: nil, legMin: nil
+                    legKm: nil, legMin: nil,
+                    mezzo: transport.rawValue
                 )
 
                 await MainActor.run {
@@ -557,7 +574,7 @@ struct ImportRouteView: View {
                 }
 
                 // Calcola distanze reali via MKDirections
-                if let result = await computeDistances(for: gWps) {
+                if let result = await computeDistances(for: gWps, transport: transport.rawValue) {
                     await MainActor.run {
                         if var curr = preview {
                             preview = MotoRoute(
@@ -570,7 +587,8 @@ struct ImportRouteView: View {
                                 waypointsGmaps: curr.waypointsGmaps,
                                 tags: curr.tags, fonte: curr.fonte,
                                 stagione: curr.stagione, isCustom: curr.isCustom,
-                                legKm: result.legKm, legMin: result.legMin
+                                legKm: result.legKm, legMin: result.legMin,
+                                mezzo: curr.mezzo
                             )
                         }
                         isComputingDistances = false
@@ -600,7 +618,8 @@ struct ImportRouteView: View {
                     waypointsGmaps: composed.waypointsGmaps,
                     tags: Array(Set(composed.tags + ["personale"])).sorted(),
                     fonte: "Importato", stagione: composed.stagione, isCustom: true,
-                    legKm: composed.legKm, legMin: composed.legMin
+                    legKm: composed.legKm, legMin: composed.legMin,
+                    mezzo: transport.rawValue
                 )
 
                 await MainActor.run {
@@ -614,7 +633,7 @@ struct ImportRouteView: View {
                 }
 
                 if composed.km == 0 {
-                    if let result = await computeDistances(for: gWps) {
+                    if let result = await computeDistances(for: gWps, transport: transport.rawValue) {
                         await MainActor.run {
                             if var curr = preview {
                                 preview = MotoRoute(
@@ -641,11 +660,11 @@ struct ImportRouteView: View {
     }
 
     /// Calcola km e durata reali tra i waypoint usando MKDirections
-    private func computeDistances(for waypoints: [String]) async
+    private func computeDistances(for waypoints: [String], transport: String?) async
         -> (km: Int, durataMin: Int, legKm: [Int], legMin: [Int])? {
         guard let geoWps = try? await RouterService.shared.geocodeWaypointsMixed(waypoints),
               geoWps.count >= 2,
-              let legs = try? await RouterService.shared.computeLegs(for: geoWps) else { return nil }
+              let legs = try? await RouterService.shared.computeLegs(for: geoWps, transport: transport) else { return nil }
         let km     = max(1, Int(legs.reduce(0) { $0 + $1.distanceMeters } / 1000))
         let mins   = max(1, Int(legs.reduce(0) { $0 + $1.durationSeconds } / 60))
         let legKms = legs.map { max(1, Int($0.distanceMeters / 1000)) }

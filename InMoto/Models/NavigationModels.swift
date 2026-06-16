@@ -125,6 +125,10 @@ struct NavigationRoute: Codable {
     let routeName: String
     let waypoints: [GeocodedWaypoint]
     let legs: [RouteLeg]
+    var transport: String? = nil   // "moto" | "piedi" (nil = moto)
+
+    /// Mezzo del percorso (default moto se non specificato)
+    var transportMode: TransportMode { TransportMode(rawValue: transport ?? "moto") ?? .moto }
 
     var totalDistanceMeters: Double { legs.reduce(0) { $0 + $1.distanceMeters } }
     var totalDurationSeconds: Double { legs.reduce(0) { $0 + $1.durationSeconds } }

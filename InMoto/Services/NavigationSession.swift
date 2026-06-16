@@ -207,7 +207,7 @@ final class NavigationSession: ObservableObject {
         Task {
             do {
                 let connector = try await RouterService.shared.connectorLeg(
-                    from: loc.coordinate, to: target)
+                    from: loc.coordinate, to: target, transport: navRoute.transport)
                 applyReroute(connector: connector, targetWaypointIndex: targetIdx, location: loc)
             } catch {
                 isRerouting = false
@@ -239,7 +239,8 @@ final class NavigationSession: ObservableObject {
         navRoute = NavigationRoute(routeId: navRoute.routeId,
                                    routeName: navRoute.routeName,
                                    waypoints: waypoints,
-                                   legs: legs)
+                                   legs: legs,
+                                   transport: navRoute.transport)
         geometry = RouteGeometry(route: navRoute)
 
         // Riaggancio sul nuovo percorso al prossimo fix (senza ri-annunciare l'avvio)

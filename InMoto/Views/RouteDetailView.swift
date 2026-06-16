@@ -231,6 +231,7 @@ struct RouteDetailView: View {
             Label("Informazioni", systemImage: "info.circle")
                 .font(.headline)
             HStack(spacing: 10) {
+                infoChip(icon: route.transportMode.icon, text: route.transportMode.label)
                 if !route.stagione.isEmpty {
                     infoChip(icon: "calendar", text: route.stagione)
                 }
@@ -359,9 +360,9 @@ struct RouteDetailView: View {
         guard !route.waypointsGmaps.isEmpty,
               let wps = try? await RouterService.shared.geocodeWaypointsMixed(route.waypointsGmaps),
               wps.count >= 2,
-              let legs = try? await RouterService.shared.computeLegs(for: wps) else { return nil }
+              let legs = try? await RouterService.shared.computeLegs(for: wps, transport: route.mezzo) else { return nil }
         let nav = NavigationRoute(routeId: route.id, routeName: route.nome,
-                                  waypoints: wps, legs: legs)
+                                  waypoints: wps, legs: legs, transport: route.mezzo)
         RouterService.shared.cacheRoute(nav)
         return nav
     }

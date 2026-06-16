@@ -205,7 +205,7 @@ struct RoutePDFPage: View {
     }
 
     private var metaLine: String {
-        [route.regione, route.fonte, route.stagione]
+        [route.transportMode.label, route.regione, route.fonte, route.stagione]
             .filter { !$0.isEmpty }
             .joined(separator: " · ")
     }

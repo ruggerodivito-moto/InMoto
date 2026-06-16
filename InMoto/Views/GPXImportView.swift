@@ -13,6 +13,7 @@ struct GPXImportView: View {
     @State private var name = ""
     @State private var errorMsg: String?
     @State private var localFiles: [URL] = []
+    @State private var transport: TransportMode = .moto
 
     /// Tipi accettati: il sistema spesso non conosce l'estensione .gpx, quindi
     /// si includono anche XML e dati generici così il file resta selezionabile.
@@ -31,6 +32,7 @@ struct GPXImportView: View {
                 if !localFiles.isEmpty { localFilesSection }
                 if let t = track {
                     nameSection
+                    transportSection
                     if let r = preview { previewSection(r, pointCount: t.points.count) }
                 }
                 if let e = errorMsg { errorSection(e) }
@@ -47,6 +49,7 @@ struct GPXImportView: View {
                           allowsMultipleSelection: false,
                           onCompletion: handlePick)
             .onAppear(perform: scanLocalFiles)
+            .onChange(of: transport) { _ in rebuildPreview() }
         }
     }
 
@@ -81,6 +84,20 @@ struct GPXImportView: View {
         Section("Nome del tragitto") {
             TextField("Nome", text: $name)
                 .autocorrectionDisabled()
+        }
+    }
+
+    private var transportSection: some View {
+        Section("Tipo di percorso") {
+            Picker("Tipo di percorso", selection: $transport) {
+                ForEach(TransportMode.allCases) { mode in
+                    Label(mode.label, systemImage: mode.icon).tag(mode)
+                }
+            }
+            .pickerStyle(.segmented)
+            Text("I tempi di percorrenza vengono tarati sul mezzo scelto.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 
@@ -162,10 +179,9 @@ struct GPXImportView: View {
             let data = try Data(contentsOf: url)
             let fallback = url.deletingPathExtension().lastPathComponent
             let parsed = try GPXImporter.parse(data: data, fallbackName: fallback)
-            let built = GPXImporter.buildRoute(from: parsed, displayName: parsed.name)
             track = parsed
             name = parsed.name
-            preview = built.route
+            rebuildPreview()
         } catch {
             track = nil
             preview = nil
@@ -173,11 +189,17 @@ struct GPXImportView: View {
         }
     }
 
+    /// Ricostruisce l'anteprima (tempi tarati sul mezzo scelto)
+    private func rebuildPreview() {
+        guard let parsed = track else { return }
+        preview = GPXImporter.buildRoute(from: parsed, displayName: name, transport: transport).route
+    }
+
     private func salva() {
         guard let parsed = track else { return }
-        // Ricostruisce col nome eventualmente modificato e mette in cache la
-        // NavigationRoute "esatta" (routeId condiviso col MotoRoute salvato).
-        let built = GPXImporter.buildRoute(from: parsed, displayName: name)
+        // Ricostruisce col nome/mezzo scelti e mette in cache la NavigationRoute
+        // "esatta" (routeId condiviso col MotoRoute salvato).
+        let built = GPXImporter.buildRoute(from: parsed, displayName: name, transport: transport)
         RouterService.shared.cacheRoute(built.navRoute)
         store.savePersonalRoute(built.route)
         dismiss()
