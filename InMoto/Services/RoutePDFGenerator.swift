@@ -9,11 +9,16 @@ import CoreLocation
 @MainActor
 enum RoutePDFGenerator {
 
-    static let pageWidth: CGFloat = 595   // A4 a 72 dpi
+    static let pageWidth: CGFloat = 842    // A4 orizzontale a 72 dpi
+    static let mapPanelWidth: CGFloat = 486
+    static let mapPanelHeight: CGFloat = 470
 
     /// Costruisce il PDF e ne restituisce l'URL (nil se fallisce).
     static func generate(route: MotoRoute, navRoute: NavigationRoute) async -> URL? {
-        let mapImage = await routeImage(for: navRoute, size: CGSize(width: 1240, height: 720))
+        // Snapshot ad alta risoluzione con la stessa proporzione del pannello mappa
+        let mapImage = await routeImage(for: navRoute,
+                                        size: CGSize(width: mapPanelWidth * 2.2,
+                                                     height: mapPanelHeight * 2.2))
 
         let page = RoutePDFPage(route: route, navRoute: navRoute, mapImage: mapImage)
         let renderer = ImageRenderer(content: page)
@@ -62,43 +67,24 @@ enum RoutePDFGenerator {
 
         let nodes = nav.waypoints
         let orange = UIColor(red: 0.95, green: 0.50, blue: 0.07, alpha: 1)
-        return UIGraphicsImageRenderer(size: size).image { ctx in
+        return UIGraphicsImageRenderer(size: size).image { _ in
+            // Mappa di sfondo nitida (nessun velo)
             snapshot.image.draw(at: .zero)
-            // Velo scuro leggero per far risaltare tracciato e nodi
-            UIColor.black.withAlphaComponent(0.06).setFill()
-            ctx.fill(CGRect(origin: .zero, size: size))
 
             let pts = coords.map { snapshot.point(for: $0) }
-
             let path = UIBezierPath()
             for (i, pt) in pts.enumerated() {
                 if i == 0 { path.move(to: pt) } else { path.addLine(to: pt) }
             }
             path.lineJoinStyle = .round
             path.lineCapStyle = .round
-            // Alone bianco + tratto arancione
+            // Alone bianco + tratto arancione, ben leggibile sulla mappa
             UIColor.white.withAlphaComponent(0.95).setStroke()
-            path.lineWidth = 11; path.stroke()
+            path.lineWidth = 12; path.stroke()
             orange.setStroke()
-            path.lineWidth = 6; path.stroke()
+            path.lineWidth = 7; path.stroke()
 
-            // Un puntino per ogni nodo (vertice) usato per costruire il percorso.
-            // Filtro di spaziatura minima sullo schermo: mostra tutti i nodi
-            // distinguibili come una linea "a perline" senza impastarli.
-            let r: CGFloat = 3.0
-            let minGap: CGFloat = 7
-            var lastDot: CGPoint?
-            for pt in pts {
-                if let l = lastDot, hypot(pt.x - l.x, pt.y - l.y) < minGap { continue }
-                lastDot = pt
-                UIColor.white.setFill()
-                UIBezierPath(ovalIn: CGRect(x: pt.x - r - 1, y: pt.y - r - 1,
-                                            width: 2 * r + 2, height: 2 * r + 2)).fill()
-                orange.setFill()
-                UIBezierPath(ovalIn: CGRect(x: pt.x - r, y: pt.y - r, width: 2 * r, height: 2 * r)).fill()
-            }
-
-            // Marcatori numerati delle tappe (sopra ai puntini)
+            // Solo i marcatori dei nodi (non coprono la linea: piccoli e netti)
             for (i, wp) in nodes.enumerated() {
                 let p = snapshot.point(for: wp.coordinate)
                 let color: UIColor = i == 0 ? .systemGreen
@@ -109,10 +95,7 @@ enum RoutePDFGenerator {
     }
 
     private static func drawNodeMarker(at p: CGPoint, number: Int, color: UIColor) {
-        let r: CGFloat = 15
-        // Ombra morbida
-        UIColor.black.withAlphaComponent(0.18).setFill()
-        UIBezierPath(ovalIn: CGRect(x: p.x - r - 2, y: p.y - r, width: 2 * r + 6, height: 2 * r + 6)).fill()
+        let r: CGFloat = 13
         // Bordo bianco
         UIColor.white.setFill()
         UIBezierPath(ovalIn: CGRect(x: p.x - r - 3, y: p.y - r - 3,
@@ -123,7 +106,7 @@ enum RoutePDFGenerator {
         // Numero
         let label = "\(number)"
         let attrs: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 17, weight: .heavy),
+            .font: UIFont.systemFont(ofSize: 16, weight: .heavy),
             .foregroundColor: UIColor.white
         ]
         let sz = label.size(withAttributes: attrs)

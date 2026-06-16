@@ -1,16 +1,19 @@
 import SwiftUI
 import UIKit
 
-/// Scheda PDF di un tragitto: header, mappa "hero" a tutta larghezza con tutti
-/// i nodi, statistiche, descrizione, timeline dei nodi. Renderizzata in PDF da
-/// `RoutePDFGenerator` (larghezza A4, altezza dinamica → pagina unica).
+/// Scheda PDF di un tragitto in formato **orizzontale**: mappa grande a sinistra,
+/// dati a destra. Renderizzata in PDF da `RoutePDFGenerator` (larghezza A4
+/// orizzontale, altezza dinamica → pagina unica).
 struct RoutePDFPage: View {
     let route: MotoRoute
     let navRoute: NavigationRoute
     let mapImage: UIImage?
 
-    private let width = RoutePDFGenerator.pageWidth
-    private let pad: CGFloat = 32
+    private let width = RoutePDFGenerator.pageWidth          // 842
+    private let mapW = RoutePDFGenerator.mapPanelWidth        // 486
+    private let mapH = RoutePDFGenerator.mapPanelHeight       // 470
+    private let pad: CGFloat = 28
+
     private let accent = Color(red: 0.95, green: 0.50, blue: 0.07)
     private let ink = Color(white: 0.12)
     private let faint = Color(white: 0.46)
@@ -19,168 +22,174 @@ struct RoutePDFPage: View {
     private var nodes: [GeocodedWaypoint] { navRoute.waypoints }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            header
-            mapHero
-            legend
-            VStack(alignment: .leading, spacing: 24) {
-                statsCard
-                if !route.descrizione.isEmpty { descriptionBlock }
-                nodesBlock
-                footer
+        VStack(spacing: 0) {
+            headerStrip
+            HStack(alignment: .top, spacing: 22) {
+                mapPanel
+                sidePanel
             }
             .padding(.horizontal, pad)
-            .padding(.top, 18)
-            .padding(.bottom, 34)
+            .padding(.vertical, 22)
         }
         .frame(width: width)
         .background(Color.white)
         .environment(\.colorScheme, .light)
     }
 
-    // ── Intestazione ────────────────────────────────────────────────────────
-    private var header: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(spacing: 8) {
-                Image(systemName: "location.north.fill")
-                    .font(.system(size: 13, weight: .black))
-                Text("INMOTO")
-                    .font(.system(size: 14, weight: .black))
-                    .tracking(3)
-                Spacer()
-                Text("SCHEDA TRAGITTO")
-                    .font(.system(size: 10, weight: .bold))
-                    .tracking(2)
-                    .foregroundStyle(.white.opacity(0.85))
+    // ── Striscia intestazione ─────────────────────────────────────────────────
+    private var headerStrip: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "location.north.fill").font(.system(size: 15, weight: .black))
+            Text("INMOTO").font(.system(size: 16, weight: .black)).tracking(3)
+            Spacer()
+            Text("SCHEDA TRAGITTO · \(dateString)")
+                .font(.system(size: 10, weight: .bold)).tracking(1.5)
+                .foregroundStyle(.white.opacity(0.85))
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, pad)
+        .padding(.vertical, 14)
+        .frame(width: width, alignment: .leading)
+        .background(
+            LinearGradient(colors: [Color(red: 0.12, green: 0.12, blue: 0.14),
+                                    Color(red: 0.22, green: 0.22, blue: 0.26)],
+                           startPoint: .leading, endPoint: .trailing)
+        )
+    }
+
+    // ── Mappa (protagonista) ──────────────────────────────────────────────────
+    @ViewBuilder
+    private var mapPanel: some View {
+        ZStack(alignment: .bottomLeading) {
+            if let img = mapImage {
+                Image(uiImage: img)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: mapW, height: mapH)
+                    .clipped()
+            } else {
+                ZStack {
+                    Rectangle().fill(Color(white: 0.93))
+                    Label("Mappa non disponibile", systemImage: "map")
+                        .font(.system(size: 13)).foregroundStyle(.secondary)
+                }
+                .frame(width: mapW, height: mapH)
             }
-            .foregroundStyle(.white)
+            legendCard.padding(12)
+        }
+        .frame(width: mapW, height: mapH)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .overlay(RoundedRectangle(cornerRadius: 16).strokeBorder(Color(white: 0.85), lineWidth: 1))
+    }
 
+    private var legendCard: some View {
+        HStack(spacing: 12) {
+            legendDot(.green, "Partenza")
+            legendDot(accent, "Nodo")
+            legendDot(.red, "Arrivo")
+        }
+        .padding(.horizontal, 12).padding(.vertical, 8)
+        .background(Color.white.opacity(0.92), in: Capsule())
+        .overlay(Capsule().strokeBorder(Color(white: 0.85), lineWidth: 0.5))
+    }
+
+    private func legendDot(_ color: Color, _ text: String) -> some View {
+        HStack(spacing: 5) {
+            Circle().fill(color).frame(width: 10, height: 10)
+            Text(text).font(.system(size: 10, weight: .semibold)).foregroundStyle(ink)
+        }
+    }
+
+    // ── Colonna destra ────────────────────────────────────────────────────────
+    private var sidePanel: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            titleBlock
+            statsGrid
+            if !route.descrizione.isEmpty { descriptionBlock }
+            nodesBlock
+            Spacer(minLength: 0)
+            footer
+        }
+        .frame(width: width - mapW - 22 - pad * 2, alignment: .topLeading)
+        .frame(minHeight: mapH, alignment: .topLeading)
+    }
+
+    private var titleBlock: some View {
+        VStack(alignment: .leading, spacing: 8) {
             Text(route.nome)
-                .font(.system(size: 28, weight: .heavy))
-                .foregroundStyle(.white)
-                .lineLimit(2)
+                .font(.system(size: 23, weight: .heavy))
+                .foregroundStyle(ink)
+                .lineLimit(3)
                 .minimumScaleFactor(0.6)
-
-            HStack(spacing: 8) {
+                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 7) {
                 pill(icon: route.transportMode.icon, text: route.transportMode.label)
                 pill(icon: "arrow.left.arrow.right",
                      text: "\(shortName(route.partenza)) → \(shortName(route.arrivo))")
             }
         }
-        .padding(.horizontal, pad)
-        .padding(.top, 26)
-        .padding(.bottom, 22)
-        .frame(width: width, alignment: .leading)
-        .background(
-            LinearGradient(colors: [Color(red: 0.13, green: 0.13, blue: 0.15),
-                                    Color(red: 0.20, green: 0.20, blue: 0.23)],
-                           startPoint: .topLeading, endPoint: .bottomTrailing)
-        )
     }
 
     private func pill(icon: String, text: String) -> some View {
         HStack(spacing: 5) {
-            Image(systemName: icon).font(.system(size: 10, weight: .bold))
-            Text(text).font(.system(size: 11, weight: .semibold)).lineLimit(1)
+            Image(systemName: icon).font(.system(size: 9, weight: .bold))
+            Text(text).font(.system(size: 10, weight: .semibold)).lineLimit(1)
         }
         .foregroundStyle(.white)
-        .padding(.horizontal, 11).padding(.vertical, 6)
+        .padding(.horizontal, 10).padding(.vertical, 5)
         .background(accent, in: Capsule())
     }
 
-    // ── Mappa hero (a tutta larghezza) ────────────────────────────────────────
-    @ViewBuilder
-    private var mapHero: some View {
-        if let img = mapImage {
-            Image(uiImage: img)
-                .resizable()
-                .scaledToFill()
-                .frame(width: width, height: 360)
-                .clipped()
-        } else {
-            ZStack {
-                Rectangle().fill(Color(white: 0.93))
-                Label("Anteprima mappa non disponibile", systemImage: "map")
-                    .font(.system(size: 13)).foregroundStyle(.secondary)
+    // ── Statistiche 2×2 ───────────────────────────────────────────────────────
+    private var statsGrid: some View {
+        VStack(spacing: 9) {
+            HStack(spacing: 9) {
+                statChip(value: "\(totalKm)", unit: "km", label: "Distanza", icon: "road.lanes")
+                statChip(value: navRoute.formattedDuration, unit: "", label: "Durata", icon: "clock")
             }
-            .frame(width: width, height: 150)
-        }
-    }
-
-    private var legend: some View {
-        HStack(spacing: 18) {
-            legendItem(color: accent, filled: true, text: "Nodi del tracciato")
-            legendItem(color: .green, filled: true, text: "Partenza", number: "1")
-            legendItem(color: .red, filled: true, text: "Arrivo", number: "\(nodes.count)")
-            Spacer()
-        }
-        .padding(.horizontal, pad)
-        .padding(.vertical, 10)
-        .frame(width: width, alignment: .leading)
-        .background(Color(white: 0.96))
-    }
-
-    private func legendItem(color: Color, filled: Bool, text: String, number: String? = nil) -> some View {
-        HStack(spacing: 6) {
-            ZStack {
-                Circle().fill(color).frame(width: number == nil ? 9 : 16, height: number == nil ? 9 : 16)
-                if let number { Text(number).font(.system(size: 9, weight: .bold)).foregroundStyle(.white) }
+            HStack(spacing: 9) {
+                statChip(value: "\(nodes.count)", unit: "", label: "Nodi", icon: "mappin.and.ellipse")
+                statChip(value: route.difficolta, unit: "", label: "Difficoltà", icon: "speedometer")
             }
-            Text(text).font(.system(size: 10, weight: .medium)).foregroundStyle(faint)
         }
     }
 
-    // ── Statistiche ───────────────────────────────────────────────────────────
-    private var statsCard: some View {
-        HStack(spacing: 0) {
-            statCell(value: "\(totalKm)", unit: "km", label: "Distanza", icon: "road.lanes")
-            statDivider
-            statCell(value: navRoute.formattedDuration, unit: "", label: "Durata", icon: "clock")
-            statDivider
-            statCell(value: "\(nodes.count)", unit: "", label: "Nodi", icon: "mappin.and.ellipse")
-            statDivider
-            statCell(value: route.transportMode.label, unit: "", label: "Mezzo", icon: route.transportMode.icon)
-        }
-        .padding(.vertical, 16)
-        .frame(maxWidth: .infinity)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 14))
-        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(Color(white: 0.9), lineWidth: 1))
-    }
-
-    private var statDivider: some View {
-        Rectangle().fill(Color(white: 0.9)).frame(width: 1, height: 40)
-    }
-
-    private func statCell(value: String, unit: String, label: String, icon: String) -> some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon).font(.system(size: 14, weight: .semibold)).foregroundStyle(accent)
-            HStack(alignment: .firstTextBaseline, spacing: 2) {
-                Text(value).font(.system(size: 19, weight: .heavy)).foregroundStyle(ink)
-                    .lineLimit(1).minimumScaleFactor(0.5)
-                if !unit.isEmpty {
-                    Text(unit).font(.system(size: 10, weight: .semibold)).foregroundStyle(faint)
+    private func statChip(value: String, unit: String, label: String, icon: String) -> some View {
+        HStack(spacing: 10) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 9).fill(accent.opacity(0.12)).frame(width: 34, height: 34)
+                Image(systemName: icon).font(.system(size: 14, weight: .semibold)).foregroundStyle(accent)
+            }
+            VStack(alignment: .leading, spacing: 1) {
+                HStack(alignment: .firstTextBaseline, spacing: 2) {
+                    Text(value).font(.system(size: 16, weight: .heavy)).foregroundStyle(ink)
+                        .lineLimit(1).minimumScaleFactor(0.5)
+                    if !unit.isEmpty {
+                        Text(unit).font(.system(size: 9, weight: .semibold)).foregroundStyle(faint)
+                    }
                 }
+                Text(label.uppercased()).font(.system(size: 8, weight: .bold)).tracking(0.5).foregroundStyle(faint)
             }
-            Text(label.uppercased()).font(.system(size: 9, weight: .bold)).tracking(0.6).foregroundStyle(faint)
+            Spacer(minLength: 0)
         }
+        .padding(10)
         .frame(maxWidth: .infinity)
+        .background(Color(white: 0.97), in: RoundedRectangle(cornerRadius: 11))
     }
 
     // ── Descrizione ─────────────────────────────────────────────────────────
     private var descriptionBlock: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
             sectionTitle("Descrizione")
             Text(route.descrizione)
-                .font(.system(size: 12)).foregroundStyle(Color(white: 0.25))
-                .lineSpacing(2)
+                .font(.system(size: 10.5)).foregroundStyle(Color(white: 0.28)).lineSpacing(2)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
 
     // ── Nodi ────────────────────────────────────────────────────────────────
     private var nodesBlock: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 10) {
             sectionTitle("Nodi del percorso (\(nodes.count))")
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(Array(nodes.enumerated()), id: \.offset) { i, wp in
@@ -192,34 +201,31 @@ struct RoutePDFPage: View {
     }
 
     private func nodeRow(index: Int, wp: GeocodedWaypoint) -> some View {
-        HStack(alignment: .top, spacing: 14) {
+        HStack(alignment: .top, spacing: 11) {
             ZStack {
                 Circle()
                     .fill(index == 0 ? Color.green
                           : index == nodes.count - 1 ? Color.red : accent)
-                    .frame(width: 30, height: 30)
-                Text("\(index + 1)").font(.system(size: 14, weight: .bold)).foregroundStyle(.white)
+                    .frame(width: 24, height: 24)
+                Text("\(index + 1)").font(.system(size: 11, weight: .bold)).foregroundStyle(.white)
             }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(shortName(wp.name)).font(.system(size: 14, weight: .semibold)).foregroundStyle(ink)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(shortName(wp.name)).font(.system(size: 12, weight: .semibold)).foregroundStyle(ink)
                 if let note = wp.note, !note.isEmpty {
-                    Text(note).font(.system(size: 11)).italic().foregroundStyle(faint)
+                    Text(note).font(.system(size: 10)).italic().foregroundStyle(faint)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
             Spacer(minLength: 0)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 2)
     }
 
     private func connector(legInfo: String?) -> some View {
-        HStack(spacing: 8) {
-            Rectangle().fill(Color(white: 0.85)).frame(width: 2, height: 20).padding(.leading, 14)
+        HStack(spacing: 7) {
+            Rectangle().fill(Color(white: 0.85)).frame(width: 2, height: 15).padding(.leading, 11)
             if let legInfo {
-                Text(legInfo)
-                    .font(.system(size: 10, weight: .semibold)).foregroundStyle(faint)
-                    .padding(.horizontal, 9).padding(.vertical, 3)
-                    .background(Color(white: 0.96), in: Capsule())
+                Text(legInfo).font(.system(size: 9, weight: .semibold)).foregroundStyle(faint)
             }
             Spacer()
         }
@@ -227,32 +233,18 @@ struct RoutePDFPage: View {
 
     // ── Footer ──────────────────────────────────────────────────────────────
     private var footer: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if !route.tags.isEmpty {
-                HStack(spacing: 6) {
-                    ForEach(route.tags, id: \.self) { tag in
-                        Text(tag.uppercased())
-                            .font(.system(size: 9, weight: .bold)).tracking(0.5)
-                            .foregroundStyle(accent)
-                            .padding(.horizontal, 8).padding(.vertical, 3)
-                            .background(accent.opacity(0.12), in: Capsule())
-                    }
-                }
-            }
+        VStack(alignment: .leading, spacing: 7) {
             Rectangle().fill(Color(white: 0.9)).frame(height: 1)
-            HStack {
-                Text(metaLine).font(.system(size: 10)).foregroundStyle(faint)
-                Spacer()
-                Text("Generato da InMoto · \(dateString)").font(.system(size: 10)).foregroundStyle(faint)
-            }
+            Text(metaLine).font(.system(size: 9)).foregroundStyle(faint).lineLimit(2)
+            Text("Generato da InMoto").font(.system(size: 9, weight: .semibold)).foregroundStyle(accent)
         }
     }
 
     // ── Helpers ─────────────────────────────────────────────────────────────
     private func sectionTitle(_ t: String) -> some View {
-        HStack(spacing: 8) {
-            RoundedRectangle(cornerRadius: 1.5).fill(accent).frame(width: 4, height: 15)
-            Text(t.uppercased()).font(.system(size: 12, weight: .heavy)).tracking(0.8).foregroundStyle(ink)
+        HStack(spacing: 7) {
+            RoundedRectangle(cornerRadius: 1.5).fill(accent).frame(width: 3, height: 13)
+            Text(t.uppercased()).font(.system(size: 10.5, weight: .heavy)).tracking(0.6).foregroundStyle(ink)
         }
     }
 
