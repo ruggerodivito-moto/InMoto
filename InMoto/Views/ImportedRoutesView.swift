@@ -7,6 +7,7 @@ struct ImportedRoutesView: View {
     @State private var showImport   = false
     @State private var showCompose  = false
     @State private var showRoadbook = false
+    @State private var showGPX      = false
     @State private var renamingPlan: TripPlan?
     @State private var renameText   = ""
 
@@ -30,6 +31,9 @@ struct ImportedRoutesView: View {
                     Button { showRoadbook = true } label: {
                         Label("Importa roadbook (viaggio)", systemImage: "doc.text")
                     }
+                    Button { showGPX = true } label: {
+                        Label("Importa traccia GPX", systemImage: "point.topleft.down.curvedto.point.bottomright.up")
+                    }
                     Button { showCompose = true } label: {
                         Label("Componi viaggio da tragitti", systemImage: "arrow.triangle.merge")
                     }
@@ -46,6 +50,9 @@ struct ImportedRoutesView: View {
         }
         .sheet(isPresented: $showRoadbook) {
             RoadbookImportView()
+        }
+        .sheet(isPresented: $showGPX) {
+            GPXImportView()
         }
         }
     }

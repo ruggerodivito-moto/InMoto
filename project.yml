@@ -42,5 +42,7 @@ targets:
           - comgooglemaps
           - googlemaps
         UIRequiresFullScreen: false
+        UIFileSharingEnabled: true
+        LSSupportsOpeningDocumentsInPlace: true
     scheme:
       testTargets: []
