@@ -382,6 +382,76 @@ repo. **Decisioni prese** (sessione 2026-06-12):
   percorso) parte il reroute verso la partenza: è corretto; il test vero della
   navigazione si fa in strada.
 
+**Sessione 2026-06-16 — nuove feature iOS + parità Android (DOVE SIAMO)**:
+
+Cinque feature nuove, prima su **iOS** (rilasciate fino alla **build 40**,
+`v1.0.20260616-40`, installata e in parte da testare) poi **replicate 1:1 su
+Android** (APK **V13**, `android-v1.0.20260616-13`, build CI **success** —
+⏳ APK **non ancora scaricato/installato**: ripartire da lì).
+
+1. **Import GPX "traccia esatta"**. `GPXImporter`(.swift/`GpxImporter.kt`):
+   parser XML della traccia (`<trkpt>`; fallback `<rtept>`/`<wpt>`), costruisce un
+   `MotoRoute` personale + una `NavigationRoute` con i punti traccia come polyline
+   **senza ricalcolo stradale** (cache con lo stesso routeId → la navigazione la
+   usa diretta). Manovre voce/frecce **sintetizzate** dai cambi di rotta
+   (Douglas–Peucker). Traccia spezzata in più nodi per ETA e per evitare il falso
+   "arrivo" sugli **anelli** (partenza≈arrivo). **Waypoint nominati**: se il GPX ha
+   `<wpt>` con `name`/`desc`/`cmt` diventano i nodi (con nota); altrimenti nodi
+   sintetici ("km X"). `GeocodedWaypoint` ha una `note` opzionale.
+   - iOS: `GPXImportView` nel menu `+` (fileImporter + elenco .gpx già nei
+     Documenti dell'app; `UIFileSharingEnabled`+`LSSupportsOpeningDocumentsInPlace`).
+   - Android: `GpxImportScreen` (SAF `OpenDocument`) nel menu `+`.
+2. **Tipo di percorso (mezzo) moto / a piedi**. `TransportMode` (moto 45 km/h /
+   piedi 5 km/h). Campo `mezzo` su `MotoRoute`, `transport` su `NavigationRoute`
+   (entrambi opzionali → dati esistenti compatibili). Routing dipendente dal mezzo:
+   iOS `MKDirections .walking/.automobile`; Android **OSRM** `driving` vs
+   **foot** (`routing.openstreetmap.de/routed-foot`); cache tratte **per-mezzo**.
+   Per i GPX la velocità media è tarata sul mezzo. Selettore all'import (iOS:
+   testo/link **e** GPX; Android: GPX, dato che manca l'import link). Mostrato nel
+   dettaglio e nel PDF.
+3. **Scelta posizione di partenza**. Avviando la navigazione di un tragitto
+   personale, se sei **>300 m** dal primo nodo, chiede esplicitamente: *"Aggiungi
+   la mia posizione come partenza"* (calcola la tratta di collegamento) **oppure**
+   *"Solo il percorso originale"*. iOS in `DownloadPreparationView`; Android in
+   `NavigatorScreen` (`NavigationGate`, usa `LocationProvider.oneShot()`). Vale
+   anche per le tappe dei viaggi.
+4. **Scheda PDF orizzontale** (`RoutePDFGenerator`/`RoutePdfGenerator.kt`).
+   Layout **landscape A4**: mappa grande a sinistra (iOS `MKMapSnapshotter`,
+   Android `MapSnapshotter` MapLibre/OSM) con la polyline e i **marcatori numerati
+   dei nodi** (verde=partenza, rosso=arrivo); a destra header scuro, statistiche
+   (incl. mezzo), elenco nodi con note. Condivisione: iOS share sheet ("Salva su
+   File"); Android `FileProvider` + `ACTION_SEND`. Pulsante in `RouteDetail`.
+   ⚠️ Storia travagliata del layout: v1 (build 36/38) troppo simile → v2 (39)
+   aveva velo scuro + 222 "perline" che coprivano la mappa ("fa schifo") → **v3
+   (build 40) = quella buona**: landscape, mappa nitida, solo i marcatori dei nodi.
+5. **Notifiche di navigazione** (`NavNotifier`). Eventi: ▶️ avvio, 🏁 tappa
+   raggiunta, ⚠️ fuori percorso, ✅ ricalcolo, 📍 arrivo. iOS notifiche locali →
+   **Apple Watch** (mirroring automatico a schermo bloccato/spento); Android
+   `NotificationChannel` → **Wear OS** (bridging). Permesso richiesto all'avvio
+   della navigazione (Android: `POST_NOTIFICATIONS`; iOS in `NavigationSession.init`).
+
+**File toccati Android** (commit `566d2fd` + fix `3e23c8e`): nuovi
+`data/GpxImporter.kt`, `data/RoutePdfGenerator.kt`, `data/NavNotifier.kt`,
+`ui/screens/GpxImportScreen.kt`, `res/xml/file_paths.xml`; modificati
+`model/MotoRoute.kt` (+`TransportMode`,`mezzo`), `model/NavigationModels.kt`
+(`GeocodedWaypoint.note`,`NavigationRoute.transport`), `data/RouterService.kt`
+(OSRM foot/driving + cache per-mezzo), `data/NavigationSession.kt` (notifiche +
+transport nel reroute), `data/LocationProvider.kt` (`oneShot()`), `AppViewModel.kt`,
+`ui/Routes.kt`+`MainActivity.kt` (rotta GPX), `RoadtripScreen.kt` (voce menu),
+`RouteDetailScreen.kt` (PDF+chip mezzo), `NavigatorScreen.kt` (NavigationGate +
+permesso notifiche), `AndroidManifest.xml` (POST_NOTIFICATIONS + FileProvider).
+Gotcha CI risolto: `GeocodedWaypoint` ha `id` come 1° param → costruire con
+parametri **nominati** (`name=`,`latitude=`,`longitude=`).
+
+**⏳ DA FARE alla ripresa**:
+- **Android**: scaricare l'APK **V13** in `C:\Users\divito_adm\InMoto\InMotoAndroid_V13.apk`
+  (URL asset della release `android-v1.0.20260616-13`, `Invoke-WebRequest -OutFile`,
+  ~62 MB), `adb install -r` (keystore fissa, niente wipe), e **testare**: import
+  GPX (con/ senza `<wpt>`), mezzo moto/piedi (tempi), scelta partenza, PDF
+  (condivisione), notifiche (anche su Wear OS se presente).
+- **iOS**: restano da provare in strada navigazione/notifiche su Apple Watch; il
+  PDF v3 (build 40) è installato, ricontrollare a vista.
+
 **Altri possibili prossimi passi (Android)**:
 - Opz.: foreground service di localizzazione per schermo spento (in moto). Per
   v1 va bene foreground a schermo acceso.
