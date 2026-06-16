@@ -8,6 +8,9 @@ struct RouteDetailView: View {
     @State private var newWaypoint = ""
     @State private var showAddField = false
     @State private var showNavigator = false
+    @State private var generatingPDF = false
+    @State private var pdfShare: PDFShareItem?
+    @State private var pdfError: String?
 
     init(route: MotoRoute) {
         self.route = route
@@ -43,6 +46,15 @@ struct RouteDetailView: View {
         }
         .fullScreenCover(isPresented: $showNavigator) {
             DownloadPreparationView(route: route)
+        }
+        .sheet(item: $pdfShare) { item in
+            ShareSheet(items: [item.url])
+        }
+        .alert("PDF non disponibile",
+               isPresented: Binding(get: { pdfError != nil }, set: { if !$0 { pdfError = nil } })) {
+            Button("OK", role: .cancel) { pdfError = nil }
+        } message: {
+            Text(pdfError ?? "")
         }
     }
 
@@ -296,9 +308,62 @@ struct RouteDetailView: View {
             Text("Evita automaticamente autostrade e pedaggi. Include tutte le tappe elencate sopra.")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
+
+            Divider()
+
+            Button(action: generaPDF) {
+                HStack {
+                    if generatingPDF {
+                        ProgressView().padding(.trailing, 4)
+                        Text("Generazione PDF…")
+                    } else {
+                        Label("Scarica scheda PDF", systemImage: "doc.richtext")
+                    }
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .tint(.green)
+            .disabled(generatingPDF || waypoints.isEmpty)
+
+            Text("Crea una scheda PDF del tragitto con mappa, statistiche e tappe, da salvare o condividere.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
         }
         .padding(16)
         .background(Color(.systemGray6).opacity(0.5))
+    }
+
+    // ── PDF ──────────────────────────────────────────────────────────────────
+    private func generaPDF() {
+        generatingPDF = true
+        Task {
+            defer { generatingPDF = false }
+            guard let nav = await ensureNavRoute() else {
+                pdfError = "Non riesco a preparare il percorso (tappe non localizzabili o connessione assente)."
+                return
+            }
+            guard let url = await RoutePDFGenerator.generate(route: route, navRoute: nav) else {
+                pdfError = "Generazione del PDF non riuscita."
+                return
+            }
+            pdfShare = PDFShareItem(url: url)
+        }
+    }
+
+    /// Recupera la NavigationRoute dalla cache o, se manca, la calcola (geocoding
+    /// + routing) e la mette in cache. Per i GPX è sempre già in cache.
+    private func ensureNavRoute() async -> NavigationRoute? {
+        if let cached = RouterService.shared.cachedRoute(for: route.id) { return cached }
+        guard !route.waypointsGmaps.isEmpty,
+              let wps = try? await RouterService.shared.geocodeWaypointsMixed(route.waypointsGmaps),
+              wps.count >= 2,
+              let legs = try? await RouterService.shared.computeLegs(for: wps) else { return nil }
+        let nav = NavigationRoute(routeId: route.id, routeName: route.nome,
+                                  waypoints: wps, legs: legs)
+        RouterService.shared.cacheRoute(nav)
+        return nav
     }
 
     // ── Actions ──────────────────────────────────────────────────────────────
@@ -325,6 +390,12 @@ struct RouteDetailView: View {
         if let url = URL(string: urlStr) { UIApplication.shared.open(url) }
     }
 
+}
+
+// ── PDF condivisibile (item per sheet) ────────────────────────────────────────
+struct PDFShareItem: Identifiable {
+    let id = UUID()
+    let url: URL
 }
 
 // ── FlowLayout ───────────────────────────────────────────────────────────────
