@@ -178,7 +178,7 @@ private fun NavigationGate(route: NavigationRoute, onBack: () -> Unit, onOpenMap
                             val connector = withContext(Dispatchers.IO) {
                                 RouterService.connectorLeg(h, first, route.transport)
                             }
-                            val hereWp = GeocodedWaypoint("Posizione attuale", h.lat, h.lon)
+                            val hereWp = GeocodedWaypoint(name = "Posizione attuale", latitude = h.lat, longitude = h.lon)
                             route.copy(
                                 waypoints = listOf(hereWp) + route.waypoints,
                                 legs = listOf(connector) + route.legs,
