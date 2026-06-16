@@ -105,7 +105,15 @@ class DownloadPreparationViewModel: ObservableObject {
 struct DownloadPreparationView: View {
     let route: MotoRoute
     @StateObject private var vm = DownloadPreparationViewModel()
+    @ObservedObject private var locationMgr = LocationManager.shared
     @Environment(\.dismiss) private var dismiss
+
+    @State private var navigating: StartedNav?
+    @State private var startPrompt: StartHerePrompt?
+    @State private var addingCurrentPosition = false
+
+    /// Oltre questa distanza dal primo punto si chiede se anteporre la posizione attuale
+    private let startProximityThreshold: Double = 300
 
     var body: some View {
         NavigationStack {
@@ -135,7 +143,81 @@ struct DownloadPreparationView: View {
                 }
             }
             .task { await vm.prepare(route: route) }
+            .onAppear {
+                // Un fix di posizione pronto per capire se sei già alla partenza
+                locationMgr.requestPermission()
+                locationMgr.requestOneShot()
+            }
+            .confirmationDialog("Non sei al punto di partenza",
+                                isPresented: Binding(get: { startPrompt != nil },
+                                                     set: { if !$0 { startPrompt = nil } }),
+                                titleVisibility: .visible,
+                                presenting: startPrompt) { prompt in
+                Button("Aggiungi la mia posizione come partenza") {
+                    startWithCurrentPosition(prompt.nav, from: prompt.here)
+                }
+                Button("Solo il percorso originale") {
+                    navigating = StartedNav(navRoute: prompt.nav, motoRoute: route)
+                }
+                Button("Annulla", role: .cancel) {}
+            } message: { prompt in
+                Text("Sei a circa \(formatDistance(prompt.distance)) dall'inizio del percorso. Vuoi aggiungere la tua posizione attuale come partenza, prima del primo punto, oppure vedere solo il percorso originale?")
+            }
+            .fullScreenCover(item: $navigating) { prepared in
+                NavigationStack {
+                    NavigatorView(navRoute: prepared.navRoute, motoRoute: prepared.motoRoute)
+                }
+            }
         }
+    }
+
+    // MARK: - Avvio navigazione
+
+    /// Tap su "Inizia navigazione": se la posizione attuale è nota ed è lontana
+    /// dal primo punto, chiede esplicitamente se anteporre la posizione attuale.
+    private func onStartTapped(_ nav: NavigationRoute) {
+        locationMgr.requestOneShot()
+        if let here = locationMgr.location?.coordinate, let first = nav.waypoints.first {
+            let distance = CLLocation(latitude: here.latitude, longitude: here.longitude)
+                .distance(from: CLLocation(latitude: first.latitude, longitude: first.longitude))
+            if distance > startProximityThreshold {
+                startPrompt = StartHerePrompt(nav: nav, here: here, distance: distance)
+                return
+            }
+        }
+        navigating = StartedNav(navRoute: nav, motoRoute: route)
+    }
+
+    /// Antepone la posizione attuale come primo waypoint, calcolando la tratta di
+    /// collegamento fino al primo punto, poi avvia la navigazione.
+    private func startWithCurrentPosition(_ nav: NavigationRoute,
+                                          from here: CLLocationCoordinate2D) {
+        guard let first = nav.waypoints.first else {
+            navigating = StartedNav(navRoute: nav, motoRoute: route)
+            return
+        }
+        addingCurrentPosition = true
+        Task {
+            defer { addingCurrentPosition = false }
+            let current = GeocodedWaypoint(name: "Posizione attuale",
+                                           latitude: here.latitude, longitude: here.longitude)
+            do {
+                let connector = try await RouterService.shared.connectorLeg(from: here, to: first)
+                let merged = NavigationRoute(routeId: nav.routeId,
+                                             routeName: nav.routeName,
+                                             waypoints: [current] + nav.waypoints,
+                                             legs: [connector] + nav.legs)
+                navigating = StartedNav(navRoute: merged, motoRoute: route)
+            } catch {
+                // Collegamento non calcolabile: parti comunque dal percorso originale
+                navigating = StartedNav(navRoute: nav, motoRoute: route)
+            }
+        }
+    }
+
+    private func formatDistance(_ meters: Double) -> String {
+        if meters < 1000 { return "\(Int((meters / 50).rounded()) * 50) m" }
+        return String(format: "%.1f km", meters / 1000)
     }
 
     private var headerSection: some View {
@@ -200,15 +282,40 @@ struct DownloadPreparationView: View {
             }
 
         } else if let navRoute = vm.navigationRoute {
-            NavigationLink(destination: NavigatorView(navRoute: navRoute, motoRoute: route)) {
-                Label("Inizia navigazione", systemImage: "location.north.fill")
-                    .frame(maxWidth: .infinity)
-                    .fontWeight(.semibold)
+            Button {
+                onStartTapped(navRoute)
+            } label: {
+                HStack {
+                    if addingCurrentPosition {
+                        ProgressView().tint(.white)
+                        Text("Calcolo collegamento…")
+                    } else {
+                        Label("Inizia navigazione", systemImage: "location.north.fill")
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .fontWeight(.semibold)
             }
             .buttonStyle(.borderedProminent)
             .tint(.orange)
+            .disabled(addingCurrentPosition)
         }
     }
+}
+
+/// Percorso pronto per la navigazione (item per fullScreenCover).
+private struct StartedNav: Identifiable {
+    let id = UUID()
+    let navRoute: NavigationRoute
+    let motoRoute: MotoRoute
+}
+
+/// Richiesta di conferma per anteporre la posizione attuale alla partenza.
+private struct StartHerePrompt: Identifiable {
+    let id = UUID()
+    let nav: NavigationRoute
+    let here: CLLocationCoordinate2D
+    let distance: Double
 }
 
 // MARK: - Step Row
