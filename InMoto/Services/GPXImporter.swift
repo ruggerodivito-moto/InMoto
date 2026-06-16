@@ -6,14 +6,23 @@ import CoreLocation
 /// punti della traccia diventano la polyline di navigazione, senza alcun
 /// ricalcolo stradale (niente geocoding, niente MKDirections).
 ///
-/// La `NavigationRoute` prodotta va salvata in cache con `routeId` = id del
-/// `MotoRoute`: `DownloadPreparationView` la riusa dalla cache e il motore di
-/// navigazione (RouteGeometry/NavigationSession) la consuma senza modifiche.
+/// Se il file contiene **waypoint nominati** (`<wpt>` con nome/descrizione, es.
+/// soste o punti d'interesse di un percorso pianificato), questi diventano i
+/// nodi del percorso (con il loro nome e nota); altrimenti la traccia viene
+/// spezzata in nodi sintetici per dare avanzamento ed ETA.
 struct GPXImporter {
+
+    /// Punto nominato del GPX (`<wpt>`): nome + eventuale nota/descrizione.
+    struct NamedPoint {
+        let name: String
+        let note: String?
+        let coordinate: CLLocationCoordinate2D
+    }
 
     struct ParsedTrack {
         let name: String
         let points: [CLLocationCoordinate2D]
+        let waypoints: [NamedPoint]
     }
 
     enum GPXError: LocalizedError {
@@ -40,14 +49,14 @@ struct GPXImporter {
 
         let parsedName = delegate.trackName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let name = parsedName.isEmpty ? fallbackName : parsedName
-        return ParsedTrack(name: name, points: pts)
+        return ParsedTrack(name: name, points: pts, waypoints: delegate.namedPoints)
     }
 
     // MARK: - Costruzione percorso navigabile
 
-    /// Crea il `MotoRoute` personale e la `NavigationRoute` "esatta" già pronta.
-    /// Restituisce entrambi: salvare il primo in `RouteStore` e mettere in cache
-    /// la seconda con `RouterService.cacheRoute` (routeId condiviso).
+    /// Confine di tratta: indice sul tracciato + etichetta + eventuale nota.
+    private struct Boundary { let idx: Int; let name: String; let note: String? }
+
     static func buildRoute(from track: ParsedTrack, displayName: String,
                            transport: TransportMode) -> (route: MotoRoute, navRoute: NavigationRoute) {
         let pts = track.points
@@ -62,47 +71,40 @@ struct GPXImporter {
         let total = cum.last ?? 0
         let totalKm = total / 1000
 
-        // La traccia continua viene spezzata in più tratte: dà progressione/ETA
-        // per tappa ed evita il falso "arrivo" sugli anelli (partenza ≈ arrivo),
-        // dove una singola tratta farebbe scattare l'arrivo già alla partenza.
-        let segCount = max(2, min(8, Int((totalKm / 4).rounded())))
+        // Nodi: dai waypoint nominati se presenti, altrimenti sintetici
+        var boundaries = track.waypoints.isEmpty
+            ? syntheticBoundaries(pts: pts, cum: cum, total: total, totalKm: totalKm, endName: name)
+            : namedBoundaries(pts: pts, named: track.waypoints, endName: name)
 
-        // Indici di taglio a frazioni uguali della distanza totale
-        var splitIdx: [Int] = [0]
-        for s in 1..<segCount {
-            let target = total * Double(s) / Double(segCount)
-            let idx = cum.firstIndex { $0 >= target } ?? (pts.count - 1)
-            if idx > splitIdx.last! { splitIdx.append(idx) }
-        }
-        if splitIdx.last! != pts.count - 1 { splitIdx.append(pts.count - 1) }
-
-        // Un waypoint per ogni confine di tratta (servono a ETA, annunci, reroute)
-        var waypoints: [GeocodedWaypoint] = []
-        for (k, idx) in splitIdx.enumerated() {
-            let label: String
-            if k == 0 {
-                label = "Partenza"
-            } else if k == splitIdx.count - 1 {
-                label = name
-            } else {
-                label = "km \(Int((cum[idx] / 1000).rounded()))"
+        // Salvaguardia anelli: con soli 2 nodi e partenza ≈ arrivo, una singola
+        // tratta farebbe scattare il falso "arrivo". Inserisci un nodo a metà.
+        if boundaries.count == 2,
+           RouteGeometry.distance(pts[boundaries[0].idx], pts[boundaries[1].idx]) < 100 {
+            let midIdx = cum.firstIndex { $0 >= total / 2 } ?? (pts.count / 2)
+            if midIdx > 1 && midIdx < pts.count - 1 {
+                boundaries.insert(Boundary(idx: midIdx, name: "Metà percorso", note: nil), at: 1)
             }
-            waypoints.append(GeocodedWaypoint(name: label,
-                                              latitude: pts[idx].latitude,
-                                              longitude: pts[idx].longitude))
+        }
+
+        // Waypoint (uno per confine) con nome e nota
+        let waypoints: [GeocodedWaypoint] = boundaries.map {
+            GeocodedWaypoint(name: $0.name,
+                             latitude: pts[$0.idx].latitude,
+                             longitude: pts[$0.idx].longitude,
+                             note: $0.note)
         }
 
         // Tratte: sotto-polyline tra confini consecutivi (estremo condiviso, che
         // RouteGeometry deduplica come fa per le tratte di MKDirections)
         let avgSpeedKmh = transport.avgSpeedKmh   // tempi tarati sul mezzo (la traccia non ha tempi)
         var legs: [RouteLeg] = []
-        for i in 0..<(splitIdx.count - 1) {
-            let a = splitIdx[i], b = splitIdx[i + 1]
+        for i in 0..<(boundaries.count - 1) {
+            let a = boundaries[i].idx, b = boundaries[i + 1].idx
             let slice = Array(pts[a...b])
             let legMeters = cum[b] - cum[a]
             let legSeconds = legMeters / 1000 / avgSpeedKmh * 3600
-            legs.append(RouteLeg(fromName: waypoints[i].name,
-                                 toName: waypoints[i + 1].name,
+            legs.append(RouteLeg(fromName: boundaries[i].name,
+                                 toName: boundaries[i + 1].name,
                                  distanceMeters: legMeters,
                                  durationSeconds: legSeconds,
                                  polylineCoordinates: slice,
@@ -114,15 +116,21 @@ struct GPXImporter {
                                        waypoints: waypoints, legs: legs,
                                        transport: transport.rawValue)
 
+        let nNodi = track.waypoints.count
+        let descrizione = nNodi > 0
+            ? "Traccia GPX (\(transport.label.lowercased())) · \(pts.count) punti · \(nNodi) nod\(nNodi == 1 ? "o" : "i") dal file · segue esattamente il tracciato."
+            : "Traccia GPX (\(transport.label.lowercased())) · \(pts.count) punti · segue esattamente il tracciato registrato."
+
         let route = MotoRoute(
             id: routeId,
             nome: name,
-            partenza: "Partenza", arrivo: name,
+            partenza: waypoints.first?.name ?? "Partenza",
+            arrivo: waypoints.last?.name ?? name,
             regione: "",
             km: max(1, Int(totalKm.rounded())),
             durataMin: max(1, Int(total / 1000 / avgSpeedKmh * 60)),
             difficolta: "Media", stelle: 0,
-            descrizione: "Traccia GPX (\(transport.label.lowercased())) · \(pts.count) punti · segue esattamente il tracciato registrato.",
+            descrizione: descrizione,
             tappe: waypoints.map { $0.name },
             waypointsGmaps: waypoints.map { "\($0.latitude),\($0.longitude)" },
             tags: ["gpx", "personale"],
@@ -132,6 +140,77 @@ struct GPXImporter {
             mezzo: transport.rawValue
         )
         return (route, navRoute)
+    }
+
+    // MARK: - Nodi
+
+    /// Nodi dai waypoint nominati del GPX, agganciati al punto più vicino della
+    /// traccia e ordinati per progressione. Partenza/arrivo della traccia sono
+    /// sempre inclusi (prendono il nome del waypoint se ne coincide uno).
+    private static func namedBoundaries(pts: [CLLocationCoordinate2D],
+                                        named: [GPXImporter.NamedPoint],
+                                        endName: String) -> [Boundary] {
+        let n = pts.count
+        let snap = max(2, n / 50)        // tolleranza (in indici) per "sta all'estremo"
+
+        var startName = "Partenza", startNote: String? = nil
+        var finalName = endName, finalNote: String? = nil
+        var interior: [Boundary] = []
+
+        for wp in named {
+            let idx = nearestIndex(of: wp.coordinate, in: pts)
+            if idx <= snap {
+                startName = wp.name; startNote = wp.note
+            } else if idx >= n - 1 - snap {
+                finalName = wp.name; finalNote = wp.note
+            } else {
+                interior.append(Boundary(idx: idx, name: wp.name, note: wp.note))
+            }
+        }
+        interior.sort { $0.idx < $1.idx }
+
+        var result: [Boundary] = [Boundary(idx: 0, name: startName, note: startNote)]
+        for b in interior where b.idx - result.last!.idx >= 2 {
+            result.append(b)
+        }
+        // Arrivo: se l'ultimo interno è vicino alla fine usa il suo nome, altrimenti aggiungi
+        if let last = result.last, n - 1 - last.idx < 2 {
+            result[result.count - 1] = Boundary(idx: n - 1, name: last.name, note: last.note)
+        } else {
+            result.append(Boundary(idx: n - 1, name: finalName, note: finalNote))
+        }
+        return result
+    }
+
+    /// Nodi sintetici: spezza la traccia in tratte uguali (per ETA e per evitare
+    /// il falso "arrivo" sugli anelli, dove partenza ≈ arrivo).
+    private static func syntheticBoundaries(pts: [CLLocationCoordinate2D], cum: [Double],
+                                            total: Double, totalKm: Double, endName: String) -> [Boundary] {
+        let segCount = max(2, min(8, Int((totalKm / 4).rounded())))
+        var idxs: [Int] = [0]
+        for s in 1..<segCount {
+            let target = total * Double(s) / Double(segCount)
+            let idx = cum.firstIndex { $0 >= target } ?? (pts.count - 1)
+            if idx > idxs.last! { idxs.append(idx) }
+        }
+        if idxs.last! != pts.count - 1 { idxs.append(pts.count - 1) }
+
+        return idxs.enumerated().map { k, idx in
+            if k == 0 { return Boundary(idx: idx, name: "Partenza", note: nil) }
+            if k == idxs.count - 1 { return Boundary(idx: idx, name: endName, note: nil) }
+            return Boundary(idx: idx, name: "km \(Int((cum[idx] / 1000).rounded()))", note: nil)
+        }
+    }
+
+    private static func nearestIndex(of c: CLLocationCoordinate2D,
+                                     in pts: [CLLocationCoordinate2D]) -> Int {
+        var best = 0
+        var bestD = Double.greatestFiniteMagnitude
+        for (i, p) in pts.enumerated() {
+            let d = RouteGeometry.distance(c, p)
+            if d < bestD { bestD = d; best = i }
+        }
+        return best
     }
 
     // MARK: - Manovre sintetizzate
@@ -225,8 +304,18 @@ private final class GPXParserDelegate: NSObject, XMLParserDelegate {
     private var wpts:   [CLLocationCoordinate2D] = []
 
     private(set) var trackName: String?
-    private var capturingName = false
-    private var nameBuffer = ""
+    private(set) var namedPoints: [GPXImporter.NamedPoint] = []
+
+    // Stato per il <wpt> in costruzione
+    private var inWpt = false
+    private var wptCoord: CLLocationCoordinate2D?
+    private var wptName = ""
+    private var wptDesc = ""
+    private var wptCmt = ""
+
+    // Campo di testo attualmente in cattura: "wname"/"wdesc"/"wcmt"/"trackname"
+    private var capturing: String?
+    private var buffer = ""
 
     /// Preferisce la traccia (`trkpt`); in mancanza, la rotta (`rtept`); infine i waypoint
     var bestPoints: [CLLocationCoordinate2D] {
@@ -241,24 +330,47 @@ private final class GPXParserDelegate: NSObject, XMLParserDelegate {
         switch elementName {
         case "trkpt": if let c = coordinate(attributeDict) { trkpts.append(c) }
         case "rtept": if let c = coordinate(attributeDict) { rtepts.append(c) }
-        case "wpt":   if let c = coordinate(attributeDict) { wpts.append(c) }
+        case "wpt":
+            inWpt = true
+            wptCoord = coordinate(attributeDict)
+            wptName = ""; wptDesc = ""; wptCmt = ""
+            if let c = wptCoord { wpts.append(c) }
         case "name":
-            // Prende il primo <name> del file (quello della traccia/metadata)
-            if trackName == nil { capturingName = true; nameBuffer = "" }
-        default:
-            break
+            if inWpt { capturing = "wname"; buffer = "" }
+            else if trackName == nil { capturing = "trackname"; buffer = "" }
+        case "desc": if inWpt { capturing = "wdesc"; buffer = "" }
+        case "cmt":  if inWpt { capturing = "wcmt"; buffer = "" }
+        default: break
         }
     }
 
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        if capturingName { nameBuffer += string }
+        if capturing != nil { buffer += string }
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String,
                 namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "name", capturingName {
-            capturingName = false
-            trackName = nameBuffer
+        switch elementName {
+        case "name":
+            if capturing == "wname" { wptName = buffer }
+            else if capturing == "trackname" { trackName = buffer }
+            capturing = nil
+        case "desc": if capturing == "wdesc" { wptDesc = buffer }; capturing = nil
+        case "cmt":  if capturing == "wcmt"  { wptCmt = buffer };  capturing = nil
+        case "wpt":
+            if let c = wptCoord {
+                let nm = wptName.trimmingCharacters(in: .whitespacesAndNewlines)
+                let note = [wptDesc, wptCmt]
+                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .first { !$0.isEmpty }
+                namedPoints.append(GPXImporter.NamedPoint(
+                    name: nm.isEmpty ? "Nodo \(namedPoints.count + 1)" : nm,
+                    note: note,
+                    coordinate: c))
+            }
+            inWpt = false
+            wptCoord = nil
+        default: break
         }
     }
 

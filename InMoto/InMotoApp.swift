@@ -16,7 +16,10 @@ struct InMotoApp: App {
                 .environmentObject(store)
                 .environmentObject(settings)
                 .environmentObject(appState)
-                .onAppear { store.loadInitial() }
+                .onAppear {
+                    store.loadInitial()
+                    NavNotifier.configure()
+                }
         }
     }
 }

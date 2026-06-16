@@ -13,7 +13,7 @@ enum RoutePDFGenerator {
 
     /// Costruisce il PDF e ne restituisce l'URL (nil se fallisce).
     static func generate(route: MotoRoute, navRoute: NavigationRoute) async -> URL? {
-        let mapImage = await routeImage(for: navRoute, size: CGSize(width: 1100, height: 660))
+        let mapImage = await routeImage(for: navRoute, size: CGSize(width: 1240, height: 720))
 
         let page = RoutePDFPage(route: route, navRoute: navRoute, mapImage: mapImage)
         let renderer = ImageRenderer(content: page)
@@ -60,6 +60,7 @@ enum RoutePDFGenerator {
         let snapshotter = MKMapSnapshotter(options: options)
         guard let snapshot = try? await snapshotter.start() else { return nil }
 
+        let nodes = nav.waypoints
         return UIGraphicsImageRenderer(size: size).image { _ in
             snapshot.image.draw(at: .zero)
 
@@ -72,22 +73,38 @@ enum RoutePDFGenerator {
             path.lineCapStyle = .round
             // Alone bianco + tratto arancione
             UIColor.white.withAlphaComponent(0.9).setStroke()
-            path.lineWidth = 9; path.stroke()
+            path.lineWidth = 10; path.stroke()
             UIColor.systemOrange.setStroke()
-            path.lineWidth = 5; path.stroke()
+            path.lineWidth = 6; path.stroke()
 
-            if let first = coords.first { drawMarker(at: snapshot.point(for: first), color: .systemGreen) }
-            if let last = coords.last { drawMarker(at: snapshot.point(for: last), color: .systemRed) }
+            // Un segno numerato per ogni nodo del percorso
+            for (i, wp) in nodes.enumerated() {
+                let p = snapshot.point(for: wp.coordinate)
+                let color: UIColor = i == 0 ? .systemGreen
+                    : i == nodes.count - 1 ? .systemRed
+                    : UIColor(red: 0.95, green: 0.55, blue: 0.10, alpha: 1)
+                drawNodeMarker(at: p, number: i + 1, color: color)
+            }
         }
     }
 
-    private static func drawMarker(at p: CGPoint, color: UIColor) {
-        let r: CGFloat = 10
+    private static func drawNodeMarker(at p: CGPoint, number: Int, color: UIColor) {
+        let r: CGFloat = 16
+        // Alone bianco
         UIColor.white.setFill()
-        UIBezierPath(ovalIn: CGRect(x: p.x - r - 2.5, y: p.y - r - 2.5,
-                                    width: 2 * r + 5, height: 2 * r + 5)).fill()
+        UIBezierPath(ovalIn: CGRect(x: p.x - r - 3, y: p.y - r - 3,
+                                    width: 2 * r + 6, height: 2 * r + 6)).fill()
+        // Disco colorato
         color.setFill()
         UIBezierPath(ovalIn: CGRect(x: p.x - r, y: p.y - r, width: 2 * r, height: 2 * r)).fill()
+        // Numero
+        let label = "\(number)"
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18, weight: .bold),
+            .foregroundColor: UIColor.white
+        ]
+        let sz = label.size(withAttributes: attrs)
+        label.draw(at: CGPoint(x: p.x - sz.width / 2, y: p.y - sz.height / 2), withAttributes: attrs)
     }
 
     private static func safeFileName(_ name: String) -> String {

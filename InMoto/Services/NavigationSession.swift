@@ -65,6 +65,7 @@ final class NavigationSession: ObservableObject {
     init(navRoute: NavigationRoute) {
         self.navRoute = navRoute
         self.geometry = RouteGeometry(route: navRoute)
+        NavNotifier.requestAuthorization()
     }
 
     // MARK: - Audio (auricolare Bluetooth, schermo spento, interruttore silenzioso)
@@ -95,6 +96,9 @@ final class NavigationSession: ObservableObject {
         guard m.distanceFromRoute <= tolerance else {
             offRouteFixCount += 1
             if offRouteFixCount >= offRouteFixesNeeded {
+                if !isOffRoute {
+                    NavNotifier.post(title: "⚠️ Fuori percorso", body: "Ricalcolo in corso…")
+                }
                 isOffRoute = true
                 requestReroute(from: loc)
             }
@@ -117,6 +121,7 @@ final class NavigationSession: ObservableObject {
                 hasAnnouncedStart = true
                 let dest = shortName(navRoute.waypoints.last?.name ?? "destinazione")
                 speak("Navigazione avviata verso \(dest).")
+                NavNotifier.post(title: "▶️ Navigazione avviata", body: "verso \(dest)")
             }
         } else if m.progress > progressMeters || progressMeters - m.progress < 300 {
             // La progressione può arretrare solo di poco (rumore GPS);
@@ -137,7 +142,9 @@ final class NavigationSession: ObservableObject {
         guard newLeg != currentLegIndex else { return }
         if newLeg > currentLegIndex, announce {
             let nextIdx = min(newLeg + 1, navRoute.waypoints.count - 1)
-            speak("Tappa raggiunta. Prossima destinazione: \(shortName(navRoute.waypoints[nextIdx].name)).")
+            let next = shortName(navRoute.waypoints[nextIdx].name)
+            speak("Tappa raggiunta. Prossima destinazione: \(next).")
+            NavNotifier.post(title: "🏁 Tappa raggiunta", body: "Prossima destinazione: \(next)")
         }
         currentLegIndex = newLeg
     }
@@ -187,6 +194,7 @@ final class NavigationSession: ObservableObject {
             hasAnnouncedArrival = true
             arrivedAtDestination = true
             speak("Sei arrivato a destinazione. Buona moto!")
+            NavNotifier.post(title: "📍 Sei arrivato", body: "Buona moto!")
         }
     }
 
@@ -214,6 +222,7 @@ final class NavigationSession: ObservableObject {
                 if !announcedRerouteFailure {
                     announcedRerouteFailure = true
                     speak("Sei fuori percorso e non riesco a ricalcolare. Rientra sul tracciato.")
+                    NavNotifier.post(title: "⚠️ Impossibile ricalcolare", body: "Rientra sul tracciato")
                 }
             }
         }
@@ -255,6 +264,7 @@ final class NavigationSession: ObservableObject {
         isRerouting = false
         routeVersion += 1
         speak("Percorso ricalcolato.")
+        NavNotifier.post(title: "✅ Percorso ricalcolato", body: "Navigazione aggiornata")
     }
 
     // MARK: - Valori per la UI
