@@ -2,6 +2,20 @@ package com.divito.inmoto.model
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Mezzo con cui si percorre il tragitto: determina il tipo di routing (OSRM
+ * driving/foot) e la taratura dei tempi di percorrenza. Port di TransportMode iOS.
+ */
+enum class TransportMode(val id: String, val label: String, val avgSpeedKmh: Double) {
+    moto("moto", "In moto", 45.0),
+    piedi("piedi", "A piedi", 5.0);
+
+    companion object {
+        fun from(value: String?): TransportMode =
+            entries.firstOrNull { it.id == value } ?: moto
+    }
+}
+
 /** Itinerario/tragitto moto. Mappa 1:1 il MotoRoute di iOS (stessi nomi JSON). */
 @Serializable
 data class MotoRoute(
@@ -23,7 +37,11 @@ data class MotoRoute(
     val isCustom: Boolean? = null,
     val legKm: List<Int>? = null,   // km per ogni tratta (solo tragitti calcolati)
     val legMin: List<Int>? = null,  // minuti per ogni tratta
+    val mezzo: String? = null,      // "moto" | "piedi" (null = moto, compatibilità)
 ) {
+    /** Mezzo del tragitto (default moto se non specificato). */
+    val transportMode: TransportMode get() = TransportMode.from(mezzo)
+
     val durataFormattata: String
         get() {
             val h = durataMin / 60

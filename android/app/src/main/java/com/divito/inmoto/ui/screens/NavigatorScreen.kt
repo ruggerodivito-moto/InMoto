@@ -3,6 +3,7 @@ package com.divito.inmoto.ui.screens
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -45,10 +46,17 @@ import androidx.navigation.NavController
 import com.divito.inmoto.AppViewModel
 import com.divito.inmoto.data.LocationProvider
 import com.divito.inmoto.data.NavigationSession
+import com.divito.inmoto.data.RouteGeometry
+import com.divito.inmoto.data.RouterService
+import com.divito.inmoto.model.GeoPoint
+import com.divito.inmoto.model.GeocodedWaypoint
 import com.divito.inmoto.model.NavigationRoute
 import com.divito.inmoto.model.TurnDirection
 import com.divito.inmoto.ui.MapsLauncher
 import com.divito.inmoto.ui.components.NavigationMap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
 private sealed interface NavUiState {
@@ -95,13 +103,100 @@ fun NavigatorScreen(vm: AppViewModel, nav: NavController, routeId: String) {
             }
         }
 
-        is NavUiState.Ready -> LiveNavigation(
+        is NavUiState.Ready -> NavigationGate(
             route = s.route,
             onBack = { nav.popBackStack() },
             onOpenMaps = { route?.let { MapsLauncher.openRoute(context, it.waypointsGmaps.ifEmpty { it.tappe }) } },
         )
     }
 }
+
+/**
+ * Prima della navigazione: se la posizione attuale è nota ed è lontana (>300 m)
+ * dal primo nodo, chiede se anteporre la posizione come partenza oppure seguire
+ * solo il percorso originale. Equivalente del prompt iOS.
+ */
+@Composable
+private fun NavigationGate(route: NavigationRoute, onBack: () -> Unit, onOpenMaps: () -> Unit) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val provider = remember { LocationProvider(context) }
+
+    var finalRoute by remember(route.routeId) { mutableStateOf<NavigationRoute?>(null) }
+    var promptDistance by remember(route.routeId) { mutableStateOf<Double?>(null) }
+    var here by remember(route.routeId) { mutableStateOf<GeoPoint?>(null) }
+    var preparing by remember(route.routeId) { mutableStateOf(false) }
+
+    LaunchedEffect(route.routeId) {
+        val first = route.waypoints.firstOrNull()
+        if (hasLocationPermission(context) && first != null) {
+            val loc = provider.oneShot()
+            if (loc != null) {
+                val d = RouteGeometry.distance(GeoPoint(loc.latitude, loc.longitude), first.point)
+                if (d > 300) {
+                    here = GeoPoint(loc.latitude, loc.longitude)
+                    promptDistance = d
+                    return@LaunchedEffect
+                }
+            }
+        }
+        finalRoute = route
+    }
+
+    val fr = finalRoute
+    if (fr != null) {
+        LiveNavigation(route = fr, onBack = onBack, onOpenMaps = onOpenMaps)
+        return
+    }
+
+    // Schermo d'attesa mentre si decide / prepara il collegamento
+    LoadingOrError(route.routeName, onBack = onBack) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            CircularProgressIndicator()
+            Text(if (preparing) "Calcolo collegamento…" else "Preparazione…", Modifier.padding(top = 12.dp))
+        }
+    }
+
+    val dist = promptDistance
+    if (dist != null && !preparing) {
+        AlertDialog(
+            onDismissRequest = {},
+            title = { Text("Non sei al punto di partenza") },
+            text = {
+                Text(
+                    "Sei a circa ${fmtKm(dist)} dall'inizio del percorso. Vuoi aggiungere la tua " +
+                        "posizione attuale come partenza, oppure vedere solo il percorso originale?",
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    val h = here; val first = route.waypoints.firstOrNull()
+                    if (h == null || first == null) { finalRoute = route; return@TextButton }
+                    preparing = true
+                    scope.launch {
+                        val merged = runCatching {
+                            val connector = withContext(Dispatchers.IO) {
+                                RouterService.connectorLeg(h, first, route.transport)
+                            }
+                            val hereWp = GeocodedWaypoint("Posizione attuale", h.lat, h.lon)
+                            route.copy(
+                                waypoints = listOf(hereWp) + route.waypoints,
+                                legs = listOf(connector) + route.legs,
+                            )
+                        }.getOrDefault(route)
+                        finalRoute = merged
+                    }
+                }) { Text("Aggiungi la mia posizione") }
+            },
+            dismissButton = {
+                TextButton(onClick = { finalRoute = route }) { Text("Solo il percorso originale") }
+            },
+        )
+    }
+}
+
+private fun fmtKm(meters: Double): String =
+    if (meters < 1000) "${meters.roundToInt()} m" else "%.1f km".format(meters / 1000)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -133,8 +228,16 @@ private fun LiveNavigation(route: NavigationRoute, onBack: () -> Unit, onOpenMap
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         hasPermission = it
     }
+    val notifLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
     LaunchedEffect(Unit) {
         if (!hasPermission) launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        // Permesso notifiche (Android 13+): le notifiche di navigazione si
+        // rispecchiano anche sull'orologio Wear OS abbinato.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
+            notifLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
     // Colleziona la posizione solo a permesso concesso; il flow si chiude all'uscita.
     LaunchedEffect(hasPermission) {

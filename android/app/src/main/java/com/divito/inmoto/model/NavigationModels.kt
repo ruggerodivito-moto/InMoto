@@ -38,6 +38,7 @@ data class GeocodedWaypoint(
     val name: String,
     val latitude: Double,
     val longitude: Double,
+    val note: String? = null,   // nota/descrizione del nodo (es. dai waypoint GPX)
 ) {
     val point: GeoPoint get() = GeoPoint(latitude, longitude)
 }
@@ -93,7 +94,11 @@ data class NavigationRoute(
     val routeName: String,
     val waypoints: List<GeocodedWaypoint>,
     val legs: List<RouteLeg>,
+    val transport: String? = null,   // "moto" | "piedi" (null = moto)
 ) {
+    /** Mezzo del percorso (default moto se non specificato). */
+    val transportMode: TransportMode get() = TransportMode.from(transport)
+
     val totalDistanceMeters: Double get() = legs.sumOf { it.distanceMeters }
     val totalDurationSeconds: Double get() = legs.sumOf { it.durationSeconds }
 

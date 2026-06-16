@@ -147,6 +147,9 @@ class NavigationSession(
         if (m.distanceFromRoute > tolerance) {
             offRouteFixCount += 1
             if (offRouteFixCount >= offRouteFixesNeeded) {
+                if (!isOffRoute) {
+                    NavNotifier.post(appContext, "⚠️ Fuori percorso", "Ricalcolo in corso…")
+                }
                 isOffRoute = true
                 requestReroute(loc)
             }
@@ -168,6 +171,7 @@ class NavigationSession(
                 hasAnnouncedStart = true
                 val dest = shortName(navRoute.waypoints.lastOrNull()?.name ?: "destinazione")
                 speak("Navigazione avviata verso $dest.")
+                NavNotifier.post(appContext, "▶️ Navigazione avviata", "verso $dest")
             }
         } else if (m.progress > progressMeters || progressMeters - m.progress < 300) {
             // La progressione arretra solo di poco (rumore GPS); i salti avanti sono accettati
@@ -188,7 +192,9 @@ class NavigationSession(
         if (newLeg == currentLegIndex) return
         if (newLeg > currentLegIndex && announce) {
             val nextIdx = min(newLeg + 1, navRoute.waypoints.size - 1)
-            speak("Tappa raggiunta. Prossima destinazione: ${shortName(navRoute.waypoints[nextIdx].name)}.")
+            val next = shortName(navRoute.waypoints[nextIdx].name)
+            speak("Tappa raggiunta. Prossima destinazione: $next.")
+            NavNotifier.post(appContext, "🏁 Tappa raggiunta", "Prossima destinazione: $next")
         }
         currentLegIndex = newLeg
     }
@@ -243,6 +249,7 @@ class NavigationSession(
             hasAnnouncedArrival = true
             arrived = true
             speak("Sei arrivato a destinazione. Buona moto!")
+            NavNotifier.post(appContext, "📍 Sei arrivato", "Buona moto!")
         }
     }
 
@@ -263,12 +270,13 @@ class NavigationSession(
 
         scope.launch {
             val connector = try {
-                withContext(Dispatchers.IO) { RouterService.connectorLeg(here, target) }
+                withContext(Dispatchers.IO) { RouterService.connectorLeg(here, target, navRoute.transport) }
             } catch (e: Exception) {
                 isRerouting = false
                 if (!announcedRerouteFailure) {
                     announcedRerouteFailure = true
                     speak("Sei fuori percorso e non riesco a ricalcolare. Rientra sul tracciato.")
+                    NavNotifier.post(appContext, "⚠️ Impossibile ricalcolare", "Rientra sul tracciato")
                 }
                 publish()
                 return@launch
@@ -296,7 +304,7 @@ class NavigationSession(
             legs[targetWaypointIndex - 1] = connector
         }
 
-        navRoute = NavigationRoute(navRoute.routeId, navRoute.routeName, waypoints, legs)
+        navRoute = NavigationRoute(navRoute.routeId, navRoute.routeName, waypoints, legs, navRoute.transport)
         geometry = RouteGeometry(navRoute)
 
         lastMatchPointIndex = null
@@ -310,6 +318,7 @@ class NavigationSession(
         isRerouting = false
         routeVersion += 1
         speak("Percorso ricalcolato.")
+        NavNotifier.post(appContext, "✅ Percorso ricalcolato", "Navigazione aggiornata")
         publish()
     }
 

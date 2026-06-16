@@ -105,12 +105,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val inputs = route.waypointsGmaps.ifEmpty { route.tappe }
                 .ifEmpty { listOf(route.partenza, route.arrivo).filter { it.isNotEmpty() } }
             val waypoints = com.divito.inmoto.data.RouterService.geocodeWaypointsMixed(inputs)
-            val legs = com.divito.inmoto.data.RouterService.computeLegs(getApplication(), waypoints)
+            val legs = com.divito.inmoto.data.RouterService.computeLegs(getApplication(), waypoints, route.mezzo)
             val nav = com.divito.inmoto.model.NavigationRoute(
                 routeId = route.id,
                 routeName = route.nome,
                 waypoints = waypoints,
                 legs = legs,
+                transport = route.mezzo,
             )
             com.divito.inmoto.data.RouterService.cacheRoute(getApplication(), nav)
             nav

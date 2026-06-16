@@ -12,6 +12,7 @@ import com.google.android.gms.location.Priority
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
  * Sorgente GPS basata su FusedLocationProviderClient — equivalente Android di
@@ -58,5 +59,18 @@ class LocationProvider(context: Context) {
 
         client.requestLocationUpdates(request, callback, Looper.getMainLooper())
         awaitClose { client.removeLocationUpdates(callback) }
+    }
+
+    /** Un solo fix di posizione (per capire se sei già alla partenza). Null se non disponibile. */
+    @SuppressLint("MissingPermission")
+    suspend fun oneShot(): Location? = suspendCancellableCoroutine { cont ->
+        client.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener { loc ->
+                if (loc != null) cont.resumeWith(Result.success(loc))
+                else client.lastLocation
+                    .addOnSuccessListener { cont.resumeWith(Result.success(it)) }
+                    .addOnFailureListener { cont.resumeWith(Result.success(null)) }
+            }
+            .addOnFailureListener { cont.resumeWith(Result.success(null)) }
     }
 }

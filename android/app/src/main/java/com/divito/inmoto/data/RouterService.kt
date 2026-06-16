@@ -24,8 +24,12 @@ import kotlin.math.abs
  */
 object RouterService {
 
-    private const val OSRM_BASE = "https://router.project-osrm.org/route/v1/driving"
+    private const val OSRM_DRIVING = "https://router.project-osrm.org/route/v1/driving"
+    private const val OSRM_FOOT = "https://routing.openstreetmap.de/routed-foot/route/v1/foot"
     private const val NOMINATIM = "https://nominatim.openstreetmap.org/search"
+
+    private fun osrmBase(transport: String?): String =
+        if (transport == "piedi") OSRM_FOOT else OSRM_DRIVING
 
     class RouterException(message: String) : Exception(message)
 
@@ -75,28 +79,32 @@ object RouterService {
 
     // MARK: - Routing pubblico
 
-    suspend fun computeLegs(context: Context, waypoints: List<GeocodedWaypoint>): List<RouteLeg> {
+    suspend fun computeLegs(
+        context: Context,
+        waypoints: List<GeocodedWaypoint>,
+        transport: String? = null,
+    ): List<RouteLeg> {
         val legs = mutableListOf<RouteLeg>()
         for (i in 0 until waypoints.size - 1) {
             val from = waypoints[i]; val to = waypoints[i + 1]
-            val cached = cachedLeg(context, from, to)
+            val cached = cachedLeg(context, from, to, transport)
             if (cached != null) { legs.add(cached); continue }
-            val leg = directionsLeg(from.name, from.point, to.name, to.point)
-            storeLeg(context, leg, from, to)
+            val leg = directionsLeg(from.name, from.point, to.name, to.point, transport)
+            storeLeg(context, leg, from, to, transport)
             legs.add(leg)
         }
         return legs
     }
 
     /** Tratta di collegamento dalla posizione attuale a una tappa (non cacheata). */
-    suspend fun connectorLeg(from: GeoPoint, to: GeocodedWaypoint): RouteLeg =
-        directionsLeg("Posizione attuale", from, to.name, to.point)
+    suspend fun connectorLeg(from: GeoPoint, to: GeocodedWaypoint, transport: String? = null): RouteLeg =
+        directionsLeg("Posizione attuale", from, to.name, to.point, transport)
 
     private suspend fun directionsLeg(
-        fromName: String, from: GeoPoint, toName: String, to: GeoPoint,
+        fromName: String, from: GeoPoint, toName: String, to: GeoPoint, transport: String?,
     ): RouteLeg {
         val coords = "${from.lon},${from.lat};${to.lon},${to.lat}"
-        val url = "$OSRM_BASE/$coords?overview=full&geometries=geojson&steps=true&annotations=false"
+        val url = "${osrmBase(transport)}/$coords?overview=full&geometries=geojson&steps=true&annotations=false"
         val resp = runCatching { Http.get(url) }.getOrNull()
             ?: throw RouterException("Percorso non disponibile: $fromName → $toName")
         if (resp.status != 200) throw RouterException("Percorso non disponibile: $fromName → $toName")
@@ -211,15 +219,17 @@ object RouterService {
 
     // MARK: - Cache tratte per coppia di nodi (4 decimali ≈ 11 m)
 
-    private fun legPairFile(context: Context, from: GeocodedWaypoint, to: GeocodedWaypoint): File {
-        val key = "legpair_%.4f_%.4f__%.4f_%.4f".format(
-            from.latitude, from.longitude, to.latitude, to.longitude
+    private fun legPairFile(context: Context, from: GeocodedWaypoint, to: GeocodedWaypoint, transport: String?): File {
+        // Il mezzo fa parte della chiave: piedi e moto danno tratte diverse
+        val t = if (transport == "piedi") "w" else "d"
+        val key = "legpair_%s_%.4f_%.4f__%.4f_%.4f".format(
+            t, from.latitude, from.longitude, to.latitude, to.longitude
         )
         return File(context.filesDir, "$key.json")
     }
 
-    private fun cachedLeg(context: Context, from: GeocodedWaypoint, to: GeocodedWaypoint): RouteLeg? {
-        val f = legPairFile(context, from, to)
+    private fun cachedLeg(context: Context, from: GeocodedWaypoint, to: GeocodedWaypoint, transport: String?): RouteLeg? {
+        val f = legPairFile(context, from, to, transport)
         if (!f.exists()) return null
         val leg = runCatching {
             AppJson.decodeFromString(RouteLeg.serializer(), f.readText())
@@ -228,9 +238,9 @@ object RouterService {
         return leg.copy(fromName = from.name, toName = to.name)
     }
 
-    private fun storeLeg(context: Context, leg: RouteLeg, from: GeocodedWaypoint, to: GeocodedWaypoint) {
+    private fun storeLeg(context: Context, leg: RouteLeg, from: GeocodedWaypoint, to: GeocodedWaypoint, transport: String?) {
         runCatching {
-            legPairFile(context, from, to).writeText(
+            legPairFile(context, from, to, transport).writeText(
                 AppJson.encodeToString(RouteLeg.serializer(), leg)
             )
         }

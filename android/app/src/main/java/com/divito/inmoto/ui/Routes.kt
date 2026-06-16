@@ -10,6 +10,7 @@ object Routes {
     const val GUIDE = "guide"
     const val ROADBOOK_IMPORT = "roadbook_import"
     const val COMPOSE_TRIP = "compose_trip"
+    const val GPX_IMPORT = "gpx_import"
 
     const val ROUTE_DETAIL = "route_detail/{id}"
     fun routeDetail(id: String) = "route_detail/$id"

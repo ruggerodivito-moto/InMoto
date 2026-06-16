@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.divito.inmoto.ui.Routes
 import com.divito.inmoto.ui.screens.ComposeTripScreen
 import com.divito.inmoto.ui.screens.FavoritePlacesScreen
+import com.divito.inmoto.ui.screens.GpxImportScreen
 import com.divito.inmoto.ui.screens.GuideScreen
 import com.divito.inmoto.ui.screens.HomeBrowseScreen
 import com.divito.inmoto.ui.screens.MoreScreen
@@ -102,6 +103,7 @@ fun InMotoApp(vm: AppViewModel) {
             composable(Routes.GUIDE) { GuideScreen(navController) }
             composable(Routes.ROADBOOK_IMPORT) { RoadbookImportScreen(vm, navController) }
             composable(Routes.COMPOSE_TRIP) { ComposeTripScreen(vm, navController) }
+            composable(Routes.GPX_IMPORT) { GpxImportScreen(vm, navController) }
             composable(Routes.ROUTE_DETAIL) { entry ->
                 RouteDetailScreen(vm, navController, entry.arguments?.getString("id").orEmpty())
             }
