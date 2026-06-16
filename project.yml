@@ -29,7 +29,7 @@ targets:
       properties:
         CFBundleDisplayName: In Moto
         CFBundleShortVersionString: "1.0.20260616"
-        CFBundleVersion: "39"
+        CFBundleVersion: "40"
         UILaunchScreen:
           UIColorName: ""
         NSLocationWhenInUseUsageDescription: >
